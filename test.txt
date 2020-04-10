@@ -5,5 +5,9 @@
 본인의 브랜치만 체크아웃! (origin/master  브랜치로 체크아웃X)
 origin/master에 수정 내용 푸쉬하고자 할 땐 pull request로 해주세요.
 
+김건휘1
 태영돈1
+김희엽1
+오주형1
 태영돈2
+
