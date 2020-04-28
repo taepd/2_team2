@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>html media 과제</title>
+</head>
+
+<body>
+    <video id="myvideo" width="320" height="240" autoplay muted controls onclick="myCanvas()">
+        <source  src="yuki.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+      </video>
+    <!-- iframe은 캡처가 안먹힘-->
+    <!-- <iframe id="youtube" width="560" height="315" src="https://www.youtube.com/embed/RkLyuQ9p6oA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
+    <div style="float: left;">
+    <p>Image to use:</p>
+    <img id="image" src="../images/pu.jpg"  width="220" height="277">
+    </div>
+    <div id="canvas"></div>
+    <p>Canvas to fill:</p>
+    <!-- <canvas id="myCanvas" width="1000" height="400" style="border:1px solid #d3d3d3;">
+        Your browser does not support the HTML5 canvas tag.
+    </canvas> -->
+    <img src="" id="imgs" width="180" height="240" alt="이미지">
+    <div id="target"></div>
+    <a id="download" download="myImage.png" href="" onclick="download_img(this);">Download to myImage.jpg</a>
+
+
+    <p><button onclick="myCanvas()">Try it</button></p>
+    <p><button onclick="getImageData()">Try it</button></p>
+    <p><button onclick="getFile()">file로</button></p>  
+    <p><button onclick="start()">slideShow</button></p>
+    
+    </div>
+    <script>
+        var x=10;
+        var y=10;
+        var count=0;
+        var date;
+        var list =[];
+        //이미지가 옆에 붙어 나온다
+        // function myCanvas() {
+        //     if(count!=0&&count%5==0){
+        //         y+=108;
+        //         x=10;}
+        //     var c = document.getElementById("myCanvas");
+        //     var ctx = c.getContext("2d");
+        //     var img = document.getElementById("myvideo");
+        //     ctx.drawImage(img, x, y,192,108);
+        //     x+=192;
+        //     count+=1;
+        //     data = c.toDataURL();
+        //     list.push(data);  
+        //     console.log(list);          
+        // }
+        
+        
+            //캔버스 동적 생성>> 캔버스 크기 조절하기가 힘들고 의도한 바는 아니라 실패
+        //  function myCanvas() {
+        //     var c = document.createElement("canvas");
+        //     var ctx = c.getContext("2d");
+        //     var img = document.getElementById("myvideo");
+        //     ctx.drawImage(img, x, y,200,200);
+        //     document.getElementById("canvas").appendChild(c);
+        //     data = c.toDataURL();
+        //     list.push(data);  
+        //     var img = document.createElement("img");
+        //     img.setAttribute("src" ,data);    
+            
+           
+        //     console.log(list);          
+        // }
+
+        function myCanvas() {
+            var c = document.createElement("canvas");
+            c.setAttribute("width","240");
+            c.setAttribute("height","320");
+            var ctx = c.getContext("2d");
+            var img = document.getElementById("myvideo");
+            ctx.drawImage(img,0,0,240,320);
+            data = c.toDataURL();
+            list.push(data);  
+            var img = document.createElement("img");
+            img.setAttribute("src" ,data);
+            img.setAttribute("width","100");  
+            img.setAttribute("height","100");  
+            document.getElementById("canvas").appendChild(img);  
+            
+           
+            console.log(list);          
+        }
+
+
+        var index=0;
+        var interval;
+        function slideShow(){
+            
+            document.getElementById("imgs").setAttribute("src", list[index++]);
+            if(index>=list.length){
+                clearInterval(interval);
+                index=0;
+            }
+        }
+        function start(){
+            interval = setInterval(slideShow,1000);
+            
+        }
+       
+
+    function getImageData() {
+        var imgUrl = "../images/pu.jpg";
+        var canvas = document.createElement("canvas");
+        var context = canvas.getContext("2d");
+        var img = new Image();
+        img.src = imgUrl;
+        context.drawImage(img, 0, 0);
+        alert(canvas.toDataURL().toString()); // 변환된 문자열 이 보임
+        target.innerHTML = "<img src='" + canvas.toDataURL().toString() + "'>"; //타겟 엘리먼트에 innerHTML
+    }
+
+        download_img = function (el) {
+            // get image URI from canvas object
+            var imageURI = data;
+            el.href = imageURI;
+        };
+
+    </script>
+
+    
+
+
+</body>
+
+</html>
