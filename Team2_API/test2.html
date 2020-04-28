@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>canvas 이미지 pixel 값 추출</title>
+</head>
+
+<body onload="load(this)">
+        <div id="result" class="result">
+            <div class="title"></div>
+            <div class="color"></div>
+        </div> 
+        <canvas  id="draw" onclick="draw(event)" width="300px" height="300px;"></canvas>      
+
+
+<script>
+
+ 
+    var ctx = null;
+     
+    function load(target) {
+        // 실제로 그려지는 위치의 캔버스 생성
+        var canvas = document.getElementById("draw");
+        ctx = canvas.getContext("2d");
+       
+       
+        var img = new Image();
+        img.src = "../images/pu.jpg";
+        img.onload = function() {
+            ctx.drawImage(img, 0, 0,300,300);
+        }
+    }
+     
+     
+    function draw(event) {
+        var x = event.offsetX;
+        var y = event.offsetY;
+       
+        var pixel = ctx.getImageData(x, y, 1, 1);
+        var data = pixel.data;
+       
+        var rgbaText = "rgba(" + data[0] + ", " + data[1] + ", " + data[2] + ", " + data[3] + ")";
+        var result = document.getElementById("result");
+        var title = result.getElementsByClassName("title")[0];
+        title.innerHTML = rgbaText;
+        var colors = result.getElementsByClassName("color");
+        for(var i=0; i<colors.length; i++) {
+            colors[i].style.background = rgbaText;
+        }
+    }
+    </script> 
+</html>
