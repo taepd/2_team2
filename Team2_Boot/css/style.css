@@ -1,0 +1,90 @@
+/* .d-flex {
+    display: flex !important;
+} */
+
+:root {
+    --blue: #007bff;
+    --indigo: #6610f2;
+    --purple: #6f42c1;
+    --pink: #e83e8c;
+    --red: #dc3545;
+    --orange: #fd7e14;
+    --yellow: #ffc107;
+    --green: #28a745;
+    --teal: #20c997;
+    --cyan: #17a2b8;
+    --white: #fff;
+    --gray: #6c757d;
+    --gray-dark: #343a40;
+    --primary: #78d5ef;
+    --secondary: #6c757d;
+    --success: #28a745;
+    --info: #17a2b8;
+    --warning: #ffc107;
+    --danger: #dc3545;
+    --light: #f8f9fa;
+    --dark: #343a40;
+    --breakpoint-xs: 0;
+    --breakpoint-sm: 576px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 992px;
+    --breakpoint-xl: 1200px;
+    --font-family-sans-serif: "Work Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+
+
+.ftco-navbar-light {
+    background: transparent !important;
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: 20px;
+    z-index: 3;
+    padding: 0; }
+
+
+    .block-20 {
+        overflow: hidden;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
+        height: 275px;
+        position: relative;
+        display: block; }   
+
+.subtitle{
+    position: absolute;
+    top: 180px;
+    left: 15px;
+    down: 100px;
+  text-align: left;
+  background: #b8b0b0;
+  padding: 15px;
+  color:white;
+}
+.subtitle a{
+    color: white;
+}
+.desc a{
+    color: black;
+    font-size: 25px;
+}
+
+.desc a:hover{
+    color:#b8b0b0;  
+    font-size: 25px;
+    text-decoration: none;
+}
+
+.subheading {
+    font-weight: 600;
+    font-size: 13px;
+    display: block;
+    margin-bottom: 0;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #b8b0b0; }
+
+#ptitle{
+    margin-top:20px;
+    }
