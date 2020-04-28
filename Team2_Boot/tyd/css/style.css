@@ -1,0 +1,64 @@
+body {font-family: "Poppins", Arial, sans-serif;
+background: #000000;
+font-size: 16px;
+line-height: 1.8;
+font-weight: 400;
+color: #999999;
+}
+
+a {
+    /* -webkit-transition: .3s all ease;
+    -o-transition: .3s all ease;
+    transition: .3s all ease; */
+    color: #60e72b; }
+    a:hover, a:focus {
+      text-decoration: none;
+      color: #398fff;
+      outline: none !important; }
+
+h1, h2, h3, h4, h5,
+.h1, .h2, .h3, .h4, .h5 {
+  line-height: 1.5;
+  color: white;
+  font-weight: 400; }
+
+.text-primary {
+  color: #398fff !important; }
+
+.navbar-brand {
+    font-weight: 900;
+    font-size: 24px;
+    text-transform: uppercase; }
+
+.nav-link{
+    color: white !important;
+  
+}
+.col-md-6{
+    height:700px;
+}
+.skills {
+    height:100px !important;
+}
+
+.resume-wrap {
+    width: 100%;
+    margin-bottom: 30px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 30px;
+    border-radius: 5px; }
+    .resume-wrap .date {
+      font-weight: 900;
+      font-size: 26px;
+      color: #398fff; }
+    .resume-wrap h2 {
+      font-size: 26px; }
+
+ .progress-wrap {
+       width: 100%;
+       margin-bottom: 30px; }
+       .progress-wrap h3 {
+         font-size: 20px;
+         margin-bottom: 10px;
+         font-weight: 500; }
+

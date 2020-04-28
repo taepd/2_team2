@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Video</title>
+    <style type="text/css">
+       
+    * html
+    {
+        margin:0;
+        padding:0;
+    }
+   
+   
+    body
+    {
+        width:100%;
+        height:100%;
+    }
+    </style>
+</head>
+<body>
+<script type="text/javascript">
+//<![CDATA[
+ 
+    var Video = (function (win, doc) {
+ 
+        return function (opt) {
+ 
+            function init() {
+ 
+                this.options = {
+                    player: null,
+ 
+                    wrap: null,
+ 
+                    id: '',
+                    src: '',
+                    poster: '',
+                    width: 500,
+                    height: 344,
+                    autoplay: false,
+                    controls: false,
+                    loop: false,
+                    isloaded: false,
+                    onload: function () { ; },
+                    onplay: function () { ; },
+                    onprogress: function () { ; },
+                    ontimeupdate: function () { ; },
+                    onended: function () { ; },
+                    onerror: function () { ; }
+ 
+                };
+ 
+                extend.call(this.options, opt);
+ 
+                // audio load
+                load.call(this.options);
+ 
+                return this;
+            }
+ 
+            Video.fn = init.prototype = {
+                play: play,
+                stop: stop,
+                isEnded: isEnded,
+                getTimeout: getTimeout,
+                getStartTime: getStartTime,
+                getSrc: getSrc,
+                isBuffering: isBuffering,
+                getCurrentTimeout: getCurrentTimeout,
+                setVolume: setVolume,
+                setMuted: setMuted,
+                getVideoSize: getVideoSize
+ 
+            }
+ 
+            return new init();
+        };
+ 
+        // audio 객체를 생성한다.
+        function createElement() {
+ 
+            this.player = document.createElement('video');
+            this.player.id = this.id;
+            this.player.src = this.src;
+ 
+            // 미디어 클립이 로드되는 동안 컨텐츠 대신 보여질 이미지 파일의 URL을 지정한다.
+            this.player.poster = this.poster;
+            // 미디어 클립의 가로폭
+            this.player.width = this.width;
+            // 미디어 클립의 세로폭
+            this.player.height = this.height;
+ 
+            this.player.autoplay = this.autoplay;
+            this.player.controls = this.controls;
+            this.player.loop = this.loop;
+ 
+            var that = this;
+ 
+            // 미디어클립을 재생할 준비가 완료 시 이벤트 핸들러
+            bind(this.player, 'canplay', function () {
+ 
+                that.onload.call(null);
+                this.isloaded = true;
+            });
+ 
+            // 미디어클립 재생 클릭 시 이벤트 핸들러
+            bind(this.player, 'play', function () { that.onplay(); });
+            // 브라우저가 미디어클립 데이터를 가져오는 프로세스에 있을 시 이벤트 핸들러
+            bind(this.player, 'progress', function () { that.onprogress(); });
+            // 미디어 클립 재생 시 지속적으로 발생(재생 위치가 변경되었을때)
+            bind(this.player, 'timeupdate', function () { that.ontimeupdate(); });
+            // 미디어 클립 종료 시 이벤트 핸들러
+            bind(this.player, 'ended', function () { that.onended(); });
+            // 미디어 클립 로드 오류 시 이벤트 핸들러
+            bind(this.player, 'error', function () { that.onerror(); });
+ 
+            return this.player;
+        };
+ 
+        // audio 객체를 로드합니다.
+        function load() {
+ 
+            var elem = createElement.call(this);
+ 
+            if (elem.load) (this.wrap || document.body).appendChild(elem);
+            else alert('Video 객체를 지원하지 않는 브라우저 입니다.');
+        };
+ 
+        // 미디어클립을 재생합니다.
+        function play() {
+ 
+            this.options.player.play();
+ 
+            return this;
+        };
+ 
+        // 미디어클립 재생을 중지합니다.
+        function stop() {
+ 
+            !this.options.player.paused && this.options.player.pause();
+            return this;
+        }
+ 
+        // 미디어클립 재생 여부를 반환
+        function isEnded() {
+            return this.options.player.ended;
+        };
+ 
+ 
+        // 미디어클립의 총 재생시간을 반환
+        function getTimeout(type) {
+ 
+            type = type || 'hours';
+ 
+            return {
+                'second': this.options.player.startTime,
+                'hours': getDateSecondToHours(this.options.player.duration)
+            }[type];
+        };
+ 
+        // 미디어클립의 현재 재생시간을 반환
+        function getCurrentTimeout(type) {
+ 
+            type = type || 'hours';
+ 
+            return {
+                'second': this.options.player.currentTime,
+                'hours': getDateSecondToHours(this.options.player.currentTime)
+            }[type];
+        };
+ 
+        // 미디어 클립의 현재 재생 시간을 반환
+        // 0.0(min) ~ 1(max) 할당한다.
+        function setVolume(num) {
+ 
+            num = num || 0;
+ 
+            this.options.player.volume = num / 10;
+ 
+            return this;
+        };
+ 
+        // 음소거 여부를 설정한다.
+        function setMuted(b) {
+ 
+            b = b || false;
+ 
+            this.options.player.muted = b;
+ 
+            return this;
+        };
+ 
+        // 미디어 클립이 재생을 시작할 수 있는 가능한 가장 빠른 시간을 반환합니다.
+        // 미디어 클립이 스트리밍되거나, 버퍼링되지 않으면 0을 반환합니다.
+        function getStartTime(type) {
+ 
+            return this.options.player.startTime;
+        };
+ 
+        // 현재 버퍼링 상태 여부를 반환
+        function isBuffering() {
+            return this.options.player.startTime !== 0;
+        };
+ 
+        // 현재 재생중인 파일명을 반환합니다.
+        function getSrc() {
+            return this.options.player.currentSrc;
+        };
+ 
+        // 미디어클립의 사이즈를 반환한다.
+        function getVideoSize() {
+            return {
+                w: this.options.player.videoWidth,
+                h: this.options.player.videoHeight
+            }
+        }
+ 
+ 
+        function getDateSecondToHours(i) {
+ 
+            i = i || 0;
+ 
+            var h = parseInt(((i / 3600) % 24), 10)
+              , m = parseInt(((i / 60) % 60), 10)
+              , s = parseInt(((i / 1) % 60), 10);
+ 
+            h = h < 10 ? '0' + h : h;
+            m = m < 10 ? '0' + m : m;
+            s = s < 10 ? '0' + s : s;
+ 
+            return h + ':' + m + ':' + s;
+        };
+ 
+        // 객체 상속 함수
+        function extend() {
+ 
+            var target = this
+          , opts = []
+          , src = null
+          , copy = null;
+ 
+            for (var i = 0, length = arguments.length; i < length; i++) {
+ 
+                opts = arguments[i];
+ 
+                for (var n in opts) {
+                    src = target[n];
+                    copy = opts[n];
+ 
+                    if (src === copy) continue;
+                    if (copy) target[n] = copy;
+                }
+            }
+        };
+ 
+ 
+    })(window, document);
+ 
+ 
+    bind(window, 'load', function () {
+ 
+        p1 = Video({
+            id: 'video_test1',
+            src: 'yuki.mp4',
+            wrap: document.getElementById('container'),
+            poster: 'http://static.naver.net/www/u/2010/0611/nmms_215646753.gif',
+            autoplay: true,
+            controls: true,
+            loop: false,
+            onload: function () {
+            },
+            onplay: function () {
+               
+                // 캔버스
+                var canvas = createCanvasElement.call(this, 'canvas_test');
+                // 복사본 캔버스
+                var canvas_copy = createCanvasElement.call(this, 'canvas_copy');
+ 
+                var that = this;
+                t = window.setInterval(function () {
+                    if (!that.player.paused) {
+                        updateFrame.call(that, canvas);
+                    }
+                    else {
+                        window.clearInterval(t);
+                    }
+                }, 60);
+            },
+            onprogress: function () {
+            },
+            ontimeupdate: function () {
+            },
+            onended: function () {
+ 
+                window.clearInterval(t);
+                var frameLength = 0;
+ 
+                (function () {
+                    // 원본 재생이 끝내면, 배열에 저장된 이미지를 복사본 캔버스에 재생시킵니다.
+                    frameTimerId = window.setInterval(function () {
+                        if (frameLength < frames.length) {
+                            document.getElementById('canvas_copy').getContext('2d').putImageData(frames[frameLength], 0, 0);
+                            frameLength++;
+                        }
+                        else {
+                            window.clearInterval(frameTimerId);
+                        }
+                    }, 60);
+                })();
+            },
+            onerror: function () {
+                alert(this === window);
+            }
+        });
+    });
+ 
+    var canvas = null
+      , ctx = null;      
+    function createCanvasElement(id) {
+ 
+        id = id || '';
+ 
+        var elem = document.getElementById(id);
+ 
+        if (!elem) {
+            elem = document.createElement('canvas');
+ 
+            elem.id = id;
+            elem.width = this.width;
+            elem.height = this.height;
+ 
+            document.getElementById('container').appendChild(elem);
+ 
+            return elem;
+        }
+        else {
+            return elem;
+        }
+    }
+ 
+    var frames = []
+      , frameTimerId = null;
+    function updateFrame(canvas) {
+ 
+        ctx = canvas.getContext('2d');
+        ctx.drawImage(this.player, 0, 0, this.width, this.height, 0, 0, this.width, this.height);
+ 
+        var pxs = ctx.getImageData(0, 0, this.width, this.height);
+ 
+        frames.push(pxs);
+    }
+ 
+    // 이벤트 할당
+    function bind(elem, type, handler, capture) {
+        type = typeof type === 'string' && type || '';
+        handler = handler || function () { ; };
+ 
+        if (elem.addEventListener) {
+            elem.addEventListener(type, handler, capture);
+        }
+        else if (elem.attachEvent) {
+            elem.attachEvent('on' + type, handler);
+        }
+ 
+        return elem;
+    };
+ 
+//]]>
+</script>
+<input id="" type="button" value="play" onclick="p1.play()" />
+<input id="" type="button" value="stop" onclick="p1.stop()" />
+<input id="" type="button" value="isEnded" onclick="alert(p1.isEnded())" />
+<input id="" type="button" value="getTimeout" onclick="alert(p1.getTimeout())" />
+<input id="" type="button" value="getStartTime" onclick="alert(p1.getStartTime())" />
+<input id="" type="button" value="getSrc" onclick="alert(p1.getSrc())" />
+<input id="" type="button" value="isBuffering" onclick="alert(p1.isBuffering())" />
+<input id="" type="button" value="getCurrentTimeout" onclick="alert(p1.getCurrentTimeout())" />
+<input id="" type="button" value="setVolume" onclick="p1.setVolume(5)" />
+<input id="" type="button" value="setMuted" onclick="p1.setMuted(true)" />
+<input id="Button1" type="button" value="getVideoSize(width)" onclick="alert(p1.getVideoSize().w)" />
+<input id="Button2" type="button" value="getVideoSize(height)" onclick="alert(p1.getVideoSize().h)" />
+<!-- <input id="Button3" type="button" value="getVideoSize(height)" onclick="alert(p1.updateFrame(canvas))" /> -->
+<div id="container">
+</div>
+</body>
+</html>
