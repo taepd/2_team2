@@ -23,7 +23,30 @@
 	url('http://script.ebay.co.kr/fonts/GmarketSansLight.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
 	url('http://script.ebay.co.kr/fonts/GmarketSansLight.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 }
-
+.col-lg-7{
+    margin: 0 auto;
+    -webkit-box-flex: 0;
+    min-width: fit-content;
+    max-width: fit-content;
+    text-align: center;
+}
+.subheading2{
+    font-weight: 600;
+    font-size: 13px;
+    display: block;
+    margin-bottom: 0;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #b8b0b0;
+}
+.subheading{
+    text-align: center;
+    margin: 0 auto;
+}
+.mb-4 h2{
+    margin: 0 auto;
+    text-align: center;
+}
 #member{
     font-family: Gmarket Sans;
 }
@@ -48,4 +71,8 @@
 }
 .ftco-section{
     font-family: Gmarket Sans;
+}
+
+.fname{
+	text-align: left;
 }
