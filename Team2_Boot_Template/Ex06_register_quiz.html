@@ -1,0 +1,376 @@
+
+<html>
+ <head>
+  <title> 회원가입 </title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
+  <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+  <!--  
+  	조별과제 : 
+    jquery 를 사용하여 유효성 검증 코드를 만드시고
+    MemberJoinOK.jsp 를 통해서 데이터 받아서 결과 출력하세요
+     
+    userId : keyup 이벤트  정해진 표현에 맞지 않으면 ID 추가 입력
+    ex) let id ="정규표현식" 
+    ex) if(id.test($(this).val()) != true) { 확인요청 } else {}
+    
+    userPass : keyup 이벤트에서 정해진 표현과 일치 하지 않으면 (정규표현 가능)
+    
+    userPassCheck : keyup  >> userPass 같은 값인지 확인 일치여부 확인
+    
+    userEmail : keyup 이벤트에서 email 형식과 일치여부 확인
+    
+    userPhone : keyup 이벤트에서 phone 형식과 일치여부 확인
+    
+    
+    submit 전송시 
+    userId , userPass , userPassCheck , userEmail , userPhone
+    , userSsn1 , userSsn2 , userZipCode , userPhone
+       값이 입력되지 않으면 다시 입력을 요청
+  -->
+  <style>
+    body{font-family:"malgun gothic";font-size:9pt;}
+    th { text-align:right; background-color:#dbdbdb}
+    th.title { text-align:center; font-size:12pt;background-color:#ffffff;}
+  </style>
+  
+ <script>
+ 
+   //주민번호를 검증하고 통과 후, 생년 인풋상자를 클릭 시 자동 생년 입력되게 하는 메서드
+   function test(){
+	       var num1 = document.getElementById("userSsn1");
+	       var num2 = document.getElementById("userSsn2");      
+	 
+	       var arrNum1 = []; // 주민번호 앞자리숫자 6개를 담을 배열
+	       var arrNum2 = []; // 주민번호 뒷자리숫자 7개를 담을 배열
+	       
+	       // -------------- 주민번호 -------------
+
+	       for (var i=0; i<num1.value.length; i++) {
+	           arrNum1[i] = num1.value.charAt(i);
+	       } // 주민번호 앞자리를 배열에 순서대로 담는다.
+
+	       for (var i=0; i<num2.value.length; i++) {
+	           arrNum2[i] = num2.value.charAt(i);
+	       } // 주민번호 뒷자리를 배열에 순서대로 담는다.
+
+	       var tempSum=0;
+
+	       for (var i=0; i<num1.value.length; i++) {
+	           tempSum += arrNum1[i] * (2+i);
+	       } // 주민번호 검사방법을 적용하여 앞 번호를 모두 계산하여 더함
+
+	       for (var i=0; i<num2.value.length-1; i++) {
+	           if(i>=2) {
+	               tempSum += arrNum2[i] * i;
+	           }
+	           else {
+	               tempSum += arrNum2[i] * (8+i);
+	           }
+	       } // 같은방식으로 앞 번호 계산한것의 합에 뒷번호 계산한것을 모두 더함
+
+	       if((11-(tempSum%11))%10!=arrNum2[6]) {
+	           alert("올바른 주민번호가 아닙니다.");
+	           num1.value = "";
+	           num2.value = "";
+	           num1.focus();
+	           return false;
+	       }else{
+	     	// ------------ 생일 자동 등록 -----------
+	           if(arrNum2[0]==1 || arrNum2[0]==2) {
+	               var y = parseInt(num1.value.substring(0,2));
+	               var m = parseInt(num1.value.substring(2,4));
+	               var d = parseInt(num1.value.substring(4,6));
+	               signForm.year.value = 1900 + y;
+	               signForm.month.value = m;
+	               signForm.day.value = d;
+	           }
+	           else if(arrNum2[0]==3 || arrNum2[0]==4) {
+	               var y = parseInt(num1.value.substring(0,2));
+	               var m = parseInt(num1.value.substring(2,4));
+	               var d = parseInt(num1.value.substring(4,6));
+	               signForm.year.value == 2000 + y;
+	               signForm.month.value = m;
+	               signForm.day.value = d;
+	           }
+	       }
+	       
+   }
+ 
+ 	// 가입완료를 눌렀을 때 검증하는 메서드
+   function validate() {
+       var re = /^[a-zA-Z0-9]{5,16}$/; // 아이디 검증 정규식
+       var re2 = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/; //비밀번호 검증 정규식
+       var re3 = /^(01[01679]{1})[-.\s]?([0-9]{3,4})[-.\s]?([0-9]{4})$/; //휴대폰번호 검증 정규식
+       var re4 = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^~*+=-])(?=.*[0-9]).{8,20}$/; //이메일 검증 정규식
+       
+      
+
+       var userId = document.getElementById("userId");
+       var userPass = document.getElementById("userPass");
+       var userEmail = document.getElementById("userEmail");
+       var userPhone = document.getElementById("userPhone");
+       
+       /* var num1 = document.getElementById("userSsn1");
+       var num2 = document.getElementById("userSsn2");      
+ 
+       var arrNum1 = []; // 주민번호 앞자리숫자 6개를 담을 배열
+       var arrNum2 = []; // 주민번호 뒷자리숫자 7개를 담을 배열 */
+
+       //휴대폰 번호
+       if(signForm.userPhone.value=="") {
+           alert("휴대폰 번호를 입력해 주세요");
+           signForm.userPhone.focus();
+           return false;
+       }if(!check(re3, userPhone, "적합하지 않은 형식입니다. '01X-XXX(X)-XXXX'형식으로 입력하세요")) {
+           return false;
+       }
+       
+       
+       // ------------ 이메일 까지 -----------
+	   
+       //아이디
+       if(!check(re,userId,"5~16자리의 영문+숫자 조합으로 입력해 주세요")) {
+           return false;
+       }
+       //이름
+       if(signForm.userName.value=="") {
+           alert("이름을 입력해 주세요");
+           signForm.userName.focus();
+           return false;
+       }
+	   //패스워드
+       if(!check(re4,userPass,"8~20자 사이에 적어도 하나의 영어대문자,숫자, 특수문자가 포함되어야 합니다.")) {
+           return false;
+       }
+
+       if(signForm.userPass.value != signForm.userPassCheck.value) {
+           alert("비밀번호가 다릅니다. 다시 확인해 주세요.");
+           signForm.userPassCheck.value = "";
+           signForm.userPassCheck.focus();
+           return false;
+       }
+	
+       //이메일
+       if(userEmail.value=="") {
+           alert("이메일을 입력해 주세요");
+           userEmail.focus();
+           return false;
+       } 
+       if(!check(re2, userEmail, "적합하지 않은 이메일 형식입니다.")) {
+           return false;
+       }
+     
+		//원래는 여기서 주민번호 검증하는 것이 더 표준적임
+       /*  // -------------- 주민번호 -------------
+
+       for (var i=0; i<num1.value.length; i++) {
+           arrNum1[i] = num1.value.charAt(i);
+       } // 주민번호 앞자리를 배열에 순서대로 담는다.
+
+       for (var i=0; i<num2.value.length; i++) {
+           arrNum2[i] = num2.value.charAt(i);
+       } // 주민번호 뒷자리를 배열에 순서대로 담는다.
+
+       var tempSum=0;
+
+       for (var i=0; i<num1.value.length; i++) {
+           tempSum += arrNum1[i] * (2+i);
+       } // 주민번호 검사방법을 적용하여 앞 번호를 모두 계산하여 더함
+
+       for (var i=0; i<num2.value.length-1; i++) {
+           if(i>=2) {
+               tempSum += arrNum2[i] * i;
+           }
+           else {
+               tempSum += arrNum2[i] * (8+i);
+           }
+       } // 같은방식으로 앞 번호 계산한것의 합에 뒷번호 계산한것을 모두 더함
+
+       if((11-(tempSum%11))%10!=arrNum2[6]) {
+           alert("올바른 주민번호가 아닙니다.");
+           num1.value = "";
+           num2.value = "";
+           num1.focus();
+           return false;
+       }else{
+     	// ------------ 생일 자동 등록 -----------
+           if(arrNum2[0]==1 || arrNum2[0]==2) {
+               var y = parseInt(num1.value.substring(0,2));
+               var m = parseInt(num1.value.substring(2,4));
+               var d = parseInt(num1.value.substring(4,6));
+               signForm.year.value = 1900 + y;
+               signForm.month.value = m;
+               signForm.day.value = d;
+           }
+           else if(arrNum2[0]==3 || arrNum2[0]==4) {
+               var y = parseInt(num1.value.substring(0,2));
+               var m = parseInt(num1.value.substring(2,4));
+               var d = parseInt(num1.value.substring(4,6));
+               signForm.year.value == 2000 + y;
+               signForm.month.value = m;
+               signForm.day.value = d;
+           }
+       } */
+       
+
+       
+
+
+		//쓰지 않은 샘플 소스
+       // 관심분야, 자기소개 미입력시 하라는 메시지 출력
+/*        if(join.inter[0].checked==false &&
+           join.inter[1].checked==false &&
+           join.inter[2].checked==false &&
+           join.inter[3].checked==false &&
+           join.inter[4].checked==false) {
+           alert("관심분야를 골라주세요");
+           return false;
+       } */
+
+/*        if(join.self.value=="") {
+           alert("자기소개를 적어주세요");
+           join.self.focus();
+           return false;
+       } */
+       
+       alert("회원가입이 완료되었습니다.");
+   }
+	
+ 	//정규식 검증 메서드 re.test()가 원래 정규식 테스트하는 내장메서드
+   function check(re, what, message) {
+       if(re.test(what.value)) {
+           return true;
+       }
+       alert(message);
+       what.value = "";
+       what.focus();
+       //return false;
+   }
+   
+   //우편번호 검색  (api활용)
+   function openZipSearch() {
+		new daum.Postcode({
+			oncomplete: function(data) {
+				$('[name=userZipCode]').val(data.zonecode); // 우편번호 (5자리)
+				$('[name=userAddr1]').val(data.address);
+				$('[name=userAddr2]').val(data.buildingName);
+			}
+		}).open();
+	}
+   
+   
+   
+</script> 
+  
+  
+ </head>
+ <body>
+
+    <form name="signForm" id="signForm" onsubmit="return validate();" method="post" action="MemberJoinOK.jsp">
+	    <table>
+		    <tr>
+		        <th colspan="2" class="title">회원가입</th>
+		    </tr>
+		    <tr>
+		        <th>아이디</th>
+		        <td>
+		        	<input type="text" maxlength="20" id="userId" name="userId" title="5~16자리의 영문+숫자 조합으로 입력해주세요">
+		       	</td>
+		        <td class="tdid"></td>
+		    </tr>
+	        
+		    <tr>
+		        <th>이름</th>
+		        <td>
+		        	<input type="text" maxlength="20" id="userName" name="userName" title="이름" >
+		        </td>
+		    </tr>
+		    <tr>
+		        <th>패스워드</th>
+		        <td>
+		        	<input type="password" maxlength="20" id="userPass" name="userPass" title="8~20자 사이에 적어도 하나의 영어대문자,숫자, 특수문자가 포함되어야 합니다.">
+		        </td>
+		        <td class="tdpw"></td>
+		    </tr>
+		    <tr>
+		        <th>패스워드 확인</th>
+		        <td><input type="password" maxlength="20" id="userPassCheck" name="userPassCheck"  title="패스워드 확인"></td>
+		        <td class="tdpwch"></td>
+		    </tr>
+		    <tr>
+		        <th>성별</th>
+		        <td><input type="radio" name="gender" value="male" checked>남
+		               <input type="radio" name="gender" value="female">여  </td>
+		    </tr>
+		    <tr>
+		        <th>이메일</th>
+		        <td><input type="text" maxlength="50" id="userEmail" name="userEmail"  title="이메일"></td>
+		        <td class="tdmail"></td>
+		    </tr>
+		    <tr>
+		        <th>주민번호</th>
+		        <td>
+		        	<input type="text" maxlength="6" id="userSsn1" name="userSsn1" title="주민번호1"> -
+		        	<input type="password" maxlength="7" id="userSsn2" name="userSsn2" title="주민번호2 ">
+		        </td>
+		    </tr>
+		    <tr>
+		        <th>생년월일</th>
+		        <td>
+		        	<input type="text" size="9" name="year" id="year" onclick="test();">년
+		        	<input type="text" size="2" name="month" id="month">월 
+		    		<input type="text" size="2" name="day" id="day">	일
+		    	</td>
+		    </tr>
+		    <tr>
+		        <th>우편번호</th>
+		        <td>
+			        <input type="text" maxlength="10" id="userZipCode" name="userZipCode" size="9" title="주소-우편번호" > 
+			        <input type="button" value="우편번호검색"  onclick="openZipSearch()">
+		        </td> 
+		    </tr>
+		    <tr>
+		       <th>주소1</th>
+		        <td>
+		        	<input type="text" maxlength="20" size="45" id="userAddr1" name="userAddr1" title="주소-기본주소" >
+		        </td>
+		    </tr>
+		    <tr>
+		        <th>주소2</th>
+		        <td>
+		        	<input type="text" maxlength="20" size="45" id="userAddr2" name="userAddr2" title="주소-상세주소">
+		        </td>
+		    </tr>
+		    <tr>
+		        <th>휴대폰번호</th>
+		        <td>
+		            <input type="text" size="35" maxlength="20" id="userPhone" name="userPhone" title="'01X-XXX(X)-XXXX'형식으로 입력하세요"
+		            placeholder="'01X-XXX(X)-XXXX'형식으로 입력하세요">
+		        </td>
+		        <td class="tdphone"></td>
+		    </tr>
+		    <tr>
+		        <th>취미</th>
+		        <td>
+			        <input type="checkbox" name="hobby" value="등산">등산 
+			        &nbsp;&nbsp;
+			        <input type="checkbox" name="hobby" value="자전거">자전거 
+			        &nbsp;&nbsp;
+			        <input type="checkbox" name="hobby" value="컴퓨터">컴퓨터
+			        &nbsp;&nbsp;
+			        <input type="checkbox" name="hobby" value="영화감상">영화감상
+		        </td>
+		    </tr>
+		    
+		    <tr>
+		        <td colspan="2">
+		            <input type="submit" value="가입완료" >    
+		            <input type="reset" value="입력취소">        
+		        </td> 
+		    </tr>
+	    </table>
+    </form>
+ </body>
+</html>
