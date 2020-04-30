@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>2벤조스 게시판 내용 입력</title>
+
+	<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div style="height: 50px;"></div>
+	<div class="container" align=center>
+	<div style="height: 50px;"></div>
+	
+	<form action="boardcontentOK">
+	<table>
+	  <tr>
+	   <td>
+		<table  style="border: 1px double;">
+					<tr>
+					<td height=20  style="background-color:#ccc; color:white; text-align:center"> 글쓰기</td>
+					</tr>
+					<tr>
+					<td>
+					<table class = "table2">
+							<tr>
+							<td>작성자</td>
+							<td><input type = text name = name size=20> </td>
+							</tr>
+	 
+							<tr>
+							<td>제목</td>
+							<td><input type = text name = title size=60></td>
+							</tr>
+	 
+							<tr>
+							<td>내용</td>
+							<td><textarea name = content cols=85 rows=15></textarea></td>
+							</tr>
+	 
+							<tr>
+							<td>비밀번호</td>
+							<td><input type = password name = pw size=10 maxlength=10></td>
+							</tr>
+							</table>
+	 
+							<div style="text-align: center;">
+							<input type = "submit" value="작성">
+							</div>
+					</td>
+					</tr>
+			</table>
+	
+	</form>
+	</div>
+	</body> 
+</html>
