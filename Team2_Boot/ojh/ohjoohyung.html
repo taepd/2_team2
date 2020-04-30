@@ -1,0 +1,329 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>OH'S PAGE</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link href="ohjoohyung.css" rel="stylesheet">
+<script src="https://kit.fontawesome.com/5bcf74932a.js"
+	crossorigin="anonymous"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+
+<script async defer
+	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCOxYL8PiEWlmPszK7jPIQtpXif1vL9L_8&callback=initMap"
+	type="text/javascript"></script>
+<script type="text/javascript">
+	window.onload = function() {
+
+		var myLatlng = new google.maps.LatLng(37.503106, 127.024264);
+		var mapOptions = {
+			zoom : 17,
+			center : myLatlng,
+			mapTypeId : google.maps.MapTypeId.ROADMAP
+		}
+		var map = new google.maps.Map(document.getElementById('map_canvas'),
+				mapOptions);
+		var marker = new google.maps.Marker({
+			position : myLatlng,
+			map : map,
+			title : "비트캠프"
+		});
+		var infowindow = new google.maps.InfoWindow({
+			content : "<h4>비트캠프 서초</h4>",
+			maxWidth : 200
+		});
+
+		google.maps.event.addListener(marker, 'click', function() {
+			infowindow.open(map, marker);
+		});
+
+	}
+</script>
+</head>
+
+<body data-spy="scroll" data-target=".navbar" data-offset="50">
+
+	<!-- Navigation bar -->
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target="#myNavbar">
+					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">2벤조스</a>
+			</div>
+			<div>
+				<div class="collapse navbar-collapse" id="myNavbar">
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="#section1">MAIN</a></li>
+						<li><a href="#section2">PROFILE</a></li>
+						<li><a href="#section3">PROJECTS</a></li>
+						<li><a href="#section4">WORKSPACE</a></li>
+						<li><a href="#section5">CONTACT</a></li>
+					</ul>
+
+
+				</div>
+			</div>
+		</div>
+	</nav>
+	
+	<!-- Header -->
+	<header>
+		<div id="section1" class="container-fluid">
+			<div class="img">
+
+				<div class="content">
+					<h1>HELLO!</h1>
+					<h1>I'M DEVELOPER</h1>
+				</div>
+				<div class="img-cover"></div>
+			</div>
+
+		</div>
+	</header>
+
+	<!-- Profile section -->
+	<div id="section2" class="container-fluid">
+		<h1>PROFILE</h1>
+		<div class="col-md-6 pt-100">
+			<div id="Carouselsel">
+				<div id="myCarousel" class="carousel slide" data-ride="carousel">
+					<!-- Indicators -->
+					<ol class="carousel-indicators">
+						<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+						<li data-target="#myCarousel" data-slide-to="1"></li>
+						<li data-target="#myCarousel" data-slide-to="2"></li>
+						<li data-target="#myCarousel" data-slide-to="3"></li>
+					</ol>
+
+					<!-- Wrapper for slides -->
+					<div class="carousel-inner">
+
+						<div class="item active">
+							<img src="images/oh1.jpg" alt="oh1" style="width: 100%;">
+
+						</div>
+
+						<div class="item">
+							<img src="images/oh2.jpg" alt="oh2" style="width: 100%;">
+
+						</div>
+
+						<div class="item">
+							<img src="images/oh3.jpg" alt="oh3" style="width: 100%;">
+
+						</div>
+
+						<div class="item">
+							<img src="images/oh4.jpg" alt="oh4" style="width: 100%;">
+
+						</div>
+
+					</div>
+
+					<!-- Left and right controls -->
+					<a class="left carousel-control" href="#myCarousel"
+						data-slide="prev"> <span
+						class="glyphicon glyphicon-chevron-left"></span> <span
+						class="sr-only">Previous</span>
+					</a> <a class="right carousel-control" href="#myCarousel"
+						data-slide="next"> <span
+						class="glyphicon glyphicon-chevron-right"></span> <span
+						class="sr-only">Next</span>
+					</a>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6 pt-30">
+			<h2 class="mb-20">WHO IS ME?</h2>
+			<p>본격적인 프로그래밍 공부는 2020년 2월부터 시작했습니다.</p>
+			<p>대학을 졸업하고 늦게 시작한 만큼 열심히 노력하고 있는 중입니다.</p>
+			<br>
+			<ul class="pl-0">
+				<h3 class="mb-20">My Skills</h3>
+				<li class="ml-20">JAVA</li>
+				<div class="progress">
+					<div class="progress-bar" role="progressbar" aria-valuenow="30"
+						aria-valuemin="0" aria-valuemax="100" style="width: 30%">
+						30%</div>
+				</div>
+				<li class="ml-20">HTML</li>
+				<div class="progress">
+					<div class="progress-bar" role="progressbar" aria-valuenow="20"
+						aria-valuemin="0" aria-valuemax="100" style="width: 20%">
+						20%</div>
+				</div>
+				<li class="ml-20">CSS</li>
+				<div class="progress">
+					<div class="progress-bar" role="progressbar" aria-valuenow="20"
+						aria-valuemin="0" aria-valuemax="100" style="width: 20%">
+						20%</div>
+				</div>
+				<li class="ml-20">JavaScript</li>
+				<div class="progress">
+					<div class="progress-bar" role="progressbar" aria-valuenow="10"
+						aria-valuemin="0" aria-valuemax="100" style="width: 10%">
+						10%</div>
+				</div>
+				<li class="ml-20">앞으로 추가될 예정...</li>
+			</ul>
+		</div>
+	</div>
+
+	<!-- Projects section -->
+	<div id="section3" class="container-fluid">
+		<h1>PROJECTS</h1>
+
+		<!-- modal 구동 버튼 (trigger) -->
+		<div class="col-md-6">
+			<h2 style="text-align: center;" class="mb-20">JAVA</h2>
+			<img src="images/pcroom.png"
+				class="proimg img-responsive center-block" style="cursor: pointer;"
+				data-toggle="modal" data-target="#myModal">
+		</div>
+		<div class="col-md-6">
+			<img
+				src="https://www.freeiconspng.com/uploads/to-be-continued-meme-right-arrow-png-image-5.png"
+				class="proimg img-responsive center-block" style="cursor: pointer;"
+				data-toggle="modal" data-target="#myModal2">
+		</div>
+
+		<!-- Modal -->
+		<div class="modal modal-center fade" id="myModal" tabindex="-1"
+			role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog modal-fullsize" role="document">
+				<div class="modal-content modal-fullsize">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h4 class="modal-title" id="myModalLabel">피시방 관리 및 사용 프로그램</h4>
+					</div>
+					<div class="modal-body row">
+						<div class="col-md-4">
+							<img src="images/eng_diagram.jpg"
+								class="img-responsive center-block img-rounded">
+						</div>
+						<div class="col-md-4">
+							<img src="images/pcroom.png"
+								class="img-responsive center-block img-rounded">
+
+
+						</div>
+						<div class="col-md-4">
+							<img src="images/4조.jpg"
+								class="img-responsive center-block img-rounded">
+						</div>
+						<p style="font-size: 20px;">JAVA라는 언어를 이용하여 처음으로 만들어본 프로젝트로
+							완성도가 높진 않았지만 제겐 처음이라는 의미가 깊은 프로젝트였습니다.</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal modal-center fade" id="myModal2" tabindex="-1"
+			role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog modal-fullsize" role="document">
+				<div class="modal-content modal-fullsize">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h4 class="modal-title" id="myModalLabel">곧 추가될 예정입니다.</h4>
+					</div>
+					<br>
+					<br>
+					<h1 style="text-align: center;">COMMING SOON</h1>
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+
+
+	<!-- Workspace section -->
+	<div id="section4" class="container-fluid">
+		<h1>WORKSPACE</h1>
+
+		<div class="col-md-6" style="text-align: center;">
+			<h3>제가 현재 공부하고 있는 곳입니다.</h3>
+			<br> <a href="https://www.bitcamp.co.kr/"><img
+				src="https://www.bitcamp.co.kr/images/logo.png" alt="bitcamp"></a>
+		</div>
+		<div class="col-md-6">
+			<div id="map_canvas" style="width: 100%; height: 300px;"></div>
+		</div>
+	</div>
+
+
+
+
+	<!-- Contact section -->
+	<div id="section5" class="container-fluid">
+		<h1>CONTACT</h1>
+		<div class="col-md-6" style="text-align: justify;">
+			<h3>저에 대해 더 궁금한게 있다면 언제든지 연락주세요.</h3>
+
+		</div>
+		<div class="col-md-6 pl-70">
+			<form>
+				<div class="form-group">
+					<label for="inputdefault">이름</label> <input class="form-control"
+						id="inputdefault" type="text" placeholder="이름">
+				</div>
+				<div class="form-group">
+					<label for="inputdefault">연락처</label> <input class="form-control"
+						id="inputdefault2" type="text" placeholder="연락처">
+				</div>
+				<div class="form-group">
+					<label for="inputdefault">이메일</label> <input class="form-control"
+						id="inputdefault3" type="text" placeholder="이메일">
+				</div>
+				<div class="form-group">
+					<label for="comment">하고싶은말</label>
+					<textarea class="form-control" rows="5" id="comment"
+						placeholder="하고싶은말"></textarea>
+					<br> <input type="submit" class="btn btn-lg"
+						style="background-color: black; color: white;" value="전송하기">
+				</div>
+			</form>
+
+		</div>
+
+	</div>
+
+	<!-- Footer -->
+	<footer>
+		<div id="WrapFoot">
+			<p>CODE BY JOO HYUNG OH</p>
+			<a href="https://www.facebook.com/ohohjoohyung"><i
+				class="fab fa-facebook-square"></i></a> <a
+				href="https://github.com/ohjoohyung/hello"><i
+				class="fab fa-github"></i></a> <a href="https://blog.naver.com/xntm3324"><i
+				class="fab fa-blogger"></i></a>
+		</div>
+
+	</footer>
+</body>
+</html>
