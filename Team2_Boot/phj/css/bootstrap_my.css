@@ -1,0 +1,489 @@
+/*전체 영역을 통 틀어서 스타일 정의*/
+
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+* {
+    font-family: 'Nanum Gothic';
+}
+* {
+    color:#000000;
+    text-decoration: none;
+}
+*:hove r{
+    color:#bbbbbb;
+    text-decoration: none;
+    cursor: pointer;
+}
+/*네비게이션 영역*/
+.navbar-default {  /*배경색상*/
+    background-color: #000000;
+    border-color: #000000;
+}
+.navbar-default .navbar-brand{ /*네이게이션 제목 색상*/
+    color: #ffffff;
+}
+.navbar-default.navbar-brand:hover,
+.navbar-default .navbar-brand:focus{ /* 네비게이션 제목에 마우스를 올렸을때*/
+    background-color: transparent;
+    color: #bbbbbb;
+}
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus{ /*현재 선택돤 네비게이션 색상 이벤트*/
+    color:white;
+    background-color: #000000;
+}
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus{/*네비게이션의 글자에 마우스를 올렸을때*/
+    color:#bbbbbb;
+}
+.navbar-default .navbar-nav > .open > a,
+.navbar-default .navbar-nav > .open > a:hover,
+.navbar-default .navbar-nav > .open > a:focus{ /*드랍다운이 열였을때 마우스 색상 이벤트*/
+    color:#000000;
+    background-color: #ffffff;
+    text-decoration: none;
+}
+.navbar-default .navbar-nav{   /*네비게이션 기본 색상*/
+    color: white;
+}
+@media (max-width:767px){  /*해상도 작아였을때 네이게이션 바 드랍다운*/
+    .navbar-default .navbar-nav .open .dropdown-menu > li > a{
+        color:#bbbbbb;
+    }
+    .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
+    .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus{
+        color:#bbbbbb;
+    }
+    
+}
+
+
+
+
+
+@import url(https://fonts.googleapis.com/css?family=Raleway:400,500,800);
+figure.snip1132 {
+  font-family: 'Raleway', Arial, sans-serif;
+  position: relative;
+  overflow: hidden;
+  margin: 10px;
+  min-width: 220px;
+  max-width: 310px;
+  max-height: 220px;
+  width: 100%;
+  background: #000000;
+  color: #ffffff;
+  text-align: center;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+}
+
+figure.snip1132 * {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-transition: all 0.45s ease-in-out;
+  transition: all 0.45s ease-in-out;
+}
+
+figure.snip1132 img {
+  max-width: 100%;
+  position: relative;
+  opacity: 1;
+}
+
+figure.snip1132 figcaption {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  right: 20px;
+  bottom: 20px;
+  border: 1px solid white;
+  border-width: 0 1px;
+}
+
+figure.snip1132 .heading {
+  overflow: hidden;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+figure.snip1132 .caption {
+  overflow: hidden;
+  -webkit-transform: translateY(50%);
+  transform: translateY(50%);
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+}
+
+figure.snip1132 h3,
+figure.snip1132 p {
+  display: table;
+  margin: 0 auto;
+  padding: 0 10px;
+  position: relative;
+  text-align: center;
+  width: auto;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+
+figure.snip1132 h3 span,
+figure.snip1132 p span {
+  font-weight: 800;
+}
+
+figure.snip1132 h3:before,
+figure.snip1132 p:before,
+figure.snip1132 h3:after,
+figure.snip1132 p:after {
+  position: absolute;
+  display: block;
+  width: 1000%;
+  height: 1px;
+  content: '';
+  background: white;
+}
+
+figure.snip1132 h3:before,
+figure.snip1132 p:before {
+  left: -1000%;
+}
+
+figure.snip1132 h3:after,
+figure.snip1132 p:after {
+  right: -1000%;
+}
+
+figure.snip1132 h3:before,
+figure.snip1132 h3:after {
+  top: 50%;
+}
+
+figure.snip1132 p {
+  font-size: 0.8em;
+  font-weight: 500;
+}
+
+figure.snip1132 p:before,
+figure.snip1132 p:after {
+  bottom: 50%;
+}
+
+figure.snip1132 a {
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  position: absolute;
+  z-index: 1;
+}
+
+figure.snip1132:hover img,
+figure.snip1132.hover img {
+  opacity: 0.35;
+  -webkit-transform: scale(1.15);
+  transform: scale(1.15);
+}
+
+
+
+
+
+
+
+@import url(https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css);
+@import url(https://fonts.googleapis.com/css?family=Raleway:400,300,800);
+figure.snip1141 {
+  font-family: 'Raleway', Arial, sans-serif;
+  position: relative;
+  overflow: hidden;
+  margin: 10px;
+  min-width: 220px;
+  max-width: 310px;
+  max-height: 310px;
+  width: 100%;
+  background: #000000;
+  color: #ffffff;
+  text-align: left;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+}
+
+figure.snip1141 * {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-transition: all 0.4s ease-in-out;
+  transition: all 0.4s ease-in-out;
+}
+
+figure.snip1141 img {
+  max-width: 100%;
+  position: relative;
+  opacity: 0.9;
+}
+
+figure.snip1141 .circle {
+  position: relative;
+  height: 55px;
+  width: 55px;
+  top: 0%;
+  left: 0%;
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 50%;
+  text-align: center;
+}
+
+figure.snip1141 .circle:before,
+figure.snip1141 .circle:after {
+  border: 2px solid white;
+  border-right-color: transparent;
+  position: absolute;
+  content: '';
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-transition: all 0.35s ease-in-out;
+  transition: all 0.35s ease-in-out;
+  -webkit-transition-delay: 0.3s;
+  transition-delay: 0.3s;
+}
+
+figure.snip1141 .circle:before {
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+figure.snip1141 .circle:after {
+  -webkit-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+
+figure.snip1141 figcaption {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  display: block;
+  width: 100%;
+  overflow: hidden;
+}
+
+figure.snip1141 h2 {
+  position: absolute;
+  margin: 0;
+  text-transform: uppercase;
+  font-weight: 300;
+  letter-spacing: -1px;
+  line-height: 55px;
+  top: 0%;
+  left: 0%;
+  width: 100%;
+  padding: 0 20px;
+  opacity: 0;
+  -webkit-transform: translateX(-10%);
+  transform: translateX(-10%);
+}
+
+figure.snip1141 .icon {
+  overflow: hidden;
+  width: 100%;
+  position: absolute;
+}
+
+figure.snip1141 i {
+  color: white;
+  font-size: 48px;
+  line-height: 55px;
+  -webkit-transition-delay: 0.3s;
+  transition-delay: 0.3s;
+}
+
+figure.snip1141 a {
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  position: absolute;
+  z-index: 1;
+}
+
+figure.snip1141:hover .circle,
+figure.snip1141.hover .circle {
+  background-color: rgba(0, 0, 0, 0);
+}
+
+figure.snip1141:hover .circle:before,
+figure.snip1141.hover .circle:before,
+figure.snip1141:hover .circle:after,
+figure.snip1141.hover .circle:after {
+  -webkit-transform: rotate(0deg);
+  transform: rotate(0deg);
+  -webkit-transition-delay: 0s;
+  transition-delay: 0s;
+}
+
+figure.snip1141:hover h2,
+figure.snip1141.hover h2 {
+  opacity: 1;
+  -webkit-transition-delay: 0.3s;
+  transition-delay: 0.3s;
+  -webkit-transform: translateX(0);
+  transform: translateX(0);
+}
+
+figure.snip1141:hover img,
+figure.snip1141.hover img {
+  opacity: 0.35;
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+}
+
+figure.snip1141:hover i,
+figure.snip1141.hover i {
+  opacity: 0;
+  -webkit-transition-delay: 0s;
+  transition-delay: 0s;
+}
+
+
+/* Demo purposes only */
+html {
+  height: 100%;
+}
+body {
+  background-color: #212121;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: wrap;
+  margin: 0;
+  height: 100%;
+}
+
+
+@import url(https://fonts.googleapis.com/css?family=Raleway:400,500,700);
+.snip1273 {
+  font-family: 'Raleway', Arial, sans-serif;
+  position: relative;
+  margin: 10px;
+  min-width: 310px -60px;
+  max-width: 310px;
+  width: 100%;
+  color: #ffffff;
+  text-align: left;
+  background-color: #000000;
+  font-size: 16px;
+}
+.snip1273 * {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-transition: all 0.4s ease-in;
+  transition: all 0.4s ease-in;
+}
+.snip1273 img {
+  position: relative;
+  max-width: 100%;
+  vertical-align: top;
+}
+.snip1273 figcaption {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  opacity: 0;
+  padding: 20px 30px;
+}
+.snip1273 figcaption:before,
+.snip1273 figcaption:after {
+  width: 1px;
+  height: 0;
+}
+.snip1273 figcaption:before {
+  right: 0;
+  top: 0;
+}
+.snip1273 figcaption:after {
+  left: 0;
+  bottom: 0;
+}
+.snip1273 h3,
+.snip1273 p {
+  line-height: 1.5em;
+}
+.snip1273 h3 {
+  margin: 0 0 5px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.snip1273 p {
+  font-size: 0.8em;
+  font-weight: 500;
+  margin: 0 0 15px;
+}
+.snip1273 a {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 1;
+}
+.snip1273:before,
+.snip1273:after,
+.snip1273 figcaption:before,
+.snip1273 figcaption:after {
+  position: absolute;
+  content: '';
+  background-color: #ffffff;
+  z-index: 1;
+  -webkit-transition: all 0.4s ease-in;
+  transition: all 0.4s ease-in;
+  opacity: 0.8;
+}
+.snip1273:before,
+.snip1273:after {
+  height: 1px;
+  width: 0%;
+}
+.snip1273:before {
+  top: 0;
+  left: 0;
+}
+.snip1273:after {
+  bottom: 0;
+  right: 0;
+}
+.snip1273:hover img,
+.snip1273.hover img {
+  opacity: 0.4;
+}
+.snip1273:hover figcaption,
+.snip1273.hover figcaption {
+  opacity: 1;
+}
+.snip1273:hover figcaption:before,
+.snip1273.hover figcaption:before,
+.snip1273:hover figcaption:after,
+.snip1273.hover figcaption:after {
+  height: 100%;
+}
+.snip1273:hover:before,
+.snip1273.hover:before,
+.snip1273:hover:after,
+.snip1273.hover:after {
+  width: 100%;
+}
+.snip1273:hover:before,
+.snip1273.hover:before,
+.snip1273:hover:after,
+.snip1273.hover:after,
+.snip1273:hover figcaption:before,
+.snip1273.hover figcaption:before,
+.snip1273:hover figcaption:after,
+.snip1273.hover figcaption:after {
+  opacity: 0.1;
+}
