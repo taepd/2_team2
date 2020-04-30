@@ -71,10 +71,31 @@ div.btn {
 }
 
 .centered {
-	display: table;
-	margin-left: auto;
-	margin-right: auto;
+	width: 30%;
+	margin:0 auto;
 }
+
+
+.form-control {
+  height: 50px !important;
+  background: #fff !important;
+  color: #000000 !important;
+  font-size: 15px;
+  border-radius: 0px;
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+  border: 1px solid #e6e6e6;
+  }
+
+  label{
+	font-size: 18px;
+	font-weight: 700;
+	margin-bottom: 0px;
+  }
+
+
+
+
 </style>
 
 
@@ -91,97 +112,72 @@ div.btn {
 
 
 <body>
- <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light site-navbar-target" id="ftco-navbar">
-	    <div class="container">
-	      <a class="navbar-brand" href="index.html">2벤조스<span>.Bit</span></a>
-	      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-	        <span class="oi oi-menu"></span> Menu
-	      </button>
-
-	      <div class="collapse navbar-collapse" id="ftco-nav">
-	        <ul class="navbar-nav ml-auto">
-	        	<li class="nav-item active "><a href="#team2_top" class="nav-link">Home</a></li>
-	          <li class="nav-item"><a href="join.html" class="nav-link">Join</a></li>
-	          <li class="nav-item"><a href="login.html" class="nav-link">Login</a></li>
-	        	<li class="nav-item "><a href="#about_us" class="nav-link">About Us</a></li>
-	        	<li class="nav-item"><a href="practice.html" class="nav-link">Practice Areas</a></li>
-	        	<li class="nav-item"><a href="attorney.html" class="nav-link">Legal Team</a></li>
-	        	<li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
-	          <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
-	        </ul>
-	      </div>
-	    </div>
-	  </nav>
+	
 
 	<section class="topsect my-5">
-	<div class="topbox my-5"></div>
-	<div class="topbox my-5"></div>
-	<div class="topbox my-5"></div>
+		<div class="topdiv my-5"></div>
 	</section>
 
 
 	<section class="text-dark mx-5 mb-5 " id="Login">
-			<div class="centered">
-				<div class="container my-4">
-					<div class="jumbotron" style="background-color: white;">
+		<div class="centered">
+			<div class="container my-4">
+				<div class="login jumbotron" style="background-color: white;">
 
-						<div>
+					<div>
 
-							<h1 class="text-center">
-								Login<img src="./images/feather.svg" class="img-fluid ml-1">
-							</h1>
+						<h1 class="text-center">
+							Login<img src="./images/feather.svg" class="img-fluid ml-1">
+						</h1>
 
-							<hr class="my-4">
+						<hr class="my-4">
 
 
-							<div class="col-lg">
-								<div class="card card-form mt-4 mb-4">
-									<div class="card-body">
-										<form>
+						<div class="col-lg">
+							<form>
 
-											<div class="form-group">
-												<label for="fname">Id</label> <input type="text"
-													class="form-control form-control" placeholder="아이디">
-											</div>
-
-											<div class="form-group">
-												<label for="fname">Password</label> <input type="text"
-													class="form-control form-control-lg" placeholder="패스워드">
-											</div>
-
-										</form>
-									</div>
+								<div class="form-group">
+									<label for="fname">Id</label> <input type="text"
+										class="form-control form-control-lg" placeholder="아이디">
 								</div>
-							</div>
 
+								<div class="form-group">
+									<label for="fname">Password</label> <input type="text"
+										class="form-control form-control-lg" placeholder="패스워드">
+								</div>
 
-
-
-
-
-
-
-							<div class="centered">
-								<button type="submit" class="btn btn-danger btn-lg">Join</button>
-							</div>
-
-
-
+							</form>
 						</div>
-					</div>
-					
-		<div class="mb-5"></div>
-					
-				
-				
-				</div>
-			</div>
 
-		<div class="mb-5"></div>
+
+
+
+
+
+
+
+						<div class="centered">
+							<button type="submit" class="btn btn-danger btn-lg" onclick="location.href='index.html'">Login</button>
+						</div>
+
+
+
+					</div>
+				</div>
+
+				<div class="mt-5"></div>
+
+
+
+			</div>
+		</div>
+
+		<div class="mt-5"></div>
 
 	</section>
 
 
+	<div class="mt-5"></div>
 
 
 
