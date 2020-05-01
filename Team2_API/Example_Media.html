@@ -4,11 +4,20 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Media player</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<script type="text/javascript" src="../js/jquery-3.4.1.min.js"></script>
+	<script type="text/javascript" src="../js/bootstrap.min.js"></script>
+	<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" />
+	<link type="text/css" rel="stylesheet" href="css/mediapalyer.css" />
+	<!--icon -->
+	<script src="https://kit.fontawesome.com/yourcode.js"></script>
+
+
+
+
+
+
 	<script type="text/javascript">
 		window.onload = function () {
 			var video = document.getElementById("video");
@@ -227,7 +236,7 @@
 			list.push(data);
 			var img = document.createElement("img");
 			img.setAttribute("src", data);
-			img.setAttribute("width", "150");
+			img.setAttribute("width", "260");
 			img.setAttribute("height", "150");
 			document.getElementById("canvas").appendChild(img);
 
@@ -276,83 +285,88 @@
 
 
 	</script>
-	<style type="text/css">
-		input[type=range] {
-			-webkit-appearance: none;
-			overflow: hidden;
-			width: 200px;
-			height: 10px;
-			background: transparent;
-			cursor: pointer;
-			background: #e5e4e3;
-			border-radius: 0;
-			/* iOS */
-		}
 
-		input[type=range]:focus {
-			outline: none;
-		}
-
-		input[type=range]::-webkit-slider-thumb {
-			-webkit-appearance: none;
-			width: 10px;
-			height: 10px;
-			background: #fff;
-			box-shadow: -100vw 0 0 100vw dodgerblue;
-			border: 0.1px solid dodgerblue;
-			cursor: pointer;
-		}
-	</style>
 </head>
 
 <body>
 
-	<div style="text-align:center; float: left; width: 1000px; margin:10px;">
-		<video id="video" width="500px" height="400px">
-			<source src="video1.mp4" type="video/mp4" onclick="myCanvas()">
-		</video>
-		<br>
-		<br>
-		<div>
-			<span id="currentTime">00:00:00</span>
-			<span id="totalTime">00:00:00</span>
-			<br>
-			<br>
-			<button type="button" id="playPause" class="btn btn-secondary">재생</button>
-			<input type="range" id=seekBar value="0" />
-			<button type="button" id="stop" class="btn btn-secondary">정지</button>
-			<button type="button" id="fullScreen" class="btn btn-secondary">전체화면</button>
-			<br>
-			<br>
-			<button type="button" id="beforeSec" class="btn btn-secondary">10초전</button>
-			<button type="button" id="afterSec" class="btn btn-secondary">30초후</button>
-			<br>
-			<br>
-			<button type="button" id="preVideo" class="btn btn-secondary">이전 영상으로</button>
-			<button type="button" id="nextVideo" class="btn btn-secondary">다음 영상으로</button>
-			<br>
-			<br>
-			<button type="button" id="mute" class="btn btn-secondary">음소거</button>
-			<input type="range" id=volumeBar min="0" max="1" step="0.01" value="1" />
+	<div class="row">
+		<div class="col-sm-6">
+
+			<div id="livevideo">
+				<video id="video">
+					<source src="video1.mp4" type="video/mp4" onclick="myCanvas()">
+				</video>
+				<div class="row">
+					<input type="range" id="seekBar" value="0" />
+					<div id="timebar">
+						<span id="currentTime">00:00:00</span>
+						<span>/</span>
+						<span id="totalTime">00:00:00</span>
+					</div>
+				</div>
+				<div class="row" id="firstarea">
+
+					<div class="col-sm-5" id="fr">
+						<button type="button" id="playPause" class="btn btn-secondary">재생</button>
+						<button type="button" id="stop" class="btn btn-secondary">정지</button>
+						<button type="button" id="fullScreen" class="btn btn-secondary">전체화면</button>
+					</div>
+					<div class="col-sm-3" id="se">
+
+						<button type="button" id="beforeSec" class="btn btn-secondary">10초전</button>
+						<button type="button" id="afterSec" class="btn btn-secondary">30초후</button>
+					</div>
+
+					<div class="col-sm-4" id="tht">
+						<div class="row" id="searea">
+							<div class="col-sm-6" id="volbar">
+								<input type="range" id=volumeBar min="0" max="1" step="0.01" value="1" />
+							</div>
+		
+							<div class="col-sm-4" id="volbuttonbar">
+								<button type="button" id="mute" class="btn btn-secondary">음소거</button>
+							</div>
+						</div>	
+					
+						
+					</div>
+				</div>
+				<div id="prebutton">
+					<button type="button" id="preVideo" class="btn btn-secondary">이전 영상</button>
+					<button type="button" id="nextVideo" class="btn btn-secondary">다음 영상</button>
+				</div>
+				
+			</div>
 		</div>
 
-	</div>
+		<div class="col-sm-4" id="images">
+			<p>캡쳐 화면</p>
+			<div id="canvas"></div>
 
-	<div style="display: inline-block; position: absolute; margin: 50px;">
-		<p>Captured Images:</p>
-		<div id="canvas"></div>
+		</div>
 
-		<hr>
-		<img src="" id="imgs" width="150" height="150" alt="Slide Show">
-	
+		<div class="col-sm-2" id="slideShowarea">
+			<img src="images/slide.png" id="imgs" width="260" height="150" alt="이미지">
+			<div id="button">
+
+				<button class="btn btn-secondary" id="cbo" onclick ="myCanvas()">이미지 캡처</button>
+				<button class="btn btn-secondary" id="dbo" onclick="delete_img()">이미지 삭제</button>
+				<button class="btn btn-secondary" id="slib"onclick="slideShowStart(1000)">슬라이드쇼</button>
+
+				<div id="downloadarea">
+					<a id="download" download="myImage.png" onclick="download_img(this);">
+						<p>이미지 다운로드</p>
+					</a>
+				</div>
+
+			</div>
+		</div>
 		
 
-
-		<p><button onclick="myCanvas()" class="btn btn-secondary">캡처</button></p>
-		<p><button onclick="delete_img()" class="btn btn-secondary">이미지 삭제</button></p>
-		<p><button onclick="slideShowStart(1000)" class="btn btn-secondary">slideShow</button></p>
-		<a id="download" download="myImage.png" href="" onclick="download_img(this);">Download to myImage.jpg</a>
 	</div>
+
+
 </body>
 
 </html>

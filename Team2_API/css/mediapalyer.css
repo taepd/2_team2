@@ -1,0 +1,167 @@
+
+#capture{
+    display: inline-block;
+}
+
+#livevideo{
+   width: 800px;
+   padding: 10px;
+   border: solid 1px #b4b4b4;
+   background-color: #eeeeee;
+   margin: 10px;
+  
+}
+#video{
+    width: 780px;
+    height: 480px;
+}
+
+#images{
+    padding: 10px;
+    font-size: 20px;
+    font-weight: 500;
+}
+#timebar{
+
+    text-align: right;
+    margin: 0 auto;
+    margin-left: 20px;
+}
+#slideShowarea{
+    padding:55px 10px 10px 10px;
+   
+}
+#button{
+    width: 260px;
+    padding-top: 20px;
+    text-align: left;
+}
+#downloadarea{
+    
+    width: 260px;
+    height: 38px;
+    background-color: rgb(218, 218, 218);
+    margin-top: 10px;
+    border-radius: 4px;
+    color: #ffffff;
+    background-color: rgb(108, 117, 125);
+    padding: 8px;
+    
+}
+a{
+    color: #ffffff;
+    text-align: center;
+  
+}
+
+input[type=range] {
+    -webkit-appearance: none;
+    overflow: hidden;
+    width: 570px;
+    height: 10px;
+    background: transparent;
+    cursor: pointer;
+    background: #c9c9c9;
+    border-radius: 0;
+    
+    /* iOS */
+}
+
+input[type=range]:focus {
+    outline: none;
+}
+
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 10px;
+    height: 10px;
+    background: #fff;
+    box-shadow: -100vw 0 0 100vw #8131e9;
+    border: 0.1px solid #8e47eb;
+    cursor: pointer;
+    
+}
+#volumeBar{
+   width: 100%;
+   text-align: right;
+    
+}
+#searea{
+    text-align: right;
+}
+
+#seekBar{
+    text-align: left;
+   
+}
+
+#playPause .btn{
+    width: 70px;
+    height: 40px;
+    font-size: 15px;
+}
+
+.row{
+    margin: 0;
+}
+
+#volbar{
+    margin-top: 8px;
+    padding: 0;
+    max-width:100%;
+    text-align: right;
+   
+}
+
+#playPause{
+    width: 100px;
+}
+#fr{
+padding: 0 !important;
+}
+#se{
+    padding: 0 !important;
+}
+#tht{
+    padding: 0 !important;
+    
+}
+#mute{
+    text-align: right;
+}
+#volbuttonbar{
+    padding: 0 !important;
+    text-align: right;
+    max-width:100%;
+}
+#firstarea{
+    margin-top: 15px;
+    width: 825px;
+    
+}    
+.col-sm-4{
+    margin: 0;
+}
+#prebutton{
+    margin-top: 8px;
+}
+body{
+    text-align: justify;
+}
+#preVideo{
+    text-align: left;
+}
+#nextVideo{
+    text-align: right;
+}
+#slib{
+    width: 260px;
+    margin-top: 10px;
+}
+#cbo{
+    width: 125px;
+    margin-right: 5px;
+}
+#dbo{
+    width: 125px;
+}
