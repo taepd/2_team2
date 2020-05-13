@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import kr.or.bit.action.Action;
 import kr.or.bit.action.ActionForward;
 
-public class EmpSelectAll implements Action {
+public class EmpSearchEmpno implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
