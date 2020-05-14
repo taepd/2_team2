@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import kr.or.bit.action.Action;
 import kr.or.bit.action.ActionForward;
 import kr.or.bit.dao.Empdao;
-import kr.or.bit.dao.memodao;
+
 import kr.or.bit.dto.Emp;
 
 public class EmpInsert implements Action {
@@ -41,14 +41,14 @@ public class EmpInsert implements Action {
 		String url = "";
 		if (result > 0) {
 			msg = "등록성공";
-			url = "empList.emp";
+			url = "EmpList.emp";
 		} else {
 			msg = "등록실패";
-			url = "memo.html";
+			url = "EmpInsert.emp";
 		}
 
-		request.setAttribute("board_msg", msg);
-		request.setAttribute("board_url", url);
+		request.setAttribute("msg", msg);
+		request.setAttribute("url", url);
 
 		ActionForward forward = new ActionForward();
 		forward.setRedirect(false);

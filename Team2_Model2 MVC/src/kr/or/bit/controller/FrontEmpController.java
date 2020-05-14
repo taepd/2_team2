@@ -22,9 +22,6 @@ import kr.or.bit.service.EmpSearchDeptno;
 import kr.or.bit.service.EmpSearchEmpno;
 import kr.or.bit.service.EmpTotalCount;
 import kr.or.bit.service.EmpUpdate;
-import kr.or.bit.service.MemoAddService;
-import kr.or.bit.service.MemoIdCheckService;
-import kr.or.bit.service.MemoListService;
 
 
 
@@ -73,12 +70,18 @@ public class FrontEmpController extends HttpServlet {
     		action = new EmpDetail();
     		forward = action.execute(request, response);
     		
-    	}else if(url_Command.equals("/AdminLogin.emp")) { //로그인페이지
-    		//UI+로직
-    		action = new AdminLogin();
-    		forward = action.execute(request, response);
+    	}else if(url_Command.equals("/LoginView.emp")) { //로그인페이지
+    		//UI
+    		forward = new ActionForward();
+    		forward.setRedirect(false);
+    		forward.setPath("/authentication-login.html");
     		
-    	}else if(url_Command.equals("/EmpInsert.emp")) { //사원 등록
+    	}else if(url_Command.equals("/EmpInsert.emp")) {
+    		forward = new ActionForward();
+    		forward.setRedirect(false);
+    		forward.setPath("/WEB-INF/views/EmpInsert.jsp");
+    		
+    	}else if(url_Command.equals("/EmpInsertOk.emp")) { //사원 등록
     		//UI+로직
     		action = new EmpInsert();
     		forward = action.execute(request, response);
@@ -103,7 +106,13 @@ public class FrontEmpController extends HttpServlet {
     		action = new EmpTotalCount();
     		forward = action.execute(request, response);
     		
-    	}else if(url_Command.equals("/EmpUpdate.emp")) { //사원 수정
+    	}else if(url_Command.equals("/EmpUpdate.emp")) {
+    		forward = new ActionForward();
+    		forward.setRedirect(false);
+    		forward.setPath("/WEB-INF/views/EmpUpdate.jsp");
+    	}
+    	
+    	else if(url_Command.equals("/EmpUpdateOk.emp")) { //사원 수정
     		//UI 제공
     		action = new EmpUpdate();
     		forward = action.execute(request, response);

@@ -25,7 +25,7 @@ public class EmpDetail implements Action {
 			 
 			 forward = new ActionForward();
 			 forward.setRedirect(false); //forward
-			 forward.setPath("/WEB-INF/views/empList.jsp");
+			 forward.setPath("/WEB-INF/views/EmpDetail.jsp");
 		}catch (Exception e) {
 			System.out.println(e.getMessage());
 		}

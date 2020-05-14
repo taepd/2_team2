@@ -6,25 +6,33 @@ import javax.servlet.http.HttpSession;
 
 import kr.or.bit.action.Action;
 import kr.or.bit.action.ActionForward;
+import kr.or.bit.dao.Empdao;
+import kr.or.bit.dto.Admin;
 
 public class AdminLogin implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
-			String adminid = request.getParameter("userid");
-			String adminpwd = request.getParameter("userpwd");
+			String userid = request.getParameter("userid");
+			String pwd = request.getParameter("pwd");
+			Admin admin = null;
+			
+			
+			Empdao dao = new Empdao();
+			admin = dao.getAdmin("admin");
+		
 			
 			String msg = "";
 			String url = "";
 			
-			if(adminid != null && adminid.trim().equals("admin") && 
-					adminpwd != null && adminpwd.trim().equals("1234")) {
+			if(userid != null && userid.equals(admin.getUserid()) && pwd != null && pwd.equals(admin.getPwd())) {
 					HttpSession session = request.getSession();
-					session.setAttribute("userid", adminid);
+					session.setAttribute("userid", userid);
 					
 					msg = "로그인 성공";
 					url = "EmpList.emp";
-			} else {
+				
+			}else {
 					msg = "로그인 실패";
 					url = "LoginView.emp";
 			}

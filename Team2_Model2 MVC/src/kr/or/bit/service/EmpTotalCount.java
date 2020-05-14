@@ -10,7 +10,11 @@ public class EmpTotalCount implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
+		
+		
+		
+		
+		
 		return null;
 	}
 

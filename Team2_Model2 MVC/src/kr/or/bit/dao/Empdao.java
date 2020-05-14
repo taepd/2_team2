@@ -12,6 +12,7 @@ import javax.naming.InitialContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
 
+import kr.or.bit.dto.Admin;
 import kr.or.bit.dto.Emp;
 import kr.or.bit.utils.ConnectionHelper;
 import kr.or.bit.utils.DB_Close;
@@ -177,17 +178,45 @@ public class Empdao {
 
 	// Update
 	// 사원 정보 수정
-	public int updateEmp(HttpServletRequest request) {
+	 // Update
+		// 사원 정보 수정
+		public int updateEmp(Emp emp) {
 		
-		
-		
-		
-		
-		// update memo set email=? , content=? where id=?
-		// m.getId()
-		return 0;
-	}
+			Connection conn = null;// 추가
+			int resultrow = 0;
+			PreparedStatement pstmt = null;
 
+			try {
+				conn = ConnectionHelper.getConnection("oracle");// 추가
+
+				String sql = "update emp set ename=?, job=?, mgr=?, sal=?, comm=?, deptno=? where empno=?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, emp.getEname());
+				pstmt.setString(2, emp.getJob());
+				pstmt.setInt(3, emp.getMgr());
+				
+				pstmt.setInt(4, emp.getSal());
+				pstmt.setInt(5, emp.getComm());
+				pstmt.setInt(6, emp.getDeptno());
+				pstmt.setInt(7, emp.getEmpno());
+				resultrow = pstmt.executeUpdate();
+
+			} catch (Exception e) {
+				System.out.println("Update : " + e.getMessage());
+			} finally {
+				DB_Close.close(pstmt);
+				try {
+					conn.close(); // 반환하기
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			return resultrow;
+
+			// update memo set email=? , content=? where id=?
+			// m.getId()
+			
+		}
 	//Delete
 	//사원정보 삭제
 		public int deleteEmp(int empno) {
@@ -258,4 +287,72 @@ public class Empdao {
 			
 			return isempno;
 		}
+		
+		public int getEmpCount() {
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			int empcount = 0;
+			try {
+				conn = ConnectionHelper.getConnection("oracle");
+				String sql = "select count(*) from emp";
+				pstmt = conn.prepareStatement(sql);
+				rs = pstmt.executeQuery();
+				if(rs.next()) {
+					empcount = rs.getInt(1);
+				}
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			} finally {
+				DB_Close.close(rs);
+				DB_Close.close(pstmt);
+				try {
+					conn.close();//반환하기
+				} catch (SQLException e) {
+					
+					e.printStackTrace();
+				} 
+			}
+			return empcount;
+		}
+		
+		public Admin getAdmin(String id) {
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			
+			Admin admin = null;
+			try {
+				
+				conn = ConnectionHelper.getConnection("oracle");
+				String sql = "SELECT USERID, PWD FROM ADMINLIST WHERE USERID=?";
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setString(1, id);
+				rs = pstmt.executeQuery();
+				
+				if(rs.next()) {
+					admin = new Admin();
+					admin.setUserid(rs.getString(1));
+					admin.setPwd(rs.getString(2));
+					System.out.println("rs탐");
+				}else {
+					System.out.println("rs안탐");
+				}
+				
+			} catch (Exception e) {
+				System.out.println("AdminSelect : " + e.getMessage());
+			} finally {
+				DB_Close.close(rs);
+				DB_Close.close(pstmt);
+				try {
+					conn.close();//반환하기
+				} catch (SQLException e) {
+					
+					e.printStackTrace();
+				} 
+			}
+			return admin;
+		}
+		
 	}
