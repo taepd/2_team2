@@ -75,7 +75,7 @@ public class Empdao {
 			memolist.add(m);
 		}
 		
-		
+
 		DB_Close.close(rs);
 		DB_Close.close(pstmt);
 		conn.close(); //반환하기
@@ -127,7 +127,7 @@ public class Empdao {
 		//delete from memo where id=?
 		return 0;
 	}
-
+	
 	//추가함수 (ID 존재 유무 판단 함수)
 	public String isCheckById(String id) {
 		Connection conn =null;//추가

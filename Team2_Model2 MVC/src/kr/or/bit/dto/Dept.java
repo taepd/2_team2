@@ -16,7 +16,7 @@ public class Dept {
 	private String loc;
 	
 	public Dept() {}
-
+	
 	public int getDeptno() {
 		return deptno;
 	}
@@ -46,7 +46,7 @@ public class Dept {
 		return "Dept [deptno=" + deptno + ", dname=" + dname + ", loc=" + loc + "]";
 	}
 	
-	
+
 	
 	
 }

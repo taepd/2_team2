@@ -29,16 +29,16 @@ public class EncodingFilter implements Filter {
 			request.setCharacterEncoding(this.encoding);  //한줄만 ....
 		}
 		chain.doFilter(request, response);
-	}
+	}	
 	
 	
     public EncodingFilter() {
-        // TODO Auto-generated constructor stub
+        
     }
 
 
 	public void destroy() {
-		// TODO Auto-generated method stub
+		
 	}
 
 
