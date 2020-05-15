@@ -150,7 +150,7 @@
                 <div class="row">
                     
                         <div class="card" style="width:60%; margin: 0 auto;">
-                            <form class="form-horizontal" action="EmpInsertOk.emp">
+                            <form class="form-horizontal" action="EmpInsertOk.emp" enctype="multipart/form-data" method="post">
                                 <div class="card-body">
                                     <h4 class="card-title">사원 정보 입력</h4>
                                     <div class="form-group row">
@@ -202,6 +202,13 @@
                                             <input type="text" class="form-control" name="deptno" id="deptno" placeholder="사원의 부서번호를 입력해주세요">
                                         </div>
                                     </div>
+                                    <div class="form-group row">
+                                        <label for="cono1" class="col-sm-3 text-right control-label col-form-label">이미지</label>
+                                        <div class="col-sm-9">
+                                           <input type='file'name="img" onchange="readURL(this);" /> <img id="img" 
+			src="#" alt="your image" />
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="border-top">
                                     <div class="card-body">
@@ -251,6 +258,17 @@
     <!-- ============================================================== -->
     <!-- All Jquery -->
     <!-- ============================================================== -->
+    <script type="text/javascript">
+	function readURL(input) {
+		if (input.files && input.files[0]) {
+			var reader = new FileReader();
+			reader.onload = function(e) {
+				$('#img').attr('src', e.target.result);
+			}
+			reader.readAsDataURL(input.files[0]);
+		}
+	};
+</script>
     <script src="assets/libs/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap tether Core JavaScript -->
     <script src="assets/libs/popper.js/dist/umd/popper.min.js"></script>

@@ -11,7 +11,7 @@ HIREDATE          DATE
 SAL               NUMBER       
 COMM              NUMBER       
 DEPTNO            NUMBER       
-
+IMG				  VARCHAR2(30) 
 데이터 row 1건을 담을 수 있는 클래스 (DTO)
  */
 public class Emp {
@@ -23,7 +23,7 @@ public class Emp {
 	private int sal;
 	private int comm;
 	private int deptno;
-	
+	private String img;
 	public Emp() {}
 	
 	public int getEmpno() {
@@ -88,6 +88,13 @@ public class Emp {
 
 	public void setDeptno(int deptno) {
 		this.deptno = deptno;
+	}
+	public String getImg() {
+		return img;
+	}
+
+	public void setImg(String img) {
+		this.img = img;
 	}
 
 	@Override

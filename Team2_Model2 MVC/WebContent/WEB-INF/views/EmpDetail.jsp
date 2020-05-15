@@ -187,7 +187,7 @@
                                 
                                 <div class="text-right">
                                      <button class="btn btn-danger" onclick="location.href='EmpList.emp?cp=${param.cp}&ps=${param.ps}'">뒤로가기</button>
-                                     <button class="btn btn-danger" onclick="location.href='EmpUpdate.emp?empno=${emp.empno}&hiredate=${emp.hiredate}&cp=${param.cp}&ps=${param.ps}'">정보수정 </button>
+                                     <button class="btn btn-danger" onclick="location.href='EmpUpdate.emp?empno=${emp.empno}&ename=${emp.ename}&job=${emp.job}&sal=${emp.sal}&mgr=${emp.mgr}&comm=${emp.comm}&deptno=${emp.deptno}&hiredate=${emp.hiredate}&cp=${param.cp}&ps=${param.ps}'">정보수정 </button>
                                      <button class="btn btn-danger" onclick="location.href='EmpDelete.emp?empno=${emp.empno}&cp=${param.cp}&ps=${param.ps}'">사원삭제 </button>
                                 </div>
                                 

@@ -137,7 +137,7 @@
                     </div>
                 </div>
             </div>
-            <!-- ============================================================== -->
+            <!-- ==S============================================================ -->
             <!-- End Bread crumb and right sidebar toggle -->
             <!-- ============================================================== -->
             <!-- ============================================================== -->
@@ -150,7 +150,7 @@
                 <div class="row">
                     
                         <div class="card" style="width:60%; margin: 0 auto;">
-                            <form class="form-horizontal" action="EmpUpdateOk.emp?cp=${param.cp}&ps=${param.ps}">
+                            <form class="form-horizontal" action="EmpUpdateOk.emp?cp=${param.cp}&ps=${param.ps}" enctype="multipart/form-data" method="post">
                                 <div class="card-body">
                                     <h4 class="card-title">사원 정보 입력</h4>
                                     <div class="form-group row">
@@ -162,19 +162,19 @@
                                     <div class="form-group row">
                                         <label for="lname" class="col-sm-3 text-right control-label col-form-label">이름</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" id="ename" name="ename" placeholder="사원의 이름을 입력해주세요">
+                                            <input type="text" class="form-control" id="ename" name="ename" value="${param.ename}">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label for="lname" class="col-sm-3 text-right control-label col-form-label">직급</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" id="job" name="job" placeholder="직급을 입력해주세요">
+                                            <input type="text" class="form-control" id="job" name="job" value="${param.job}">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label for="email1" class="col-sm-3 text-right control-label col-form-label">직속 상관</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" id="mgr" name="mgr" placeholder="사원의 직속 상관의 사번을 입력해주세요">
+                                            <input type="text" class="form-control" id="mgr" name="mgr" value="${param.mgr}">
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -186,19 +186,26 @@
                                     <div class="form-group row">
                                         <label for="cono1" class="col-sm-3 text-right control-label col-form-label">급여</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" id="sal" name="sal" placeholder="사원의 급여를 입력해주세요">
+                                            <input type="text" class="form-control" id="sal" name="sal" value="${param.sal}">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label for="cono1" class="col-sm-3 text-right control-label col-form-label">보너스</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" id="comm" name="comm" placeholder="사원의 인센티브를 입력해주세요">
+                                            <input type="text" class="form-control" id="comm" name="comm" value="${param.comm}">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label for="cono1" class="col-sm-3 text-right control-label col-form-label">부서번호</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" id="deptno" name="deptno" placeholder="사원의 부서번호를 입력해주세요">
+                                            <input type="text" class="form-control" id="deptno" name="deptno" value="${param.deptno}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="cono1" class="col-sm-3 text-right control-label col-form-label">이미지</label>
+                                        <div class="col-sm-9">
+                                           <input type='file'name="img" onchange="readURL(this);" /> <img id="img" 
+			src="#" alt="your image" />
                                         </div>
                                     </div>
                                 </div>

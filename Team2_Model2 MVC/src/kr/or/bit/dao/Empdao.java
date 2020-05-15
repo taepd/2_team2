@@ -147,8 +147,8 @@ public class Empdao {
 		try {
 			conn = ConnectionHelper.getConnection("oracle");// 추가
 
-			String sql = "insert into Emp(empno, ename, job, mgr, hiredate, sal, comm, deptno) "
-					+ "values(?,?,?,?,?,?,?,?)";
+			String sql = "insert into Emp(empno, ename, job, mgr, hiredate, sal, comm, deptno, img) "
+					+ "values(?,?,?,?,?,?,?,?,?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, emp.getEmpno());
 			pstmt.setString(2, emp.getEname());
@@ -158,7 +158,7 @@ public class Empdao {
 			pstmt.setInt(6, emp.getSal());
 			pstmt.setInt(7, emp.getComm());
 			pstmt.setInt(8, emp.getDeptno());
-
+			pstmt.setString(9, emp.getImg());
 			resultrow = pstmt.executeUpdate();
 
 		} catch (Exception e) {
@@ -189,7 +189,7 @@ public class Empdao {
 			try {
 				conn = ConnectionHelper.getConnection("oracle");// 추가
 
-				String sql = "update emp set ename=?, job=?, mgr=?, sal=?, comm=?, deptno=? where empno=?";
+				String sql = "update emp set ename=?, job=?, mgr=?, sal=?, comm=?, deptno=? img=? where empno=?";
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1, emp.getEname());
 				pstmt.setString(2, emp.getJob());
@@ -198,7 +198,8 @@ public class Empdao {
 				pstmt.setInt(4, emp.getSal());
 				pstmt.setInt(5, emp.getComm());
 				pstmt.setInt(6, emp.getDeptno());
-				pstmt.setInt(7, emp.getEmpno());
+				pstmt.setString(7, emp.getImg());
+				pstmt.setInt(8, emp.getEmpno());
 				resultrow = pstmt.executeUpdate();
 
 			} catch (Exception e) {
@@ -354,5 +355,95 @@ public class Empdao {
 			}
 			return admin;
 		}
+		
+		//사원번호로 검색하기
+		public List<Emp> getEmpListByEmpno(int empno){
+			
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			List<Emp> emplistByEmpno = null;
+			try {
+				conn = ConnectionHelper.getConnection("oracle");
+				String sql = "select empno, ename, job, deptno from emp where empno like '%' || ? || '%'";
+				
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setInt(1, empno);
+				
+				rs = pstmt.executeQuery();
+				emplistByEmpno = new ArrayList<Emp>();
+				while(rs.next()) {
+					Emp emp = new Emp();
+					emp.setEmpno(rs.getInt("empno"));
+					emp.setEname(rs.getString("ename"));
+					emp.setJob(rs.getString("job"));
+					emp.setDeptno(rs.getInt("deptno"));
+					
+					emplistByEmpno.add(emp);
+				}
+				
+			}catch (Exception e) {
+				System.out.println("오류 :" + e.getMessage());
+			}finally {
+				DB_Close.close(rs);
+				DB_Close.close(pstmt);
+				try {
+					conn.close(); //받환하기
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+				
+			return emplistByEmpno;
+		}
+		
+		//부서번호로 검색하기
+				public List<Emp> getEmpListByDeptno(int deptno){
+					
+					Connection conn = null;
+					PreparedStatement pstmt = null;
+					ResultSet rs = null;
+					List<Emp> emplistByDeptno = null;
+					try {
+						conn = ConnectionHelper.getConnection("oracle");
+						String sql = "select empno, ename, job, deptno from emp where deptno = ?";
+						
+						pstmt = conn.prepareStatement(sql);
+						
+						pstmt.setInt(1, deptno);
+						
+						rs = pstmt.executeQuery();
+						emplistByDeptno = new ArrayList<Emp>();
+						while(rs.next()) {
+							Emp emp = new Emp();
+							emp.setEmpno(rs.getInt("empno"));
+							emp.setEname(rs.getString("ename"));
+							emp.setJob(rs.getString("job"));
+							emp.setDeptno(rs.getInt("deptno"));
+							
+							emplistByDeptno.add(emp);
+						}
+						
+					}catch (Exception e) {
+						System.out.println("오류 :" + e.getMessage());
+					}finally {
+						DB_Close.close(rs);
+						DB_Close.close(pstmt);
+						try {
+							conn.close(); //받환하기
+						} catch (SQLException e) {
+							e.printStackTrace();
+						}
+					}
+						
+					return emplistByDeptno;
+				}
+
+	
+		
+		
+		
+		
 		
 	}

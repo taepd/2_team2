@@ -20,12 +20,76 @@
 	href="assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css"
 	rel="stylesheet">
 <link href="dist/css/style.min.css" rel="stylesheet">
-<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-<!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-<![endif]-->
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript">
+	$(function(){
+		$('#empsearch').keyup(function(){
+			if($('#empsearch').val() == ""){
+				$(location).attr('href',"EmpList.emp?cp=${cpage}&ps=${pagesize}");
+			}
+			var data = {empno : $('#empsearch').val()};
+			$.ajax(
+					 {
+						 type:"get",
+						 data,
+						 url:"EmpSearchEmpno.emp?",
+						 dataType:"json",
+						 success:function(responsedata){ 
+							$('#emptable').empty();
+							$.each(responsedata,function(index,obj){	
+								$('#emptable').append(	
+										"<tr><td>"+obj.empno+"</td>" +
+										"<td><a href='EmpDetail.emp?empno="+obj.empno+"&cp=${cpage}&ps=${pagesize}'>" +
+											obj.ename+"</a></td>" +
+										"<td>"+obj.job+"</td>" +
+										"<td>"+obj.deptno+"</td><tr>"
+								   
+								);
+							});
+							$('#zero_config_info').empty();
+							$('#zero_config_info').append("총 부서원 " + responsedata.length);
+							
+						 }
+						
+					 }
+			
+			      );
+		});
+		
+		$('#deptsearch').change(function(){
+			if($('#deptsearch option:selected').val() == "선택없음") {
+				$(location).attr('href',"EmpList.emp?cp=${cpage}&ps=${pagesize}");
+			}
+			var data = {deptno : $('#deptsearch option:selected').val()};
+			$.ajax(
+					 {
+						 type:"get",
+						 data,
+						 url:"EmpSearchDeptno.emp?",
+						 dataType:"json",
+						 success:function(responsedata){ 
+							 console.log(responsedata);
+							$('#emptable').empty();
+							$.each(responsedata,function(index,obj){	
+								$('#emptable').append(	
+										"<tr><td>"+obj.empno+"</td>" +
+										"<td><a href='EmpDetail.emp?empno="+obj.empno+"&cp=${cpage}&ps=${pagesize}'>" +
+											obj.ename+"</a></td>" +
+										"<td>"+obj.job+"</td>" +
+										"<td>"+obj.deptno+"</td><tr>"
+								   
+								);
+							});
+							$('#zero_config_info').empty();
+							$('#zero_config_info').append("총 부서원 " + responsedata.length);
+							
+						 }
+						
+					 });
+		});
+		
+	});
+	</script>
 </head>
 
 <body>
@@ -180,9 +244,17 @@
 										</form>
 									</div>
 								</div>
+								
 								<div class="col-sm-12 col-md-6">
+								
 									<div id="zero_config_filter" class="dataTables_filter">
-										<label>Search:<input type="search"
+										부서번호 : <select id="deptsearch">
+											<option value="선택없음" selected>선택없음</option>
+											<option value="10">10</option>
+											<option value="20">20</option>
+											<option value="30">30</option>
+										</select>
+										<label>Search:<input type="search" id="empsearch" name="empsearch"
 											class="form-control form-control-sm" placeholder=""
 											aria-controls="zero_config"></label>
 									</div>
@@ -194,7 +266,7 @@
 										class="table table-striped table-bordered dataTable no-footer"
 										role="grid" aria-describedby="zero_config_info">
 										<thead>
-											<tr role="row">
+											<tr role="row" >
 
 												<th class="sorting" tabindex="0" aria-controls="zero_config"
 													rowspan="1" colspan="1"
@@ -207,10 +279,10 @@
 													aria-label="직급: activate to sort column ascending">직급</th>
 												<th class="sorting" tabindex="0" aria-controls="zero_config"
 													rowspan="1" colspan="1"
-													aria-label="입사일: activate to sort column ascending">입사일</th>
+													aria-label="부서번호: activate to sort column ascending">부서번호</th>
 											</tr>
 										</thead>
-										<tbody>
+										<tbody id="emptable">
 
 											<c:forEach var="emp" items="${emplist}">
 												<tr>
@@ -260,6 +332,7 @@
 											<a href="EmpList.emp?cp=${cpage+1}&ps=${pagesize}">다음</a>
 										</c:if>
 									</div>
+									<a href="EmpInsert.emp">등록</a>
 								</div>
 							</div>
 						</div>

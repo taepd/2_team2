@@ -1,5 +1,7 @@
 package kr.or.bit.service;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -20,7 +22,8 @@ public class AdminLogin implements Action {
 			
 			Empdao dao = new Empdao();
 			admin = dao.getAdmin("admin");
-		
+			ArrayList<Empdao> d = new ArrayList<Empdao>();
+			
 			
 			String msg = "";
 			String url = "";
