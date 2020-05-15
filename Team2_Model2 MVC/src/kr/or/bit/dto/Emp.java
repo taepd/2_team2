@@ -24,6 +24,7 @@ public class Emp {
 	private int comm;
 	private int deptno;
 	private String img;
+	
 	public Emp() {}
 	
 	public int getEmpno() {

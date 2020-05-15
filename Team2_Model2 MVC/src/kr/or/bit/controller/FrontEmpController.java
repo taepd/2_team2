@@ -14,6 +14,7 @@ import kr.or.bit.action.ActionForward;
 import kr.or.bit.service.AdminLogin;
 import kr.or.bit.service.AdminLogout;
 import kr.or.bit.service.DeptDetail;
+import kr.or.bit.service.EmpChart;
 import kr.or.bit.service.EmpDelete;
 import kr.or.bit.service.EmpDetail;
 import kr.or.bit.service.EmpInsert;
@@ -116,6 +117,15 @@ public class FrontEmpController extends HttpServlet {
     		//UI 제공
     		action = new EmpUpdate();
     		forward = action.execute(request, response);
+    	}else if(url_Command.equals("/EmpChart.emp")) {
+    		action = new EmpChart();
+    		forward = action.execute(request, response);
+    	}
+    	else if(url_Command.equals("/EmpChartview.emp")) { //사원 수정
+    		//UI 제공
+    		forward = new ActionForward();
+    		forward.setRedirect(false);
+    		forward.setPath("/WEB-INF/views/EmpChartview.jsp");
     	}
     	
 

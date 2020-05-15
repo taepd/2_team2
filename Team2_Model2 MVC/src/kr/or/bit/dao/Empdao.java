@@ -16,6 +16,8 @@ import kr.or.bit.dto.Admin;
 import kr.or.bit.dto.Emp;
 import kr.or.bit.utils.ConnectionHelper;
 import kr.or.bit.utils.DB_Close;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 /*
 DB작업
@@ -57,66 +59,65 @@ public class Empdao {
 //		return null;
 //	}
 
-	//전체 데이터 read (where 조건절이 없어요)
-		public List<Emp> getEmpList(int cpage, int pagesize){
-			
-			Connection conn = null;
-			PreparedStatement pstmt = null;
-			ResultSet rs = null;
-			List<Emp> emplist = null;
-			try {
-				conn = ConnectionHelper.getConnection("oracle");
-				String sql = "select * from " +
-	                    "(select rownum rn,empno, ename, job, deptno from emp"+
-	                       " where rownum <= ?" +  //endrow
-	                       ") where rn >= ?"; //startrow
-				pstmt = conn.prepareStatement(sql);
-				//공식같은 로직
-				int start = cpage * pagesize - (pagesize -1); //1 * 5 - (5 - 1) >> 1
-				int end = cpage * pagesize; // 1 * 5 >> 5
-				//
-				pstmt.setInt(1, end);
-				pstmt.setInt(2, start);
-				
-				rs = pstmt.executeQuery();
-				emplist = new ArrayList<Emp>();
-				while(rs.next()) {
-					Emp emp = new Emp();
-					emp.setEmpno(rs.getInt("empno"));
-					emp.setEname(rs.getString("ename"));
-					emp.setJob(rs.getString("job"));
-					emp.setDeptno(rs.getInt("deptno"));
-					
-					emplist.add(emp);
-				}
-				
-			}catch (Exception e) {
-				System.out.println("오류 :" + e.getMessage());
-			}finally {
-				DB_Close.close(rs);
-				DB_Close.close(pstmt);
-				try {
-					conn.close(); //받환하기
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
+	// 전체 데이터 read (where 조건절이 없어요)
+	public List<Emp> getEmpList(int cpage, int pagesize) {
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<Emp> emplist = null;
+		try {
+			conn = ConnectionHelper.getConnection("oracle");
+			String sql = "select * from " + "(select rownum rn,empno, ename, job, deptno from emp"
+					+ " where rownum <= ?" + // endrow
+					") where rn >= ?"; // startrow
+			pstmt = conn.prepareStatement(sql);
+			// 공식같은 로직
+			int start = cpage * pagesize - (pagesize - 1); // 1 * 5 - (5 - 1) >> 1
+			int end = cpage * pagesize; // 1 * 5 >> 5
+			//
+			pstmt.setInt(1, end);
+			pstmt.setInt(2, start);
+
+			rs = pstmt.executeQuery();
+			emplist = new ArrayList<Emp>();
+			while (rs.next()) {
+				Emp emp = new Emp();
+				emp.setEmpno(rs.getInt("empno"));
+				emp.setEname(rs.getString("ename"));
+				emp.setJob(rs.getString("job"));
+				emp.setDeptno(rs.getInt("deptno"));
+
+				emplist.add(emp);
 			}
-				
-			return emplist;
+
+		} catch (Exception e) {
+			System.out.println("오류 :" + e.getMessage());
+		} finally {
+			DB_Close.close(rs);
+			DB_Close.close(pstmt);
+			try {
+				conn.close(); // 받환하기
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
-	
-	//사원 상세정보 보기
-	public Emp getDetail(int empno) throws SQLException { //예외 던지기 괜찮은 건가?
+
+		return emplist;
+	}
+
+	// 사원 상세정보 보기
+	public Emp getDetail(int empno) throws SQLException { // 예외 던지기 괜찮은 건가?
 		Connection conn = ConnectionHelper.getConnection("oracle"); // 객체 얻기
 
 		PreparedStatement pstmt = null;
-		String sql="select * from emp where empno=?"; //* 하지 말자
+		String sql = "select * from emp where empno=?"; // * 하지 말자
 		pstmt = conn.prepareStatement(sql);
 		pstmt.setInt(1, empno);
 		ResultSet rs = pstmt.executeQuery();
 		Emp emp = new Emp();
-		if(rs.next()) {
-			
+		if (rs.next()) {
+
 			emp.setEmpno(rs.getInt("empno"));
 			emp.setEname(rs.getString("ename"));
 			emp.setJob(rs.getString("job"));
@@ -125,7 +126,8 @@ public class Empdao {
 			emp.setSal(rs.getInt("sal"));
 			emp.setComm(rs.getInt("comm"));
 			emp.setDeptno(rs.getInt("deptno"));
-								
+			emp.setImg(rs.getString("img"));
+
 		}
 
 		DB_Close.close(rs);
@@ -133,7 +135,7 @@ public class Empdao {
 		conn.close(); // 반환하기
 
 		return emp;
-	}		
+	}
 
 	// Insert
 	// 사원 등록
@@ -173,277 +175,309 @@ public class Empdao {
 		}
 		return resultrow;
 	}
-	
-	
 
 	// Update
 	// 사원 정보 수정
-	 // Update
-		// 사원 정보 수정
-		public int updateEmp(Emp emp) {
-		
-			Connection conn = null;// 추가
-			int resultrow = 0;
-			PreparedStatement pstmt = null;
+	// Update
+	// 사원 정보 수정
+	public int updateEmp(Emp emp) {
 
-			try {
-				conn = ConnectionHelper.getConnection("oracle");// 추가
+		Connection conn = null;// 추가
+		int resultrow = 0;
+		PreparedStatement pstmt = null;
 
-				String sql = "update emp set ename=?, job=?, mgr=?, sal=?, comm=?, deptno=? img=? where empno=?";
-				pstmt = conn.prepareStatement(sql);
-				pstmt.setString(1, emp.getEname());
-				pstmt.setString(2, emp.getJob());
-				pstmt.setInt(3, emp.getMgr());
-				
-				pstmt.setInt(4, emp.getSal());
-				pstmt.setInt(5, emp.getComm());
-				pstmt.setInt(6, emp.getDeptno());
-				pstmt.setString(7, emp.getImg());
-				pstmt.setInt(8, emp.getEmpno());
-				resultrow = pstmt.executeUpdate();
+		try {
+			conn = ConnectionHelper.getConnection("oracle");// 추가
 
-			} catch (Exception e) {
-				System.out.println("Update : " + e.getMessage());
-			} finally {
-				DB_Close.close(pstmt);
-				try {
-					conn.close(); // 반환하기
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-			return resultrow;
+			String sql = "update emp set ename=?, job=?, mgr=?, sal=?, comm=?, deptno=? img=? where empno=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, emp.getEname());
+			pstmt.setString(2, emp.getJob());
+			pstmt.setInt(3, emp.getMgr());
 
-			// update memo set email=? , content=? where id=?
-			// m.getId()
-			
-		}
-	//Delete
-	//사원정보 삭제
-		public int deleteEmp(int empno) {
-			//delete from memo where id=?
-			
-			Connection conn = null;
-			int resultrow = 0;
-			PreparedStatement pstmt = null;
-			
-			try {
-				conn = ConnectionHelper.getConnection("oracle");
-				String sql = "delete from emp where empno=?";
-				
-				pstmt = conn.prepareStatement(sql);
-				pstmt.setInt(1, empno);
-				
-				resultrow = pstmt.executeUpdate();
-				
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
-			} finally {
-				DB_Close.close(pstmt);
-				try {
-					conn.close(); //반환하기
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-			
-			return resultrow;
-		}
+			pstmt.setInt(4, emp.getSal());
+			pstmt.setInt(5, emp.getComm());
+			pstmt.setInt(6, emp.getDeptno());
+			pstmt.setString(7, emp.getImg());
+			pstmt.setInt(8, emp.getEmpno());
+			resultrow = pstmt.executeUpdate();
 
-		//추가함수 (사원번호 존재 유무 판단 함수)
-		public String isCheckByEmpno(int empno) {
-			Connection conn =null;//추가
-			String isempno= null;
-			PreparedStatement pstmt = null;
-			ResultSet rs = null;
+		} catch (Exception e) {
+			System.out.println("Update : " + e.getMessage());
+		} finally {
+			DB_Close.close(pstmt);
 			try {
-					conn= ConnectionHelper.getConnection("oracle");//추가
-					String sql = "select empno from emp where empno=?";
-					pstmt = conn.prepareStatement(sql);
-					pstmt.setInt(1, empno);
-					
-					rs = pstmt.executeQuery();
-					
-					if(rs.next()) {
-						
-							isempno = "false";
-							
-						//}while(rs.next());
-					}else {
-							isempno = "true";
-					}
-				
-			}catch (Exception e) {
-				System.out.println(e.getMessage());
-			}finally {
-				DB_Close.close(rs);
-				DB_Close.close(pstmt);
-				try {
-					conn.close();//반환하기
-				} catch (SQLException e) {
-					
-					e.printStackTrace();
-				} 
+				conn.close(); // 반환하기
+			} catch (SQLException e) {
+				e.printStackTrace();
 			}
-			
-			return isempno;
 		}
-		
-		public int getEmpCount() {
-			Connection conn = null;
-			PreparedStatement pstmt = null;
-			ResultSet rs = null;
-			int empcount = 0;
-			try {
-				conn = ConnectionHelper.getConnection("oracle");
-				String sql = "select count(*) from emp";
-				pstmt = conn.prepareStatement(sql);
-				rs = pstmt.executeQuery();
-				if(rs.next()) {
-					empcount = rs.getInt(1);
-				}
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
-			} finally {
-				DB_Close.close(rs);
-				DB_Close.close(pstmt);
-				try {
-					conn.close();//반환하기
-				} catch (SQLException e) {
-					
-					e.printStackTrace();
-				} 
-			}
-			return empcount;
-		}
-		
-		public Admin getAdmin(String id) {
-			Connection conn = null;
-			PreparedStatement pstmt = null;
-			ResultSet rs = null;
-			
-			Admin admin = null;
-			try {
-				
-				conn = ConnectionHelper.getConnection("oracle");
-				String sql = "SELECT USERID, PWD FROM ADMINLIST WHERE USERID=?";
-				pstmt = conn.prepareStatement(sql);
-				
-				pstmt.setString(1, id);
-				rs = pstmt.executeQuery();
-				
-				if(rs.next()) {
-					admin = new Admin();
-					admin.setUserid(rs.getString(1));
-					admin.setPwd(rs.getString(2));
-					System.out.println("rs탐");
-				}else {
-					System.out.println("rs안탐");
-				}
-				
-			} catch (Exception e) {
-				System.out.println("AdminSelect : " + e.getMessage());
-			} finally {
-				DB_Close.close(rs);
-				DB_Close.close(pstmt);
-				try {
-					conn.close();//반환하기
-				} catch (SQLException e) {
-					
-					e.printStackTrace();
-				} 
-			}
-			return admin;
-		}
-		
-		//사원번호로 검색하기
-		public List<Emp> getEmpListByEmpno(int empno){
-			
-			Connection conn = null;
-			PreparedStatement pstmt = null;
-			ResultSet rs = null;
-			List<Emp> emplistByEmpno = null;
-			try {
-				conn = ConnectionHelper.getConnection("oracle");
-				String sql = "select empno, ename, job, deptno from emp where empno like '%' || ? || '%'";
-				
-				pstmt = conn.prepareStatement(sql);
-				
-				pstmt.setInt(1, empno);
-				
-				rs = pstmt.executeQuery();
-				emplistByEmpno = new ArrayList<Emp>();
-				while(rs.next()) {
-					Emp emp = new Emp();
-					emp.setEmpno(rs.getInt("empno"));
-					emp.setEname(rs.getString("ename"));
-					emp.setJob(rs.getString("job"));
-					emp.setDeptno(rs.getInt("deptno"));
-					
-					emplistByEmpno.add(emp);
-				}
-				
-			}catch (Exception e) {
-				System.out.println("오류 :" + e.getMessage());
-			}finally {
-				DB_Close.close(rs);
-				DB_Close.close(pstmt);
-				try {
-					conn.close(); //받환하기
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-				
-			return emplistByEmpno;
-		}
-		
-		//부서번호로 검색하기
-				public List<Emp> getEmpListByDeptno(int deptno){
-					
-					Connection conn = null;
-					PreparedStatement pstmt = null;
-					ResultSet rs = null;
-					List<Emp> emplistByDeptno = null;
-					try {
-						conn = ConnectionHelper.getConnection("oracle");
-						String sql = "select empno, ename, job, deptno from emp where deptno = ?";
-						
-						pstmt = conn.prepareStatement(sql);
-						
-						pstmt.setInt(1, deptno);
-						
-						rs = pstmt.executeQuery();
-						emplistByDeptno = new ArrayList<Emp>();
-						while(rs.next()) {
-							Emp emp = new Emp();
-							emp.setEmpno(rs.getInt("empno"));
-							emp.setEname(rs.getString("ename"));
-							emp.setJob(rs.getString("job"));
-							emp.setDeptno(rs.getInt("deptno"));
-							
-							emplistByDeptno.add(emp);
-						}
-						
-					}catch (Exception e) {
-						System.out.println("오류 :" + e.getMessage());
-					}finally {
-						DB_Close.close(rs);
-						DB_Close.close(pstmt);
-						try {
-							conn.close(); //받환하기
-						} catch (SQLException e) {
-							e.printStackTrace();
-						}
-					}
-						
-					return emplistByDeptno;
-				}
+		return resultrow;
 
-	
-		
-		
-		
-		
-		
+		// update memo set email=? , content=? where id=?
+		// m.getId()
+
 	}
+
+	// Delete
+	// 사원정보 삭제
+	public int deleteEmp(int empno) {
+		// delete from memo where id=?
+
+		Connection conn = null;
+		int resultrow = 0;
+		PreparedStatement pstmt = null;
+
+		try {
+			conn = ConnectionHelper.getConnection("oracle");
+			String sql = "delete from emp where empno=?";
+
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, empno);
+
+			resultrow = pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			DB_Close.close(pstmt);
+			try {
+				conn.close(); // 반환하기
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return resultrow;
+	}
+
+	// 추가함수 (사원번호 존재 유무 판단 함수)
+	public String isCheckByEmpno(int empno) {
+		Connection conn = null;// 추가
+		String isempno = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = ConnectionHelper.getConnection("oracle");// 추가
+			String sql = "select empno from emp where empno=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, empno);
+
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+
+				isempno = "false";
+
+				// }while(rs.next());
+			} else {
+				isempno = "true";
+			}
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			DB_Close.close(rs);
+			DB_Close.close(pstmt);
+			try {
+				conn.close();// 반환하기
+			} catch (SQLException e) {
+
+				e.printStackTrace();
+			}
+		}
+
+		return isempno;
+	}
+
+	public int getEmpCount() {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int empcount = 0;
+		try {
+			conn = ConnectionHelper.getConnection("oracle");
+			String sql = "select count(*) from emp";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				empcount = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			DB_Close.close(rs);
+			DB_Close.close(pstmt);
+			try {
+				conn.close();// 반환하기
+			} catch (SQLException e) {
+
+				e.printStackTrace();
+			}
+		}
+		return empcount;
+	}
+
+	public Admin getAdmin(String id) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		Admin admin = null;
+		try {
+
+			conn = ConnectionHelper.getConnection("oracle");
+			String sql = "SELECT USERID, PWD FROM ADMINLIST WHERE USERID=?";
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				admin = new Admin();
+				admin.setUserid(rs.getString(1));
+				admin.setPwd(rs.getString(2));
+				System.out.println("rs탐");
+			} else {
+				System.out.println("rs안탐");
+			}
+
+		} catch (Exception e) {
+			System.out.println("AdminSelect : " + e.getMessage());
+		} finally {
+			DB_Close.close(rs);
+			DB_Close.close(pstmt);
+			try {
+				conn.close();// 반환하기
+			} catch (SQLException e) {
+
+				e.printStackTrace();
+			}
+		}
+		return admin;
+	}
+
+	// 사원번호로 검색하기
+	public List<Emp> getEmpListByEmpno(int empno) {
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<Emp> emplistByEmpno = null;
+		try {
+			conn = ConnectionHelper.getConnection("oracle");
+			String sql = "select empno, ename, job, deptno from emp where empno like '%' || ? || '%'";
+
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setInt(1, empno);
+
+			rs = pstmt.executeQuery();
+			emplistByEmpno = new ArrayList<Emp>();
+			while (rs.next()) {
+				Emp emp = new Emp();
+				emp.setEmpno(rs.getInt("empno"));
+				emp.setEname(rs.getString("ename"));
+				emp.setJob(rs.getString("job"));
+				emp.setDeptno(rs.getInt("deptno"));
+
+				emplistByEmpno.add(emp);
+			}
+
+		} catch (Exception e) {
+			System.out.println("오류 :" + e.getMessage());
+		} finally {
+			DB_Close.close(rs);
+			DB_Close.close(pstmt);
+			try {
+				conn.close(); // 받환하기
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return emplistByEmpno;
+	}
+
+	// 부서번호로 검색하기
+	public List<Emp> getEmpListByDeptno(int deptno) {
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<Emp> emplistByDeptno = null;
+		try {
+			conn = ConnectionHelper.getConnection("oracle");
+			String sql = "select empno, ename, job, deptno from emp where deptno = ?";
+
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setInt(1, deptno);
+
+			rs = pstmt.executeQuery();
+			emplistByDeptno = new ArrayList<Emp>();
+			while (rs.next()) {
+				Emp emp = new Emp();
+				emp.setEmpno(rs.getInt("empno"));
+				emp.setEname(rs.getString("ename"));
+				emp.setJob(rs.getString("job"));
+				emp.setDeptno(rs.getInt("deptno"));
+
+				emplistByDeptno.add(emp);
+			}
+
+		} catch (Exception e) {
+			System.out.println("오류 :" + e.getMessage());
+		} finally {
+			DB_Close.close(rs);
+			DB_Close.close(pstmt);
+			try {
+				conn.close(); // 받환하기
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return emplistByDeptno;
+	}
+
+	// 차트 데이터
+	public JSONArray getEmpChartJob() {
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		JSONObject jsonObject = new JSONObject();
+		JSONArray jsonArray = new JSONArray();
+
+		try {
+			conn = ConnectionHelper.getConnection("oracle");
+			String sql = "select job,round(avg(sal),0),max(sal),min(sal) from emp group by job";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+
+				jsonObject.put("job", rs.getString(1));
+				jsonObject.put("avg", rs.getInt(2));
+				jsonObject.put("max", rs.getInt(3));
+				jsonObject.put("min", rs.getInt(4));
+				jsonArray.add(jsonObject);
+			}
+
+		} catch (Exception e) {
+			System.out.println("오류 :" + e.getMessage());
+		} finally {
+			DB_Close.close(rs);
+			DB_Close.close(pstmt);
+			try {
+				conn.close(); // 받환하기
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return jsonArray;
+	}
+
+}

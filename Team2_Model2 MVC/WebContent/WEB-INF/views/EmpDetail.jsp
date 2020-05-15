@@ -104,7 +104,7 @@
                     </ul>
                 </nav>
                 <!-- End Sidebar navigation -->
-            </div>
+            </div>	
             <!-- End Sidebar scroll-->
         </aside>
         <!-- ============================================================== -->
@@ -151,7 +151,7 @@
                                 <div class="col-md-12">
                                     <div class="pull-left">
                                         <div id="profile">
-                                            <img src="assets/images/users/1.png" style="margin-bottom: 30px;">
+                                            <img src="upload/${emp.img}" style="margin-bottom: 30px;">
                                         </div>
                                         <address>
                                             <h3> &nbsp;<b class="text-danger">${emp.ename}</b></h3>
@@ -184,13 +184,21 @@
                                    
                                 </div>
                                 
-                                
+                                <form action="EmpUpdate.emp" method="post">
+                                 	<input type="hidden" name="empno" value=${emp.empno }>
+                                 	<input type="hidden" name="ename" value=${emp.empno }>
+                                 	<input type="hidden" name="job" value=${emp.job }>
+                                 	<input type="hidden" name="mgr" value=${emp.mgr }>
+                                 	<input type="hidden" name="hiredate" value=${emp.hiredate }>
+                                 	<input type="hidden" name="sal" value=${emp.sal }>
+                                 	<input type="hidden" name="comm" value=${emp.comm }>
+                                 	<input type="hidden" name="deptno" value=${emp.deptno }>
                                 <div class="text-right">
                                      <button class="btn btn-danger" onclick="location.href='EmpList.emp?cp=${param.cp}&ps=${param.ps}'">뒤로가기</button>
-                                     <button class="btn btn-danger" onclick="location.href='EmpUpdate.emp?empno=${emp.empno}&ename=${emp.ename}&job=${emp.job}&sal=${emp.sal}&mgr=${emp.mgr}&comm=${emp.comm}&deptno=${emp.deptno}&hiredate=${emp.hiredate}&cp=${param.cp}&ps=${param.ps}'">정보수정 </button>
+                                     <button type="submit" class="btn btn-danger">정보수정</button>
                                      <button class="btn btn-danger" onclick="location.href='EmpDelete.emp?empno=${emp.empno}&cp=${param.cp}&ps=${param.ps}'">사원삭제 </button>
                                 </div>
-                                
+                                </form>
                             </div>
                         </div>
                     </div>
