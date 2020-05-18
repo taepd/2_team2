@@ -18,7 +18,7 @@
 		maxActive="100"
 		password="1004" 
 		username="team2"
-		url="jdbc:oracle:thin:@localhost:1521:xe"
+		url="jdbc:oracle:thin:@localhost:1521:ORCL"
 		driverClassName="oracle.jdbc.OracleDriver" 
 		type="javax.sql.DataSource"
 		auth="Container" 
