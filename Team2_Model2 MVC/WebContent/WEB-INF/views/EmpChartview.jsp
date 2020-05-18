@@ -12,7 +12,7 @@
 
 <link rel="icon" type="image/png" sizes="16x16"
 	href="assets/images/favicon.png">
-   <title>구글 차트</title>
+<title>구글 차트</title>
 <!-- Custom CSS -->
 <link rel="stylesheet" type="text/css"
 	href="assets/extra-libs/multicheck/multicheck.css">
@@ -21,40 +21,44 @@
 	rel="stylesheet">
 <link href="dist/css/style.min.css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-	 
-   
- 
-    <!-- jQuery library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
- 
-    <!-- Popper JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
- 
-  
-   
-   
-   
-    <style type="text/css">
-       body{
-       background-color: #eeeeee;
-       }
-       
-        #chart_div{
-            text-align: center;
-            width: 100%;
-            height: 600px;
-            margin: 0 auto;
-            padding: 0;
-        }
-    </style>
- 
- 
-    <!-- AJAX API 로드  -->
- 
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
+
+
+<!-- jQuery library -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+
+
+
+
+<style type="text/css">
+body {
+	background-color: #eeeeee;
+}
+
+#chart_div {
+	text-align: center;
+	width: 100%;
+	height: 600px;
+	margin: 0 auto;
+	padding: 0;
+}
+</style>
+
+
+<!-- AJAX API 로드  -->
+
+
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
     google.charts.load('current', {packages: ['corechart', 'bar']});
     google.charts.setOnLoadCallback(drawMultSeries);
     
@@ -87,11 +91,43 @@
     }
     
  </script>
-    
+ 
+ <!-- 파일 버튼 디자인을 위해 bootstrap 추가한 것-->
+<script
+	src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<link
+	href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"
+	rel="stylesheet">
+
+
+<style>
+.btn-file {
+	position: relative;
+	overflow: hidden;
+}
+
+.btn-file input[type=file] {
+	position: absolute;
+	top: 0;
+	right: 0;
+	min-width: 100%;
+	min-height: 100%;
+	font-size: 100px;
+	text-align: right;
+	filter: alpha(opacity = 0);
+	opacity: 0;
+	outline: none;
+	background: white;
+	cursor: inherit;
+	display: block;
+}
+</style>
+<!--  파일 버튼 디자인을 위해 bootstrap 추가한 것/ -->
+
 </head>
 
 <body>
-	
+
 	<!-- ============================================================== -->
 	<!-- Preloader - style you can find in spinners.css -->
 	<!-- ============================================================== -->
@@ -117,8 +153,8 @@
 					<!-- ============================================================== -->
 					<!-- Logo -->
 					<!-- ============================================================== -->
-					<a class="navbar-brand" href="index.html"> <!-- Logo icon --> <b
-						class="logo-icon p-l-10"> <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
+					<a class="navbar-brand" href="EmpList.emp"> <!-- Logo icon -->
+						<b class="logo-icon p-l-10"> <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
 							<!-- Dark Logo icon --> <img src="assets/images/logo-icon.png"
 							alt="homepage" class="light-logo" />
 
@@ -146,7 +182,12 @@
 				<!-- ============================================================== -->
 				<!-- End Logo -->
 				<!-- ============================================================== -->
-
+				<div class="ml-auto text-right" style="margin-right: 50px">
+					<label class="btn btn-primary btn-file float-right"> <a
+						href="AdminLogout.emp"
+						style="color: white; text-decoration: none;">로그아웃</a>
+					</label>
+				</div>
 			</nav>
 		</header>
 		<!-- ============================================================== -->
@@ -164,7 +205,8 @@
 						<li class="sidebar-item"><a
 							class="sidebar-link waves-effect waves-dark sidebar-link"
 							href="EmpList.emp" aria-expanded="false"><i
-								class="mdi mdi-view-dashboard"></i><span class="hide-menu">사원 관리</span></a></li>
+								class="mdi mdi-view-dashboard"></i><span class="hide-menu">사원
+									관리</span></a></li>
 						<li class="sidebar-item"><a
 							class="sidebar-link waves-effect waves-dark sidebar-link"
 							href="EmpChartview.emp" aria-expanded="false"><i
@@ -210,33 +252,34 @@
 
 
 			<div class="container-fluid">
-               
-       
-                <!-- Chart-3 -->
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">Bar Chart</h5>
-                                <div class="flot-chart">
-                                    <div id="chart_div"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-               
-            </div>
+
+
+				<!-- Chart-3 -->
+				<div class="row">
+					<div class="col-md-12">
+						<div class="card">
+							<div class="card-body">
+								<h5 class="card-title">Bar Chart</h5>
+								<div class="flot-chart">
+									<div id="chart_div"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
 		</div>
 	</div>
 
-	
+
 	<script src="assets/libs/jquery/dist/jquery.min.js"></script>
 	<!-- Bootstrap tether Core JavaScript -->
 	<script src="assets/libs/popper.js/dist/umd/popper.min.js"></script>
 	<script src="assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
 	<!-- slimscrollbar scrollbar JavaScript -->
-	<script src="assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
+	<script
+		src="assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
 	<script src="assets/extra-libs/sparkline/sparkline.js"></script>
 	<!--Wave Effects -->
 	<script src="dist/js/waves.js"></script>

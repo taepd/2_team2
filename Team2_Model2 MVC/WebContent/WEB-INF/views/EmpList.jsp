@@ -90,6 +90,41 @@
 		
 	});
 	</script>
+<!-- 파일 버튼 디자인을 위해 bootstrap 추가한 것-->
+<script
+	src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<link
+	href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"
+	rel="stylesheet">
+
+
+<style>
+.btn-file {
+	position: relative;
+	overflow: hidden;
+}
+
+.btn-file input[type=file] {
+	position: absolute;
+	top: 0;
+	right: 0;
+	min-width: 100%;
+	min-height: 100%;
+	font-size: 100px;
+	text-align: right;
+	filter: alpha(opacity = 0);
+	opacity: 0;
+	outline: none;
+	background: white;
+	cursor: inherit;
+	display: block;
+}
+</style>
+<!--  파일 버튼 디자인을 위해 bootstrap 추가한 것/ -->	
+
+	
+	
+
 </head>
 
 <body>
@@ -124,7 +159,7 @@
 					<!-- ============================================================== -->
 					<!-- Logo -->
 					<!-- ============================================================== -->
-					<a class="navbar-brand" href="index.html"> <!-- Logo icon --> <b
+					<a class="navbar-brand" href="EmpList.emp"> <!-- Logo icon --> <b
 						class="logo-icon p-l-10"> <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
 							<!-- Dark Logo icon --> <img src="assets/images/logo-icon.png"
 							alt="homepage" class="light-logo" />
@@ -149,11 +184,16 @@
 						data-target="#navbarSupportedContent"
 						aria-controls="navbarSupportedContent" aria-expanded="false"
 						aria-label="Toggle navigation"><i class="ti-more"></i></a>
+							
 				</div>
 				<!-- ============================================================== -->
 				<!-- End Logo -->
 				<!-- ============================================================== -->
-
+			<div class="ml-auto text-right" style="margin-right:50px">
+			<label class="btn btn-primary btn-file float-right">  
+					<a href="AdminLogout.emp" style="color:white; text-decoration:none; ">로그아웃</a>
+		    </label> 
+			</div>
 			</nav>
 		</header>
 		<!-- ============================================================== -->
@@ -179,20 +219,13 @@
 
 					</ul>
 				</nav>
-				<!-- End Sidebar navigation -->
+				
 			</div>
-			<!-- End Sidebar scroll-->
+			
 		</aside>
-		<!-- ============================================================== -->
-		<!-- End Left Sidebar - style you can find in sidebar.scss  -->
-		<!-- ============================================================== -->
-		<!-- ============================================================== -->
-		<!-- Page wrapper  -->
-		<!-- ============================================================== -->
+	
 		<div class="page-wrapper">
-			<!-- ============================================================== -->
-			<!-- Bread crumb and right sidebar toggle -->
-			<!-- ============================================================== -->
+		
 			<div class="page-breadcrumb">
 				<div class="row">
 					<div class="col-12 d-flex no-block align-items-center">
@@ -201,19 +234,13 @@
 							<nav aria-label="breadcrumb">
 								<ol class="breadcrumb">
 									<li class="breadcrumb-item"><a href="#">Home</a></li>
-									<li class="breadcrumb-item active" aria-current="page">Library</li>
 								</ol>
 							</nav>
 						</div>
 					</div>
 				</div>
 			</div>
-			<!-- ============================================================== -->
-			<!-- End Bread crumb and right sidebar toggle -->
-			<!-- ============================================================== -->
-			<!-- ============================================================== -->
-			<!-- Container fluid  -->
-			<!-- ============================================================== -->
+
 
 
 			<div class="card">

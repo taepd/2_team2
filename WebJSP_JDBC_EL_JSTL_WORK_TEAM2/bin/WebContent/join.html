@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- 
+기존에 있는거에 부트스트랩으로 디자인 입히고
+그다음에 마지막에 정규표현식 얹히는걸로 
+-->
+
+
+
+
+<!-- Bootstrap CSS 추가 -->
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+	crossorigin="anonymous">
+<!-- 사용자 CSS 추가 -->
+<link rel="stylesheet" href="./css/common.css">
+
+<!-- pure CSS 추가 -->
+<link rel="stylesheet"
+	href="https://unpkg.com/purecss@1.0.1/build/pure-min.css"
+	integrity="sha384-oAOxQR6DkCoMliIh8yFnu25d7Eq/PHS21PClpwjOTeU2jRSq11vu66rf90/cZr47"
+	crossorigin="anonymous">
+
+<link
+	href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700"
+	rel="stylesheet">
+
+<link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
+<link rel="stylesheet" href="css/animate.css">
+
+<link rel="stylesheet" href="css/owl.carousel.min.css">
+<link rel="stylesheet" href="css/owl.theme.default.min.css">
+<link rel="stylesheet" href="css/magnific-popup.css">
+
+<link rel="stylesheet" href="css/aos.css">
+
+<link rel="stylesheet" href="css/ionicons.min.css">
+
+<link rel="stylesheet" href="css/bootstrap-datepicker.css">
+<link rel="stylesheet" href="css/jquery.timepicker.css">
+
+<link rel="stylesheet" href="css/mycss.css">
+<link rel="stylesheet" href="css/flaticon.css">
+<link rel="stylesheet" href="css/icomoon.css">
+<link rel="stylesheet" href="css/style.css">
+
+<title>Join</title>
+
+
+<style type="text/css">
+body {
+	background-image: url("images/2vengers_red.png");
+	font-family: 'Gmarket Sans';
+}
+
+.btn {
+	color: #f8b102;
+	font-weight: 400;
+}
+
+div.btn {
+	padding: 5px;
+	width: 100%;
+	font-size: 18px;
+}
+
+.centered {
+	width: 40%;
+	margin:0 auto;
+}
+#joinbt{
+	margin: 0 auto;
+}
+.joincentered{
+	
+	text-align: center;
+}
+
+.form-control {
+  height: 40px !important;
+  background: #fff !important;
+  color: #000000 !important;
+  font-size: 15px;
+  border-radius: 0px;
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+  border: 1px solid #e6e6e6;
+  }
+
+  label{
+	font-size: 14px;
+	font-weight: 700;
+	margin-bottom: 0px;
+  }
+
+
+</style>
+
+
+</head>
+
+
+
+
+
+
+
+
+
+
+
+<body>
+	<section class="text-dark mx-5 mb-5" id="join">
+		<div class="centered">
+			<div class="container my-4">
+				<div class="join jumbotron" style="background-color: white;">
+					<h1 class="text-center">
+						Join<img src="./images/feather.svg" class="img-fluid ml-1">
+					</h1>
+
+					<hr class="my-4">
+
+
+					<div class="card-body">
+						<form>
+						
+						
+						
+						
+							<div class="form-group">
+								<label for="fname">Id</label> <input type="text"
+									class="form-control form-control-sm" placeholder="아이디 입력">
+							</div>
+
+							<div class="form-group">
+								<label for="fname">이름</label> <input type="text"
+									class="form-control form-control-sm" placeholder="실명 입력">
+							</div>
+
+							<div class="form-group">
+								<label for="fname">패스워드</label> <input type="text"
+									class="form-control form-control-sm" placeholder="패스워드 입력">
+							</div>
+
+							<div class="form-group">
+								<label for="fname">패스워드 확인</label> <input type="text"
+									class="form-control form-control-sm" placeholder="패스워드 확인">
+							</div>
+
+							<div class="form-group">
+								<label for="fname">성별&nbsp;&nbsp;&nbsp;</label> <input
+									type="radio" id="gender" name="gender" value="여" checked>여&nbsp;&nbsp;
+								<input type="radio" id="gender" name="gender" value="남">남
+							</div>
+
+							<div class="form-group">
+								<label for="fname">나이</label> <input type="text"
+									class="form-control form-control-sm" placeholder="나이 입력">
+							</div>
+
+							<div class="form-group">
+								<label for="fname">Email</label> <input type="text"
+									class="form-control form-control-sm" placeholder="이메일 입력">
+							</div>
+
+							<div class="form-group">
+								<label for="fname">주민번호</label> <input type="text"
+									class="form-control form-control-sm" placeholder="주민번호 입력">
+									
+							</div>
+
+							<div class="form-group">
+								<label for="fname">생년월일</label> <input type="text"
+									class="form-control form-control-sm" placeholder="생년월입 입력">
+							</div>
+						</form>
+					</div>
+
+
+
+
+
+
+
+					<div class="joincentered" >
+							<button type="submit" class="btn btn-danger btn-lg" onclick="location.href='login.html'">Join</button>
+					</div>
+
+				</div>
+			</div>
+
+			<div class="mt-5"></div>
+		</div>
+		</div>
+
+		<div class="mt-5"></div>
+	</section>
+
+	<div class="mt-5"></div>
+
+
+
+	<div id="ftco-loader" class="show fullscreen">
+		<svg class="circular" width="48px" height="48px">
+			<circle class="path-bg" cx="24" cy="24" r="22" fill="none"
+				stroke-width="4" stroke="#eeeeee" />
+			<circle class="path" cx="24" cy="24" r="22" fill="none"
+				stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" /></svg>
+	</div>
+
+	<script src="https://kit.fontawesome.com/880ed703ab.js"
+		crossorigin="anonymous"></script>
+	<script src="js/jquery.min.js"></script>
+	<script src="js/jquery-migrate-3.0.1.min.js"></script>
+	<script src="js/popper.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/jquery.easing.1.3.js"></script>
+	<script src="js/jquery.waypoints.min.js"></script>
+	<script src="js/jquery.stellar.min.js"></script>
+	<script src="js/owl.carousel.min.js"></script>
+	<script src="js/jquery.magnific-popup.min.js"></script>
+	<script src="js/aos.js"></script>
+	<script src="js/jquery.animateNumber.min.js"></script>
+	<script src="js/bootstrap-datepicker.js"></script>
+	<script src="js/jquery.timepicker.min.js"></script>
+	<script src="js/scrollax.min.js"></script>
+	<script
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+	<script src="js/google-map.js"></script>
+	<script src="js/main.js"></script>
+</body>
+</html>

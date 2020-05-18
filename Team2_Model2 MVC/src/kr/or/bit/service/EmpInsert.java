@@ -52,7 +52,7 @@ public class EmpInsert implements Action {
 				
 				String deptno = multi.getParameter("deptno");
 				String img = multi.getFilesystemName(file);
-	
+				System.out.println(img);
 				emp.setEmpno(Integer.parseInt(empno));
 				emp.setEname(ename);
 				emp.setJob(job);
