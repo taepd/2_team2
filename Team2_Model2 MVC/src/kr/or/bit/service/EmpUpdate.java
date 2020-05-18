@@ -42,6 +42,7 @@ public class EmpUpdate implements Action {
 				Enumeration filenames = multi.getFileNames();
 				String file = (String)filenames.nextElement();
 				
+				
 				empno = multi.getParameter("empno");
 				String ename = multi.getParameter("ename");
 				String job = multi.getParameter("job");
@@ -49,9 +50,10 @@ public class EmpUpdate implements Action {
 				String hiredate = multi.getParameter("hiredate"); // 타입 date로 해야하나?
 				String sal = multi.getParameter("sal");
 				String comm = multi.getParameter("comm");
-				
 				String deptno = multi.getParameter("deptno");
 				String img = multi.getFilesystemName(file);
+				
+				System.out.println(img);
 				
 				emp.setEmpno(Integer.parseInt(empno));
 				emp.setEname(ename);
@@ -61,7 +63,7 @@ public class EmpUpdate implements Action {
 				emp.setSal(Integer.parseInt(sal));
 				emp.setComm(Integer.parseInt(comm));
 				emp.setDeptno(Integer.parseInt(deptno));
-
+				emp.setImg(img);
 				result = dao.updateEmp(emp);
 				request.setAttribute("emp", emp); // 하는 중
 				

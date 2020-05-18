@@ -189,7 +189,7 @@ public class Empdao {
 		try {
 			conn = ConnectionHelper.getConnection("oracle");// 추가
 
-			String sql = "update emp set ename=?, job=?, mgr=?, sal=?, comm=?, deptno=? img=? where empno=?";
+			String sql = "update emp set ename=?, job=?, mgr=?, sal=?, comm=?, deptno=?, img=? where empno=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, emp.getEname());
 			pstmt.setString(2, emp.getJob());

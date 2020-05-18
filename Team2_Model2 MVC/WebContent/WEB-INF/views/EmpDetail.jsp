@@ -19,6 +19,38 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+<!-- 파일 버튼 디자인을 위해 bootstrap 추가한 것-->
+<script
+	src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<link
+	href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"
+	rel="stylesheet">
+
+
+<style>
+.btn-file {
+	position: relative;
+	overflow: hidden;
+}
+
+.btn-file input[type=file] {
+	position: absolute;
+	top: 0;
+	right: 0;
+	min-width: 100%;
+	min-height: 100%;
+	font-size: 100px;
+	text-align: right;
+	filter: alpha(opacity = 0);
+	opacity: 0;
+	outline: none;
+	background: white;
+	cursor: inherit;
+	display: block;
+}
+</style>
+<!--  파일 버튼 디자인을 위해 bootstrap 추가한 것/ -->
 </head>
 
 <body>
@@ -48,7 +80,7 @@
                     <!-- ============================================================== -->
                     <!-- Logo -->
                     <!-- ============================================================== -->
-                    <a class="navbar-brand" href="index.html">
+                    <a class="navbar-brand" href="EmpList.emp">
                         <!-- Logo icon -->
                         <b class="logo-icon p-l-10">
                             <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
@@ -83,7 +115,12 @@
                 <!-- ============================================================== -->
                 <!-- End Logo -->
                 <!-- ============================================================== -->
-                
+                <div class="ml-auto text-right" style="margin-right: 50px">
+					<label class="btn btn-primary btn-file float-right"> <a
+						href="AdminLogout.emp"
+						style="color: white; text-decoration: none;">로그아웃</a>
+					</label>
+				</div>
             </nav>
         </header>
         <!-- ============================================================== -->
@@ -98,7 +135,7 @@
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav" class="p-t-30">
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="index.html" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Dashboard</span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="EmpList.emp" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">사원 관리</span></a></li>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="charts.html" aria-expanded="false"><i class="mdi mdi-chart-bar"></i><span class="hide-menu">Charts</span></a></li>
                         
                     </ul>
@@ -183,22 +220,28 @@
                                     </div>
                                    
                                 </div>
-                                
+                              
                                 <form action="EmpUpdate.emp" method="post">
                                  	<input type="hidden" name="empno" value=${emp.empno }>
-                                 	<input type="hidden" name="ename" value=${emp.empno }>
+                                 	<input type="hidden" name="ename" value=${emp.ename }>
                                  	<input type="hidden" name="job" value=${emp.job }>
                                  	<input type="hidden" name="mgr" value=${emp.mgr }>
                                  	<input type="hidden" name="hiredate" value=${emp.hiredate }>
                                  	<input type="hidden" name="sal" value=${emp.sal }>
                                  	<input type="hidden" name="comm" value=${emp.comm }>
                                  	<input type="hidden" name="deptno" value=${emp.deptno }>
+                                 	<input type="hidden" name="img" value=${emp.img }>
                                 <div class="text-right">
-                                     <button class="btn btn-danger" onclick="location.href='EmpList.emp?cp=${param.cp}&ps=${param.ps}'">뒤로가기</button>
+                                    
                                      <button type="submit" class="btn btn-danger">정보수정</button>
-                                     <button class="btn btn-danger" onclick="location.href='EmpDelete.emp?empno=${emp.empno}&cp=${param.cp}&ps=${param.ps}'">사원삭제 </button>
+                                     
                                 </div>
+                               
                                 </form>
+                                <div class="text-right" style="margin-left:4px">    
+                                 <button class="btn btn-danger" onclick="location.href='EmpDelete.emp?empno=${emp.empno}&cp=${param.cp}&ps=${param.ps}'">사원삭제 </button>
+                            	 <button class="btn btn-danger" onclick="location.href='EmpList.emp?cp=${param.cp}&ps=${param.ps}'">뒤로가기</button>
+                            	 </div>
                             </div>
                         </div>
                     </div>

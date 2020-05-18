@@ -26,6 +26,37 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
+<!-- 파일 버튼 디자인을 위해 bootstrap 추가한 것-->
+<script
+	src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<link
+	href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"
+	rel="stylesheet">
+
+
+<style>
+.btn-file {
+	position: relative;
+	overflow: hidden;
+}
+
+.btn-file input[type=file] {
+	position: absolute;
+	top: 0;
+	right: 0;
+	min-width: 100%;
+	min-height: 100%;
+	font-size: 100px;
+	text-align: right;
+	filter: alpha(opacity = 0);
+	opacity: 0;
+	outline: none;
+	background: white;
+	cursor: inherit;
+	display: block;
+}
+</style>
+<!--  파일 버튼 디자인을 위해 bootstrap 추가한 것/ -->
 </head>
 
 <body>
@@ -53,7 +84,7 @@
                     <!-- ============================================================== -->
                     <!-- Logo -->
                     <!-- ============================================================== -->
-                    <a class="navbar-brand" href="index.html">
+                    <a class="navbar-brand" href="EmpList.emp">
                         <!-- Logo icon -->
                         <b class="logo-icon p-l-10">
                             <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
@@ -88,7 +119,11 @@
                 <!-- ============================================================== -->
                 <!-- End Logo -->
                 <!-- ============================================================== -->
-            
+            <div class="ml-auto text-right" style="margin-right:50px">
+			<label class="btn btn-primary btn-file float-right">  
+					<a href="AdminLogout.emp" style="color:white; text-decoration:none; ">로그아웃</a>
+		    </label> 
+			</div>
             </nav>
         </header>
         <!-- ============================================================== -->
@@ -202,13 +237,16 @@
                                             <input type="text" class="form-control" name="deptno" id="deptno" placeholder="사원의 부서번호를 입력해주세요">
                                         </div>
                                     </div>
-                                    <div class="form-group row">
-                                        <label for="cono1" class="col-sm-3 text-right control-label col-form-label">이미지</label>
-                                        <div class="col-sm-9">
-                                           <input type='file'name="img" onchange="readURL(this);" /> <img id="img" 
-			src="#" alt="your image" />
-                                        </div>
-                                    </div>
+                                   <div class="form-group row">
+									<label for="cono1"
+										class="col-sm-3 text-right control-label col-form-label">이미지</label>
+									<div class="col-sm-9">
+										<label class="btn btn-primary btn-file"> 이미지 설정/변경 
+										<input type="file" name="img" style="display: none;" onchange="readURL(this);">
+										</label>  <span id="imgFileName">${param.img}</span> 
+										<img id="img" src="upload/${param.img}" alt="your image" />
+									</div>
+								</div>
                                 </div>
                                 <div class="border-top">
                                     <div class="card-body">
@@ -266,7 +304,7 @@
 				$('#img').attr('src', e.target.result);
 			}
 			reader.readAsDataURL(input.files[0]);
-		}
+		}$('#imgFileName').html(input.files[0].name);
 	};
 </script>
     <script src="assets/libs/jquery/dist/jquery.min.js"></script>
