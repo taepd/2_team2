@@ -182,7 +182,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card card-body printableArea">
-                            <h3><b>사번</b> <span class="pull-right">${emp.empno }</span></h3>
+                            <h3><b>사번</b> <span>${emp.empno }</span></h3>
                             <hr>
                             <div class="row">
                                 <div class="col-md-12">

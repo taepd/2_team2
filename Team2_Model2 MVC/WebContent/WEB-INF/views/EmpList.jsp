@@ -31,10 +31,11 @@
 			$.ajax(
 					 {
 						 type:"get",
-						 data,
+						 data: data,
 						 url:"EmpSearchEmpno.emp?",
 						 dataType:"json",
 						 success:function(responsedata){ 
+							 console.log(responsedata);
 							$('#emptable').empty();
 							$.each(responsedata,function(index,obj){	
 								$('#emptable').append(	
@@ -56,6 +57,9 @@
 			      );
 		});
 		
+		
+		
+		
 		$('#deptsearch').change(function(){
 			if($('#deptsearch option:selected').val() == "선택없음") {
 				$(location).attr('href',"EmpList.emp?cp=${cpage}&ps=${pagesize}");
@@ -64,8 +68,8 @@
 			$.ajax(
 					 {
 						 type:"get",
-						 data,
-						 url:"EmpSearchDeptno.emp?",
+						 data: data,
+						 url:"EmpSearchDeptno.emp",
 						 dataType:"json",
 						 success:function(responsedata){ 
 							 console.log(responsedata);
@@ -134,6 +138,7 @@
 	<c:set var="cpage" value="${requestScope.cpage}" />
 	<c:set var="pagecount" value="${requestScope.pagecount}" />
 	<c:set var="totalempcount" value="${requestScope.totalempcount}" />
+	<c:set var="deptList" value="${requestScope.deptList}" />
 	<!-- ============================================================== -->
 	<!-- Preloader - style you can find in spinners.css -->
 	<!-- ============================================================== -->
@@ -277,9 +282,9 @@
 									<div id="zero_config_filter" class="dataTables_filter">
 										부서번호 : <select id="deptsearch">
 											<option value="선택없음" selected>선택없음</option>
-											<option value="10">10</option>
-											<option value="20">20</option>
-											<option value="30">30</option>
+											<c:forEach var="dept" items="${deptList}">>
+											<option value="${dept}">${dept}</option>
+											</c:forEach>
 										</select>
 										<label>Search:<input type="search" id="empsearch" name="empsearch"
 											class="form-control form-control-sm" placeholder=""

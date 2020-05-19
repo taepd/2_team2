@@ -479,5 +479,37 @@ public class Empdao {
 
 		return jsonArray;
 	}
+	//부서번호 조회
+	public List<Integer> getDeptList() {
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<Integer> deptlist = null;
+		try {
+			conn = ConnectionHelper.getConnection("oracle");
+			String sql = "select distinct deptno from emp order by deptno asc";
+			pstmt = conn.prepareStatement(sql);	
+
+			rs = pstmt.executeQuery();
+			deptlist = new ArrayList<>();
+			while (rs.next()) {			
+				deptlist.add(rs.getInt("deptno"));
+			}
+
+		} catch (Exception e) {
+			System.out.println("오류 :" + e.getMessage());
+		} finally {
+			DB_Close.close(rs);
+			DB_Close.close(pstmt);
+			try {
+				conn.close(); // 받환하기
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return deptlist;
+	}
 
 }

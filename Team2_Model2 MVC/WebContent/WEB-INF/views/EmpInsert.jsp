@@ -57,6 +57,43 @@
 }
 </style>
 <!--  파일 버튼 디자인을 위해 bootstrap 추가한 것/ -->
+<!-- jquery UI datepicker -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/sunny/jquery-ui.css">
+
+
+<script type="text/javascript">
+		
+		$(function(){
+					
+			
+			var monthNames =[];
+			for(var i = 1 ; i <=12 ;i++){
+				monthNames.push(i + "월")
+			};
+			
+			
+			$("#hiredate").datepicker(
+				{
+				   format : "yyyy-mm-dd",
+				  /*  prevText:"이전달", //이전달 Tool tip text
+				   nextText:"다음달",  //다음달 Tool tip text
+				   monthNames : monthNames ,//['1월','2월'] //각 월표현
+				   //dayNames : ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'],
+				   dayNamesMin:['일','월','화','수','목','금','토'] ,
+				   yearSuffix:'년',
+				   numberOfMonths:1	 */			  
+				}	
+			);
+
+			
+		});
+</script>
+
+
+
+
 </head>
 
 <body>
@@ -249,14 +286,11 @@
 								</div>
                                 </div>
                                 <div class="border-top">
-                                    <div class="card-body">
-                                        <button type="button" class="btn btn-primary"></button>
-                                     
-                						
+                                    <div class="card-body" style="margin-left:220px">
+                                    	<input type="submit" value="전송" >
+                                    	<input type="reset" value="취소">
                                     </div>
                                 </div>
-                                <input type="submit" value="전송" >
-                                     <input type="reset" value="취소">
                             </form>
                             
                          

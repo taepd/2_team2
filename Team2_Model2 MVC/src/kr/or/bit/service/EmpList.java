@@ -41,7 +41,8 @@ public class EmpList implements Action {
 			 Empdao dao = new Empdao();
 			 List<Emp> emplist = dao.getEmpList(cpage, pagesize);
 			 request.setAttribute("emplist", emplist);
-			 
+			 List<Integer> deptList = dao.getDeptList();
+			 request.setAttribute("deptList", deptList);
 			 
 			 
 			 int totalempcount = dao.getEmpCount();
