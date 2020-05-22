@@ -16,8 +16,10 @@ import kr.or.bit.service.AdminLogout;
 import kr.or.bit.service.DeptDetail;
 import kr.or.bit.service.EmpChart;
 import kr.or.bit.service.EmpDelete;
+import kr.or.bit.service.DeptnoSelect;
 import kr.or.bit.service.EmpDetail;
 import kr.or.bit.service.EmpInsert;
+import kr.or.bit.service.EmpJobSelect;
 import kr.or.bit.service.EmpList;
 import kr.or.bit.service.EmpSearchDeptno;
 import kr.or.bit.service.EmpSearchEmpno;
@@ -78,7 +80,7 @@ public class FrontEmpController extends HttpServlet {
     		forward.setPath("/authentication-login.html");
     		
     	}else if(url_Command.equals("/EmpInsert.emp")) {
-    		forward = new ActionForward();
+    		forward = new ActionForward(); 
     		forward.setRedirect(false);
     		forward.setPath("/WEB-INF/views/EmpInsert.jsp");
     		
@@ -121,11 +123,17 @@ public class FrontEmpController extends HttpServlet {
     		action = new EmpChart();
     		forward = action.execute(request, response);
     	}
-    	else if(url_Command.equals("/EmpChartview.emp")) { //사원 수정
+    	else if(url_Command.equals("/EmpChartview.emp")) {
     		//UI 제공
     		forward = new ActionForward();
     		forward.setRedirect(false);
     		forward.setPath("/WEB-INF/views/EmpChartview.jsp");
+    	}else if(url_Command.equals("/EmpJobSelect.emp")) {
+    		action = new EmpJobSelect();
+    		forward = action.execute(request, response);
+    	}else if(url_Command.equals("/EmpDeptnoSelect.emp")) {
+    		action = new DeptnoSelect();
+    		forward = action.execute(request, response);
     	}
     	
 

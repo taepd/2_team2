@@ -24,7 +24,7 @@ public class EmpDelete implements Action {
 			url = "EmpList.emp";
 		} else {
 			msg = "삭제 실패";
-			url = "EmpDetail.emp";
+			url = "EmpDetail.emp?empno="+empno;
 		}
 		
 		request.setAttribute("msg", msg);

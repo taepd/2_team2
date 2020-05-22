@@ -22,7 +22,7 @@ public class AdminLogin implements Action {
 			
 			Empdao dao = new Empdao();
 			admin = dao.getAdmin(userid);
-			ArrayList<Empdao> d = new ArrayList<Empdao>();
+			
 			
 			
 			String msg = "";

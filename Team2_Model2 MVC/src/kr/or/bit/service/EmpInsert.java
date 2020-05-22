@@ -47,8 +47,8 @@ public class EmpInsert implements Action {
 				String job = multi.getParameter("job");
 				String mgr = multi.getParameter("mgr");
 				String hiredate = multi.getParameter("hiredate"); // 타입 date로 해야하나?
-				String sal = multi.getParameter("sal");
-				String comm = multi.getParameter("comm");
+				String sal = multi.getParameter("sal").replace(",", "");
+				String comm = multi.getParameter("comm").replace(",", "");
 				
 				String deptno = multi.getParameter("deptno");
 				String img = multi.getFilesystemName(file);

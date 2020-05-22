@@ -479,37 +479,77 @@ public class Empdao {
 
 		return jsonArray;
 	}
-	//부서번호 조회
-	public List<Integer> getDeptList() {
 
+	public List<String> getEmpJob() {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		List<Integer> deptlist = null;
+		List<String> list = null;
+		
 		try {
 			conn = ConnectionHelper.getConnection("oracle");
-			String sql = "select distinct deptno from emp order by deptno asc";
-			pstmt = conn.prepareStatement(sql);	
-
+			String sql = "select distinct job from emp";
+			
+			pstmt = conn.prepareStatement(sql);
+			
 			rs = pstmt.executeQuery();
-			deptlist = new ArrayList<>();
-			while (rs.next()) {			
-				deptlist.add(rs.getInt("deptno"));
+			
+			list = new ArrayList<String>();
+			while(rs.next()) {
+				list.add(rs.getString(1));
 			}
-
+			
+			
 		} catch (Exception e) {
-			System.out.println("오류 :" + e.getMessage());
+			System.out.println(e.getMessage());
 		} finally {
 			DB_Close.close(rs);
 			DB_Close.close(pstmt);
 			try {
-				conn.close(); // 받환하기
-			} catch (SQLException e) {
-				e.printStackTrace();
+				conn.close();
+			} catch (Exception e2) {
+				System.out.println(e2.getMessage());
 			}
 		}
-
-		return deptlist;
+ 	
+		return list;
 	}
+	
+	
+	public List<Integer> getDeptno() {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<Integer> list = null;
+		
+		try {
+			conn = ConnectionHelper.getConnection("oracle");
+			String sql = "select distinct deptno from emp";
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			rs = pstmt.executeQuery();
+			
+			list = new ArrayList<Integer>();
+			while(rs.next()) {
+				list.add(rs.getInt(1));
+			}
+			
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			DB_Close.close(rs);
+			DB_Close.close(pstmt);
+			try {
+				conn.close();
+			} catch (Exception e2) {
+				System.out.println(e2.getMessage());
+			}
+		}
+ 	
+		return list;
+	}
+	
 
 }

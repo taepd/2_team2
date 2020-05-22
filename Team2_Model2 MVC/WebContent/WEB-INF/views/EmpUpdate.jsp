@@ -123,12 +123,7 @@
 				<!-- ============================================================== -->
 				<!-- End Logo -->
 				<!-- ============================================================== -->
-				<div class="ml-auto text-right" style="margin-right: 50px">
-					<label class="btn btn-primary btn-file float-right"> <a
-						href="AdminLogout.emp"
-						style="color: white; text-decoration: none;">로그아웃</a>
-					</label>
-				</div>
+
 			</nav>
 		</header>
 		<!-- ============================================================== -->
@@ -271,11 +266,10 @@
 									<label for="cono1"
 										class="col-sm-3 text-right control-label col-form-label">이미지</label>
 									<div class="col-sm-9">
-										<label class="btn btn-primary btn-file"> 이미지 설정/변경 <input
-											type="file" name="img" style="display: none;"
-											onchange="readURL(this);">
-										</label> <span id="imgFileName">${param.img}</span> <img id="img"
-											src="upload/${param.img}" alt="your image" />
+										<label class="btn btn-primary btn-file"> 이미지 설정/변경 
+										<input type="file" name="img" style="display: none;" onchange="readURL(this);">
+										</label>  <span id="imgFileName">${param.img}</span> 
+										<img id="img" src="upload/${param.img}" alt="your image" />
 									</div>
 								</div>
 							</div>
@@ -300,18 +294,17 @@
 			</div>
 
 			<script type="text/javascript">
-				function readURL(input) {
-					if (input.files && input.files[0]) {
-						var reader = new FileReader();
-						reader.onload = function(e) {
-							$('#img').attr('src', e.target.result);
-						}
-						reader.readAsDataURL(input.files[0]);
-					}
-					$('#imgFileName').html(input.files[0].name);
-
-				};
-			</script>
+	function readURL(input) {
+		if (input.files && input.files[0]) {
+			var reader = new FileReader();
+			reader.onload = function(e) {
+				$('#img').attr('src', e.target.result);
+			}
+			reader.readAsDataURL(input.files[0]);			
+		}$('#imgFileName').html(input.files[0].name);
+		
+	};
+	</script>
 			<script src="assets/libs/jquery/dist/jquery.min.js"></script>
 			<!-- Bootstrap tether Core JavaScript -->
 			<script src="assets/libs/popper.js/dist/umd/popper.min.js"></script>
@@ -341,54 +334,48 @@
 				src="assets/libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
 			<script src="assets/libs/quill/dist/quill.min.js"></script>
 			<script>
-				//***********************************//
-				// For select 2
-				//***********************************//
-				$(".select2").select2();
+        //***********************************//
+        // For select 2
+        //***********************************//
+        $(".select2").select2();
 
-				/*colorpicker*/
-				$('.demo').each(
-						function() {
-							//
-							// Dear reader, it's actually very easy to initialize MiniColors. For example:
-							//
-							//  $(selector).minicolors();
-							//
-							// The way I've done it below is just for the demo, so don't get confused
-							// by it. Also, data- attributes aren't supported at this time...they're
-							// only used for this demo.
-							//
-							$(this).minicolors(
-									{
-										control : $(this).attr('data-control')
-												|| 'hue',
-										position : $(this)
-												.attr('data-position')
-												|| 'bottom left',
+        /*colorpicker*/
+        $('.demo').each(function() {
+        //
+        // Dear reader, it's actually very easy to initialize MiniColors. For example:
+        //
+        //  $(selector).minicolors();
+        //
+        // The way I've done it below is just for the demo, so don't get confused
+        // by it. Also, data- attributes aren't supported at this time...they're
+        // only used for this demo.
+        //
+        $(this).minicolors({
+                control: $(this).attr('data-control') || 'hue',
+                position: $(this).attr('data-position') || 'bottom left',
 
-										change : function(value, opacity) {
-											if (!value)
-												return;
-											if (opacity)
-												value += ', ' + opacity;
-											if (typeof console === 'object') {
-												console.log(value);
-											}
-										},
-										theme : 'bootstrap'
-									});
+                change: function(value, opacity) {
+                    if (!value) return;
+                    if (opacity) value += ', ' + opacity;
+                    if (typeof console === 'object') {
+                        console.log(value);
+                    }
+                },
+                theme: 'bootstrap'
+            });
 
-						});
-				/*datwpicker*/
-				jQuery('.mydatepicker').datepicker();
-				jQuery('#datepicker-autoclose').datepicker({
-					autoclose : true,
-					todayHighlight : true
-				});
-				var quill = new Quill('#editor', {
-					theme : 'snow'
-				});
-			</script>
+        });
+        /*datwpicker*/
+        jQuery('.mydatepicker').datepicker();
+        jQuery('#datepicker-autoclose').datepicker({
+            autoclose: true,
+            todayHighlight: true
+        });
+        var quill = new Quill('#editor', {
+            theme: 'snow'
+        });
+
+    </script>
 </body>
 
 </html>

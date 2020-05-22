@@ -1,0 +1,79 @@
+<!--  꼬리글 달기 테이블 -->
+			<form name="reply" action="board_replyok.jsp" method="POST">
+				<!-- hidden 태그  값을 숨겨서 처리  -->
+				<input type="hidden" name="idx" value="<%=  %>">
+				<input type="hidden" name="userid" value="">
+					<!-- hidden data -->
+					<table width="80%" border="1">
+						<tr>
+							<th colspan="2">덧글 쓰기</th>
+						</tr>
+						<tr>
+							<td align="left">
+								작성자 : <input type="text" name="reply_writer"><br />
+								내&nbsp;&nbsp;용 : <textarea name="reply_content" rows="2" cols="50"></textarea>
+							</td>
+							<td align="left"> 
+								비밀번호:<input type="password" name="reply_pwd" size="4">
+								  	    <input type="button" value="등록" onclick="reply_check()">
+							</td>
+						</tr>
+					</table>
+			</form>
+	<!-- 유효성 체크	 -->	
+	<script type="text/javascript">
+		function reply_check() {
+			var frm = document.reply;
+			if (frm.reply_writer.value == "" || frm.reply_content.value == ""
+					|| frm.reply_pwd.value == "") {
+				alert("리플 내용, 작성자, 비밀번호를 모두 입력해야합니다.");
+				return false;
+			}
+			frm.submit();
+		}
+		function reply_del(frm) {
+			//alert("del");
+			//var frm = document.replyDel;
+			//alert(frm);
+			if (frm.delPwd.value == "") {
+				alert("비밀번호를 입력하세요");
+				frm.delPwd.focus();
+				return false;
+			}
+			frm.submit();
+		}
+	</script>
+	<br>
+	<!-- 꼬리글 목록 테이블 -->
+	<%
+	  //덧글 목록 보여주기
+	 
+	%>
+		<table width="80%" border="1">
+					<tr><th colspan="2">REPLY LIST</th></tr>
+	<%	   
+	
+	%>
+					<tr align="left">
+						<td width="80%">
+							[<%=%>] : 
+							<%= %><br>
+							작성일:<%= %>
+						</td>
+						<td width="20%">
+							<form action="boardreply_deleteOk.jsp" method="POST" name="replyDel">
+								<input type="hidden" name="no" value="<%=%>">
+								<input type="hidden" name="idx" value="<%= %>">
+								password :<input type="password" name="delPwd" size="4">
+					 			<input type="button" value="삭제" onclick="reply_del(this.form)">
+							</form>
+						</td>
+					</tr>
+		<%
+		
+		%>
+		</table>
+		<%
+	 
+		%>
+		

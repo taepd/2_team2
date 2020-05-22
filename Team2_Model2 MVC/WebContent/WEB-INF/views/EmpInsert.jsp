@@ -27,8 +27,11 @@
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
 <!-- 파일 버튼 디자인을 위해 bootstrap 추가한 것-->
+
 <script
 	src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+	
+
 <link
 	href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"
 	rel="stylesheet">
@@ -57,43 +60,66 @@
 }
 </style>
 <!--  파일 버튼 디자인을 위해 bootstrap 추가한 것/ -->
-<!-- jquery UI datepicker -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/sunny/jquery-ui.css">
 
-
-<script type="text/javascript">
-		
-		$(function(){
-					
-			
-			var monthNames =[];
-			for(var i = 1 ; i <=12 ;i++){
-				monthNames.push(i + "월")
-			};
-			
-			
-			$("#hiredate").datepicker(
+    <script type="text/javascript">
+    $(function() {
+    	$.ajax(
+				 {
+					 type:"get",
+					 url:"EmpJobSelect.emp",
+					 dataType:"html",
+					 success:function(responsedata){ 
+						$('#jobselect').html(responsedata);			 
+					 }
+				 });
+    	
+    	$.ajax(
+				 {
+					 type:"get",
+					 url:"EmpDeptnoSelect.emp",
+					 dataType:"json",
+					 success:function(responsedata){ 
+						 
+						 let select = "<select name='deptno'>";
+						 $.each(responsedata.deptnolist, function(index, obj) {
+							 if(index == 0) {
+								 select += "<option value='"+obj+"' selected>"+obj+"</option>";
+							 }else{
+							 	select += "<option value='"+obj+"'>"+obj+"</option>";
+							 }
+						})
+						$('#deptnoselect').html(select);			 
+					 }
+				 });
+    	
+    	
+    	
+    	
+    	
+    	
+   
+    	
+    	$('#hiredate').datepicker(
 				{
 				   format : "yyyy-mm-dd",
-				  /*  prevText:"이전달", //이전달 Tool tip text
-				   nextText:"다음달",  //다음달 Tool tip text
-				   monthNames : monthNames ,//['1월','2월'] //각 월표현
-				   //dayNames : ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'],
-				   dayNamesMin:['일','월','화','수','목','금','토'] ,
-				   yearSuffix:'년',
-				   numberOfMonths:1	 */			  
+				   autoclose : true
 				}	
 			);
-
-			
-		});
-</script>
-
-
-
-
+    	
+    	$('#comm, #sal').keyup(function() {
+    		var num = $(this).val().toString().replace(/[^0-9]/g,"");
+ 
+    		$(this).val(num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+    	});
+    	
+    	
+	});
+    
+    
+    
+    
+    </script>
 </head>
 
 <body>
@@ -156,11 +182,7 @@
                 <!-- ============================================================== -->
                 <!-- End Logo -->
                 <!-- ============================================================== -->
-            <div class="ml-auto text-right" style="margin-right:50px">
-			<label class="btn btn-primary btn-file float-right">  
-					<a href="AdminLogout.emp" style="color:white; text-decoration:none; ">로그아웃</a>
-		    </label> 
-			</div>
+            
             </nav>
         </header>
         <!-- ============================================================== -->
@@ -175,8 +197,8 @@
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav" class="p-t-30">
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="EmpList.emp" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">사원 관리</span></a></li>
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="EmpChartview.emp" aria-expanded="false"><i class="mdi mdi-chart-bar"></i><span class="hide-menu">차트</span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="index.html" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">사원 관리</span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="charts.html" aria-expanded="false"><i class="mdi mdi-chart-bar"></i><span class="hide-menu">차트</span></a></li>
                         
                     </ul>
                 </nav>
@@ -239,8 +261,8 @@
                                     </div>
                                     <div class="form-group row">
                                         <label for="lname" class="col-sm-3 text-right control-label col-form-label">직급</label>
-                                        <div class="col-sm-9">
-                                            <input type="text" class="form-control" name="job" id="job" placeholder="직급을 입력해주세요">
+                                        <div class="col-sm-9" id="jobselect">
+                                            
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -252,7 +274,7 @@
                                     <div class="form-group row">
                                         <label for="cono1" class="col-sm-3 text-right control-label col-form-label">입사일</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" name="hiredate" id="hiredate" placeholder="사원을 입사일을 입력해 주세요">
+                                            <input type="text" class="form-control" name="hiredate" id="hiredate" placeholder="사원을 입사일을 입력해 주세요" readonly style="cursor:default">
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -270,8 +292,8 @@
                                     </div>
                                     <div class="form-group row">
                                         <label for="cono1" class="col-sm-3 text-right control-label col-form-label">부서번호</label>
-                                        <div class="col-sm-9">
-                                            <input type="text" class="form-control" name="deptno" id="deptno" placeholder="사원의 부서번호를 입력해주세요">
+                                        <div class="col-sm-9" id="deptnoselect">
+                                            
                                         </div>
                                     </div>
                                    <div class="form-group row">
@@ -286,11 +308,14 @@
 								</div>
                                 </div>
                                 <div class="border-top">
-                                    <div class="card-body" style="margin-left:220px">
-                                    	<input type="submit" value="전송" >
-                                    	<input type="reset" value="취소">
+                                    <div class="card-body">
+                                        <button type="button" class="btn btn-primary"></button>
+                                     
+                						
                                     </div>
                                 </div>
+                                <input type="submit" value="전송" >
+                                     <input type="reset" value="취소">
                             </form>
                             
                          

@@ -31,11 +31,10 @@
 			$.ajax(
 					 {
 						 type:"get",
-						 data: data,
+						 data,
 						 url:"EmpSearchEmpno.emp?",
 						 dataType:"json",
 						 success:function(responsedata){ 
-							 console.log(responsedata);
 							$('#emptable').empty();
 							$.each(responsedata,function(index,obj){	
 								$('#emptable').append(	
@@ -57,9 +56,6 @@
 			      );
 		});
 		
-		
-		
-		
 		$('#deptsearch').change(function(){
 			if($('#deptsearch option:selected').val() == "선택없음") {
 				$(location).attr('href',"EmpList.emp?cp=${cpage}&ps=${pagesize}");
@@ -68,7 +64,7 @@
 			$.ajax(
 					 {
 						 type:"get",
-						 data: data,
+						 data,
 						 url:"EmpSearchDeptno.emp",
 						 dataType:"json",
 						 success:function(responsedata){ 
@@ -138,7 +134,6 @@
 	<c:set var="cpage" value="${requestScope.cpage}" />
 	<c:set var="pagecount" value="${requestScope.pagecount}" />
 	<c:set var="totalempcount" value="${requestScope.totalempcount}" />
-	<c:set var="deptList" value="${requestScope.deptList}" />
 	<!-- ============================================================== -->
 	<!-- Preloader - style you can find in spinners.css -->
 	<!-- ============================================================== -->
@@ -155,79 +150,17 @@
 		<!-- ============================================================== -->
 		<!-- Topbar header - style you can find in pages.scss -->
 		<!-- ============================================================== -->
-		<header class="topbar" data-navbarbg="skin5">
-			<nav class="navbar top-navbar navbar-expand-md navbar-dark">
-				<div class="navbar-header" data-logobg="skin5">
-					<!-- This is for the sidebar toggle which is visible on mobile only -->
-					<a class="nav-toggler waves-effect waves-light d-block d-md-none"
-						href="javascript:void(0)"><i class="ti-menu ti-close"></i></a>
-					<!-- ============================================================== -->
-					<!-- Logo -->
-					<!-- ============================================================== -->
-					<a class="navbar-brand" href="EmpList.emp"> <!-- Logo icon --> <b
-						class="logo-icon p-l-10"> <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
-							<!-- Dark Logo icon --> <img src="assets/images/logo-icon.png"
-							alt="homepage" class="light-logo" />
+		<!-- header include로 뺌 -->
+		   <jsp:include page="/WEB-INF/include/header.jsp"/>
 
-					</b> <!--End Logo icon --> <!-- Logo text --> <span class="logo-text">
-							<!-- dark Logo text --> <img src="assets/images/logo-text.png"
-							alt="homepage" class="light-logo" />
-
-					</span> <!-- Logo icon --> <!-- <b class="logo-icon"> --> <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
-						<!-- Dark Logo icon --> <!-- <img src="assets/images/logo-text.png" alt="homepage" class="light-logo" /> -->
-
-						<!-- </b> --> <!--End Logo icon -->
-					</a>
-					<!-- ============================================================== -->
-					<!-- End Logo -->
-					<!-- ============================================================== -->
-					<!-- ============================================================== -->
-					<!-- Toggle which is visible on mobile only -->
-					<!-- ============================================================== -->
-					<a class="topbartoggler d-block d-md-none waves-effect waves-light"
-						href="javascript:void(0)" data-toggle="collapse"
-						data-target="#navbarSupportedContent"
-						aria-controls="navbarSupportedContent" aria-expanded="false"
-						aria-label="Toggle navigation"><i class="ti-more"></i></a>
-							
-				</div>
-				<!-- ============================================================== -->
-				<!-- End Logo -->
-				<!-- ============================================================== -->
-			<div class="ml-auto text-right" style="margin-right:50px">
-			<label class="btn btn-primary btn-file float-right">  
-					<a href="AdminLogout.emp" style="color:white; text-decoration:none; ">로그아웃</a>
-		    </label> 
-			</div>
-			</nav>
-		</header>
 		<!-- ============================================================== -->
 		<!-- End Topbar header -->
 		<!-- ============================================================== -->
 		<!-- ============================================================== -->
 		<!-- Left Sidebar - style you can find in sidebar.scss  -->
 		<!-- ============================================================== -->
-		<aside class="left-sidebar" data-sidebarbg="skin5">
-			<!-- Sidebar scroll-->
-			<div class="scroll-sidebar">
-				<!-- Sidebar navigation-->
-				<nav class="sidebar-nav">
-					<ul id="sidebarnav" class="p-t-30">
-						<li class="sidebar-item"><a
-							class="sidebar-link waves-effect waves-dark sidebar-link"
-							href="EmpList.emp" aria-expanded="false"><i
-								class="mdi mdi-view-dashboard"></i><span class="hide-menu">사원 관리</span></a></li>
-						<li class="sidebar-item"><a
-							class="sidebar-link waves-effect waves-dark sidebar-link"
-							href="EmpChartview.emp" aria-expanded="false"><i
-								class="mdi mdi-chart-bar"></i><span class="hide-menu">차트</span></a></li>
-
-					</ul>
-				</nav>
-				
-			</div>
-			
-		</aside>
+		<!-- sidebar include로 뺌 -->
+		   <jsp:include page="/WEB-INF/include/sidebar.jsp"/>
 	
 		<div class="page-wrapper">
 		
@@ -282,9 +215,9 @@
 									<div id="zero_config_filter" class="dataTables_filter">
 										부서번호 : <select id="deptsearch">
 											<option value="선택없음" selected>선택없음</option>
-											<c:forEach var="dept" items="${deptList}">>
-											<option value="${dept}">${dept}</option>
-											</c:forEach>
+											<option value="10">10</option>
+											<option value="20">20</option>
+											<option value="30">30</option>
 										</select>
 										<label>Search:<input type="search" id="empsearch" name="empsearch"
 											class="form-control form-control-sm" placeholder=""
