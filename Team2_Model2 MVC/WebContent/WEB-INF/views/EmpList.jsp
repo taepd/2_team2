@@ -74,7 +74,7 @@
 				pagecount=1;
 			}else{
 			
-				pagecount = totalempcount/pagesize + 1; 
+				pagecount = Math.floor(totalempcount/pagesize + 1); 
 			}
 			
 			console.log('pagecount = '+pagecount);

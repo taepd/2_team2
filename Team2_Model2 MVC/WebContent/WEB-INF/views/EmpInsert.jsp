@@ -92,13 +92,7 @@
 						$('#deptnoselect').html(select);			 
 					 }
 				 });
-    	
-    	
-    	
-    	
-    	
-    	
-   
+ 
     	
     	$('#hiredate').datepicker(
 				{
