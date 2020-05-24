@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>	
 <select name="job">
-	
 	<c:forEach var="job" items="${requestScope.joblist }" varStatus="status">
 		<c:choose>
 			<c:when test="${status.index } == 0">

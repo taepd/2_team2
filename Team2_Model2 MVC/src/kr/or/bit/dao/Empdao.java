@@ -338,8 +338,6 @@ public class Empdao {
 				admin.setUserid(rs.getString(1));
 				admin.setPwd(rs.getString(2));
 				System.out.println("rs탐");
-			} else {
-				System.out.println("rs안탐");
 			}
 
 		} catch (Exception e) {
@@ -549,6 +547,47 @@ public class Empdao {
 		}
  	
 		return list;
+	}// datatable용 emplist데이터
+	public JSONArray getJsonEmpList() {
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		JSONObject jsonObject = new JSONObject();
+		JSONArray jsonArray = new JSONArray();
+
+		try {
+			conn = ConnectionHelper.getConnection("oracle");
+			String sql = "select * from emp";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				jsonObject.put("empno", rs.getInt(1));
+				jsonObject.put("ename", rs.getString(2));
+				jsonObject.put("job", rs.getString(3));
+				jsonObject.put("mgr", rs.getInt(4));
+				jsonObject.put("hiredate", rs.getString(5));
+				jsonObject.put("sal", rs.getDouble(6));
+				jsonObject.put("comm", rs.getDouble(7));
+				jsonObject.put("deptno", rs.getInt(8));
+				jsonObject.put("img", rs.getString(9));
+				jsonArray.add(jsonObject);
+			}
+			System.out.println(jsonArray);
+		} catch (Exception e) {
+			System.out.println("오류 :" + e.getMessage());
+		} finally {
+			DB_Close.close(rs);
+			DB_Close.close(pstmt);
+			try {
+				conn.close(); // 받환하기
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return jsonArray;
 	}
 	
 

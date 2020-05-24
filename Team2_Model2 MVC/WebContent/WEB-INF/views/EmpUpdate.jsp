@@ -65,6 +65,68 @@
 }
 </style>
 <!--  파일 버튼 디자인을 위해 bootstrap 추가한 것/ -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <script type="text/javascript">
+    $(function() {
+    	$.ajax(
+				 {
+					 type:"get",
+					 url:"EmpJobSelect.emp",
+					 dataType:"html",
+					 success:function(responsedata){ 
+						$('#jobselect').html(responsedata);			 
+					 }
+				 });
+    	
+    	$.ajax(
+				 {
+					 type:"get",
+					 url:"EmpDeptnoSelect.emp",
+					 dataType:"json",
+					 success:function(responsedata){ 
+						 
+						 let select = "<select name='deptno'>";
+						 $.each(responsedata.deptnolist, function(index, obj) {
+							 if(index == 0) {
+								 select += "<option value='"+obj+"' selected>"+obj+"</option>";
+							 }else{
+							 	select += "<option value='"+obj+"'>"+obj+"</option>";
+							 }
+						})
+						$('#deptnoselect').html(select);			 
+					 }
+				 });
+    	
+    	
+    	
+    	
+    	
+    	
+   
+    	
+    	$('#hiredate').datepicker(
+				{
+				   format : "yyyy-mm-dd",
+				   autoclose : true
+				}	
+			);
+    	
+    	//급여, 보너스 자리수 처리
+    	$('#comm, #sal').keyup(function() {
+    		var num = $(this).val().toString().replace(/[^0-9]/g,"");
+ 
+    		$(this).val(num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+    	});
+    	
+    	
+	});
+    
+    
+    
+    
+    </script>
+
 
 </head>
 
@@ -85,81 +147,18 @@
 		<!-- ============================================================== -->
 		<!-- Topbar header - style you can find in pages.scss -->
 		<!-- ============================================================== -->
-		<header class="topbar" data-navbarbg="skin5">
-			<nav class="navbar top-navbar navbar-expand-md navbar-dark">
-				<div class="navbar-header" data-logobg="skin5">
-					<!-- This is for the sidebar toggle which is visible on mobile only -->
-					<a class="nav-toggler waves-effect waves-light d-block d-md-none"
-						href="javascript:void(0)"><i class="ti-menu ti-close"></i></a>
-					<!-- ============================================================== -->
-					<!-- Logo -->
-					<!-- ============================================================== -->
-					<a class="navbar-brand" href="EmpList.emp"> <!-- Logo icon -->
-						<b class="logo-icon p-l-10"> <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
-							<!-- Dark Logo icon --> <img src="assets/images/logo-icon.png"
-							alt="homepage" class="light-logo" />
+		<!-- header include로 뺌 -->
+		   <jsp:include page="/WEB-INF/include/header.jsp"/>
 
-					</b> <!--End Logo icon --> <!-- Logo text --> <span class="logo-text">
-							<!-- dark Logo text --> <img src="assets/images/logo-text.png"
-							alt="homepage" class="light-logo" />
-
-					</span> <!-- Logo icon --> <!-- <b class="logo-icon"> --> <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
-						<!-- Dark Logo icon --> <!-- <img src="assets/images/logo-text.png" alt="homepage" class="light-logo" /> -->
-
-						<!-- </b> --> <!--End Logo icon -->
-					</a>
-					<!-- ============================================================== -->
-					<!-- End Logo -->
-					<!-- ============================================================== -->
-					<!-- ============================================================== -->
-					<!-- Toggle which is visible on mobile only -->
-					<!-- ============================================================== -->
-					<a class="topbartoggler d-block d-md-none waves-effect waves-light"
-						href="javascript:void(0)" data-toggle="collapse"
-						data-target="#navbarSupportedContent"
-						aria-controls="navbarSupportedContent" aria-expanded="false"
-						aria-label="Toggle navigation"><i class="ti-more"></i></a>
-				</div>
-				<!-- ============================================================== -->
-				<!-- End Logo -->
-				<!-- ============================================================== -->
-
-			</nav>
-		</header>
 		<!-- ============================================================== -->
 		<!-- End Topbar header -->
 		<!-- ============================================================== -->
 		<!-- ============================================================== -->
 		<!-- Left Sidebar - style you can find in sidebar.scss  -->
 		<!-- ============================================================== -->
-		<aside class="left-sidebar" data-sidebarbg="skin5">
-			<!-- Sidebar scroll-->
-			<div class="scroll-sidebar">
-				<!-- Sidebar navigation-->
-				<nav class="sidebar-nav">
-					<ul id="sidebarnav" class="p-t-30">
-						<li class="sidebar-item"><a
-							class="sidebar-link waves-effect waves-dark sidebar-link"
-							href="EmpList.emp" aria-expanded="false"><i
-								class="mdi mdi-view-dashboard"></i><span class="hide-menu">사원
-									관리</span></a></li>
-						<li class="sidebar-item"><a
-							class="sidebar-link waves-effect waves-dark sidebar-link"
-							href="charts.html" aria-expanded="false"><i
-								class="mdi mdi-chart-bar"></i><span class="hide-menu">차트</span></a></li>
-
-					</ul>
-				</nav>
-				<!-- End Sidebar navigation -->
-			</div>
-			<!-- End Sidebar scroll-->
-		</aside>
-		<!-- ============================================================== -->
-		<!-- End Left Sidebar - style you can find in sidebar.scss  -->
-		<!-- ============================================================== -->
-		<!-- ============================================================== -->
-		<!-- Page wrapper  -->
-		<!-- ============================================================== -->
+		<!-- sidebar include로 뺌 -->
+		   <jsp:include page="/WEB-INF/include/sidebar.jsp"/>
+	
 		<div class="page-wrapper">
 			<!-- ============================================================== -->
 			<!-- Bread crumb and right sidebar toggle -->
@@ -190,7 +189,7 @@
 				<!-- Start Page Content -->
 				<!-- ============================================================== -->
 				<div class="row">
-
+				 <div class="col-md-12">
 					<div class="card" style="width: 60%; margin: 0 auto;">
 						<form class="form-horizontal"
 							action="EmpUpdateOk.emp?cp=${param.cp}&ps=${param.ps}"
@@ -216,9 +215,9 @@
 								<div class="form-group row">
 									<label for="lname"
 										class="col-sm-3 text-right control-label col-form-label">직급</label>
-									<div class="col-sm-9">
-										<input type="text" class="form-control" id="job" name="job"
-											value="${param.job}">
+									<div class="col-sm-9" id="jobselect" >
+										<!-- <input type="text" class="form-control" id="job" name="job"
+											value="${param.job}"> -->
 									</div>
 								</div>
 								<div class="form-group row">
@@ -235,7 +234,7 @@
 										class="col-sm-3 text-right control-label col-form-label">입사일</label>
 									<div class="col-sm-9">
 										<input type="text" class="form-control" id="hiredate"
-											name="hiredate" value="${param.hiredate}" readonly>
+											name="hiredate" value="${param.hiredate}" readonly style="cursor:default">
 									</div>
 								</div>
 								<div class="form-group row">
@@ -257,9 +256,9 @@
 								<div class="form-group row">
 									<label for="cono1"
 										class="col-sm-3 text-right control-label col-form-label">부서번호</label>
-									<div class="col-sm-9">
-										<input type="text" class="form-control" id="deptno"
-											name="deptno" value="${param.deptno}">
+									<div class="col-sm-9" id="deptnoselect">
+										<!-- <input type="text" class="form-control" id="deptno"
+											name="deptno" value="${param.deptno}"> -->
 									</div>
 								</div>
 								<div class="form-group row">
@@ -269,7 +268,7 @@
 										<label class="btn btn-primary btn-file"> 이미지 설정/변경 
 										<input type="file" name="img" style="display: none;" onchange="readURL(this);">
 										</label>  <span id="imgFileName">${param.img}</span> 
-										<img id="img" src="upload/${param.img}" alt="your image" />
+										<img id="img" style="width:100px; height:100px"src="upload/${param.img}" alt="your image" />
 									</div>
 								</div>
 							</div>
@@ -288,7 +287,7 @@
 						</div>
 
 					</div>
-
+					</div>
 				</div>
 
 			</div>

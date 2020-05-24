@@ -13,6 +13,7 @@ import kr.or.bit.action.Action;
 import kr.or.bit.action.ActionForward;
 import kr.or.bit.service.AdminLogin;
 import kr.or.bit.service.AdminLogout;
+import kr.or.bit.service.DataTable;
 import kr.or.bit.service.DeptDetail;
 import kr.or.bit.service.EmpChart;
 import kr.or.bit.service.EmpDelete;
@@ -21,6 +22,7 @@ import kr.or.bit.service.EmpDetail;
 import kr.or.bit.service.EmpInsert;
 import kr.or.bit.service.EmpJobSelect;
 import kr.or.bit.service.EmpList;
+import kr.or.bit.service.EmpListAjax;
 import kr.or.bit.service.EmpSearchDeptno;
 import kr.or.bit.service.EmpSearchEmpno;
 import kr.or.bit.service.EmpTotalCount;
@@ -50,7 +52,7 @@ public class FrontEmpController extends HttpServlet {
     	
     	if(url_Command.equals("/AdminLogin.emp")) {//로그인페이지
     		//UI+로직
-    		action = new AdminLogin();
+       		action = new AdminLogin();
     		forward = action.execute(request, response);
     		
     	}else if(url_Command.equals("/AdminLogout.emp")) { //로그아웃 페이지
@@ -122,9 +124,7 @@ public class FrontEmpController extends HttpServlet {
     	}else if(url_Command.equals("/EmpChart.emp")) {
     		action = new EmpChart();
     		forward = action.execute(request, response);
-    	}
-    	else if(url_Command.equals("/EmpChartview.emp")) {
-    		//UI 제공
+    	}else if(url_Command.equals("/EmpChartview.emp")) {
     		forward = new ActionForward();
     		forward.setRedirect(false);
     		forward.setPath("/WEB-INF/views/EmpChartview.jsp");
@@ -133,6 +133,16 @@ public class FrontEmpController extends HttpServlet {
     		forward = action.execute(request, response);
     	}else if(url_Command.equals("/EmpDeptnoSelect.emp")) {
     		action = new DeptnoSelect();
+    		forward = action.execute(request, response);
+    	}else if(url_Command.equals("/DataTable.emp")) { 
+    		action = new DataTable();
+    		forward = action.execute(request, response);
+    	}else if(url_Command.equals("/DataTableView.emp")) {
+    		forward = new ActionForward();
+    		forward.setRedirect(false);
+    		forward.setPath("/WEB-INF/views/dataTableView.jsp");
+    	}else if(url_Command.equals("/EmpListAjax.emp")) { 
+    		action = new EmpListAjax();
     		forward = action.execute(request, response);
     	}
     	

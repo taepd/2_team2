@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
@@ -22,10 +22,36 @@
 	href="assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css"
 	rel="stylesheet">
 <link href="dist/css/style.min.css" rel="stylesheet">
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 
 
+<!-- include libraries(jQuery, bootstrap) -->
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
+<!-- include summernote css/js -->
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+<script>
+    
+    $(function() {
+    	$('#summernote').summernote({
+            placeholder: '내용을 입력해 주세요',
+            tabsize: 2,
+            height: 300,
+            width: 600,
+            toolbar: [
+              ['style', ['style']],
+              ['font', ['bold', 'underline', 'clear']],
+              ['color', ['color']],
+              ['para', ['ul', 'ol', 'paragraph']],
+              ['table', ['table']],
+              ['insert', ['link', 'picture', 'video']],
+              ['view', ['fullscreen', 'codeview', 'help']]
+            ]
+          });
+    });
+</script>
 
 
 </head>
@@ -43,82 +69,18 @@
 		<!-- ============================================================== -->
 		<!-- Topbar header - style you can find in pages.scss -->
 		<!-- ============================================================== -->
-		<header class="topbar" data-navbarbg="skin5">
-			<nav class="navbar top-navbar navbar-expand-md navbar-dark">
-				<div class="navbar-header" data-logobg="skin5">
-					<!-- This is for the sidebar toggle which is visible on mobile only -->
-					<a class="nav-toggler waves-effect waves-light d-block d-md-none"
-						href="javascript:void(0)"><i class="ti-menu ti-close"></i></a>
-					<!-- ============================================================== -->
-					<!-- Logo -->
-					<!-- ============================================================== -->
-					<a class="navbar-brand" href="EmpList.emp"> <!-- Logo icon --> <b
-						class="logo-icon p-l-10"> <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
-							<!-- Dark Logo icon --> <img src="assets/images/logo-icon.png"
-							alt="homepage" class="light-logo" />
+		<!-- header include로 뺌 -->
+		   <jsp:include page="/WEB-INF/include/header.jsp"/>
 
-					</b> <!--End Logo icon --> <!-- Logo text --> <span class="logo-text">
-							<!-- dark Logo text --> <img src="assets/images/logo-text.png"
-							alt="homepage" class="light-logo" />
-
-					</span> <!-- Logo icon --> <!-- <b class="logo-icon"> --> <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
-						<!-- Dark Logo icon --> <!-- <img src="assets/images/logo-text.png" alt="homepage" class="light-logo" /> -->
-
-						<!-- </b> --> <!--End Logo icon -->
-					</a>
-					<!-- ============================================================== -->
-					<!-- End Logo -->
-					<!-- ============================================================== -->
-					<!-- ============================================================== -->
-					<!-- Toggle which is visible on mobile only -->
-					<!-- ============================================================== -->
-					<a class="topbartoggler d-block d-md-none waves-effect waves-light"
-						href="javascript:void(0)" data-toggle="collapse"
-						data-target="#navbarSupportedContent"
-						aria-controls="navbarSupportedContent" aria-expanded="false"
-						aria-label="Toggle navigation"><i class="ti-more"></i></a>
-							
-				</div>
-				<!-- ============================================================== -->
-				<!-- End Logo -->
-				<!-- ============================================================== -->
-			<label class="btn btn-primary btn-file pull-right">  
-					<a href="AdminLogout.emp" style="color:white; text-decoration:none; ">로그아웃</a>
-		  </label> 
-			
-			</nav>
-		</header>
 		<!-- ============================================================== -->
 		<!-- End Topbar header -->
 		<!-- ============================================================== -->
 		<!-- ============================================================== -->
 		<!-- Left Sidebar - style you can find in sidebar.scss  -->
 		<!-- ============================================================== -->
-		<aside class="left-sidebar" data-sidebarbg="skin5">
-			<!-- Sidebar scroll-->
-			<div class="scroll-sidebar">
-				<!-- Sidebar navigation-->
-				<nav class="sidebar-nav">
-					<ul id="sidebarnav" class="p-t-30">
-						<li class="sidebar-item"><a
-							class="sidebar-link waves-effect waves-dark sidebar-link"
-							href="EmpList.emp" aria-expanded="false"><i
-								class="mdi mdi-view-dashboard"></i><span class="hide-menu">사원 관리</span></a></li>
-						<li class="sidebar-item"><a
-							class="sidebar-link waves-effect waves-dark sidebar-link"
-							href="EmpChartview.emp" aria-expanded="false"><i
-								class="mdi mdi-chart-bar"></i><span class="hide-menu">차트</span></a></li>
-								<li class="sidebar-item"><a
-							class="sidebar-link waves-effect waves-dark sidebar-link"
-							href="BoardList.board" aria-expanded="false"><i
-								class="mdi mdi-chart-bar"></i><span class="hide-menu">게시판</span></a></li>
-
-					</ul>
-				</nav>
-				
-			</div>
-			
-		</aside>
+		<!-- sidebar include로 뺌 -->
+		   <jsp:include page="/WEB-INF/include/sidebar.jsp"/>
+	
 		<div class="page-wrapper">
 		
 			<div class="page-breadcrumb">
@@ -157,7 +119,7 @@
                     </tr>
                     <tr>
                         <td width="40%" align="center">글내용</td>
-                        <td width="60%" align="left"><textarea rows="10" cols="60" name="content" class="ckeditor"></textarea></td>
+                        <td width="60%" align="left"><textarea id="summernote" rows="10" cols="60" name="content" class="ckeditor"></textarea></td>
                     </tr>
             
                     <tr>
@@ -174,8 +136,8 @@
               </form>
 	
 	</div>
-	
-	<script src="assets/libs/jquery/dist/jquery.min.js"></script>
+	<!-- summernote 적용을 위해 주석 처리 -->
+	<!-- <script src="assets/libs/jquery/dist/jquery.min.js"></script>-->
 	<!-- Bootstrap tether Core JavaScript -->
 	<script src="assets/libs/popper.js/dist/umd/popper.min.js"></script>
 	<script src="assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -193,5 +155,6 @@
 	<script src="assets/extra-libs/multicheck/datatable-checkbox-init.js"></script>
 	<script src="assets/extra-libs/multicheck/jquery.multicheck.js"></script>
 	<script src="assets/extra-libs/DataTables/datatables.min.js"></script>
+
 </body>
 </html>

@@ -37,83 +37,22 @@
     <!-- Main wrapper - style you can find in pages.scss -->
     <!-- ============================================================== -->
     <div id="main-wrapper">
-        <!-- ============================================================== -->
-        <!-- Topbar header - style you can find in pages.scss -->
-        <!-- ============================================================== -->
-        <header class="topbar" data-navbarbg="skin5">
-            <nav class="navbar top-navbar navbar-expand-md navbar-dark">
-                <div class="navbar-header" data-logobg="skin5">
-                    <!-- This is for the sidebar toggle which is visible on mobile only -->
-                    <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)"><i class="ti-menu ti-close"></i></a>
-                    <!-- ============================================================== -->
-                    <!-- Logo -->
-                    <!-- ============================================================== -->
-                    <a class="navbar-brand" href="EmpList.emp">
-                        <!-- Logo icon -->
-                        <b class="logo-icon p-l-10">
-                            <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
-                            <!-- Dark Logo icon -->
-                            <img src="assets/images/logo-icon.png" alt="homepage" class="light-logo" />
-                           
-                        </b>
-                        <!--End Logo icon -->
-                         <!-- Logo text -->
-                        <span class="logo-text">
-                             <!-- dark Logo text -->
-                             <img src="assets/images/logo-text.png" alt="homepage" class="light-logo" />
-                            
-                        </span>
-                        <!-- Logo icon -->
-                        <!-- <b class="logo-icon"> -->
-                            <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
-                            <!-- Dark Logo icon -->
-                            <!-- <img src="assets/images/logo-text.png" alt="homepage" class="light-logo" /> -->
-                            
-                        <!-- </b> -->
-                        <!--End Logo icon -->
-                    </a>
-                    <!-- ============================================================== -->
-                    <!-- End Logo -->
-                    <!-- ============================================================== -->
-                    <!-- ============================================================== -->
-                    <!-- Toggle which is visible on mobile only -->
-                    <!-- ============================================================== -->
-                    <a class="topbartoggler d-block d-md-none waves-effect waves-light" href="javascript:void(0)" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><i class="ti-more"></i></a>
-                </div>
-                <!-- ============================================================== -->
-                <!-- End Logo -->
-                <!-- ============================================================== -->
-                
-            </nav>
-        </header>
-        <!-- ============================================================== -->
-        <!-- End Topbar header -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- Left Sidebar - style you can find in sidebar.scss  -->
-        <!-- ============================================================== -->
-        <aside class="left-sidebar" data-sidebarbg="skin5">
-            <!-- Sidebar scroll-->
-            <div class="scroll-sidebar">
-                <!-- Sidebar navigation-->
-                <nav class="sidebar-nav">
-                    <ul id="sidebarnav" class="p-t-30">
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="EmpList.emp" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">사원 관리</span></a></li>
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="charts.html" aria-expanded="false"><i class="mdi mdi-chart-bar"></i><span class="hide-menu">Charts</span></a></li>
-                        
-                    </ul>
-                </nav>
-                <!-- End Sidebar navigation -->
-            </div>	
-            <!-- End Sidebar scroll-->
-        </aside>
-        <!-- ============================================================== -->
-        <!-- End Left Sidebar - style you can find in sidebar.scss  -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- Page wrapper  -->
-        <!-- ============================================================== -->
-        <div class="page-wrapper">
+		<!-- ============================================================== -->
+		<!-- Topbar header - style you can find in pages.scss -->
+		<!-- ============================================================== -->
+		<!-- header include로 뺌 -->
+		   <jsp:include page="/WEB-INF/include/header.jsp"/>
+
+		<!-- ============================================================== -->
+		<!-- End Topbar header -->
+		<!-- ============================================================== -->
+		<!-- ============================================================== -->
+		<!-- Left Sidebar - style you can find in sidebar.scss  -->
+		<!-- ============================================================== -->
+		<!-- sidebar include로 뺌 -->
+		   <jsp:include page="/WEB-INF/include/sidebar.jsp"/>
+	
+		<div class="page-wrapper">
             <!-- ============================================================== -->
             <!-- Bread crumb and right sidebar toggle -->
             <!-- ============================================================== -->
@@ -151,7 +90,7 @@
                                 <div class="col-md-12">
                                     <div class="pull-left">
                                         <div id="profile">
-                                            <img src="upload/${emp.img}" style="margin-bottom: 30px;">
+                                            <img src="upload/${emp.img}" alt="이미지가 없습니다"style="width:150px; height:150px">
                                         </div>
                                         <address>
                                             <h3> &nbsp;<b class="text-danger">${emp.ename}</b></h3>

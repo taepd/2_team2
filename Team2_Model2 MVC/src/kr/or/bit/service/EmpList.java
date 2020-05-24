@@ -31,8 +31,7 @@ public class EmpList implements Action {
 			//default 값 설정
 			cp = "1"; // 1번째 페이지 보겠다 
 		}
-		System.out.println(ps);
-		System.out.println(cp);
+		
 		int pagesize = Integer.parseInt(ps);
 		int cpage = Integer.parseInt(cp);
 		int pagecount=0;

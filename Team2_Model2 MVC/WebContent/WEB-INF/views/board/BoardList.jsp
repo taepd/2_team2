@@ -230,7 +230,7 @@
 											<a href="BoardList.board?cp=${cpage+1}&ps=${pagesize}">다음</a>
 										</c:if>
 									</div>
-									<a href="BoardWrite.board">등록</a>
+									<a href="BoardWrite.board">글쓰기</a>
 								</div>
 							</div>
 						</div>

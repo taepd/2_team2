@@ -23,6 +23,123 @@
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 	<script type="text/javascript">
 	$(function(){
+		
+		//페이징 비동기
+		$('#paging').change(function(){
+			let data = {ps : $('#paging option:selected').val(),
+					    cp : $('#cp').val() 
+			           };		
+			$.ajax({
+				url:"EmpListAjax.emp",
+				data: data,
+				type:"POST",		
+				dataType: "json",
+				success:function(responsedata){ 
+					 console.log(responsedata);
+					$('#emptable').empty();
+					$.each(responsedata,function(index,obj){	
+						$('#emptable').append(	
+								"<tr><td>"+obj.empno+"</td>" +
+								"<td><a href='EmpDetail.emp?empno="+obj.empno+"&cp=${cpage}&ps=${pagesize}'>" +
+									obj.ename+"</a></td>" +
+								"<td>"+obj.job+"</td>" +
+								"<td>"+obj.deptno+"</td><tr>"
+						   
+						);
+					});
+					$('#zero_config_info').empty();
+					$('#zero_config_info').append("총 부서원 " + responsedata.length);
+					
+					//페이지 번호 처리
+					page(cp=$('#cp').val());
+			   }
+				
+			
+			}); 
+		});
+		
+		//page()
+		function page(cp){
+			console.log('cp='+cp);
+			$('#zero_config_paginate').empty();
+			var pagesize = $('#paging option:selected').val();
+			var totalempcount = $('#totalempcount').val();
+			
+			var pagecount;
+			console.log('pagesize= '+pagesize);
+			console.log('totalempcount= '+ totalempcount);
+			if((totalempcount % pagesize) == 0){
+				pagecount = totalempcount/pagesize;
+			}else if(totalempcount/pagesize<1){
+				pagecount=1;
+			}else{
+			
+				pagecount = totalempcount/pagesize + 1; 
+			}
+			
+			console.log('pagecount = '+pagecount);
+			let tmp="";
+			
+			if(cp>1){
+				tmp +='<a href="EmpList.emp?cp=${cpage-1}&ps='+pagesize+'" cp="'+(cp-1)+'" ps="${pagesize}">이전</a>';
+			}
+			//page 목록 나열하기
+			for(var i=1;i<=pagecount; i++){
+				if(cp==i){
+					tmp +=('<font color="red">['+i+']</font>');
+				}else{
+					tmp +=('<a href="EmpList.emp?cp='+i+'&ps='+pagesize+'" cp="'+i+'" ps="'+pagesize+'" >['+i+']</a>');
+				}
+			}
+			//다음 링크
+			if(cp<pagecount){
+				tmp += '<a href="EmpList.emp?cp=${cpage+1}&ps='+pagesize+'" cp="'+(cp+1)+'" ps="${pagesize}">다음</a>';
+			};
+			$('#zero_config_paginate').append(tmp);
+		};
+		
+		//페이지 링크 비동기
+		$(document).on('click', '#zero_config_paginate a', function(e){
+			e.preventDefault();
+			let data = {ps : $(this).attr('ps'),
+				        cp : $(this).attr('cp')
+		           };		
+		$.ajax({
+			url:"EmpListAjax.emp",
+			data: data,
+			type:"POST",		
+			dataType: "json",
+			success:function(responsedata){ 
+				 console.log(responsedata);
+				$('#emptable').empty();
+				$.each(responsedata,function(index,obj){	
+					$('#emptable').append(	
+							"<tr><td>"+obj.empno+"</td>" +
+							"<td><a href='EmpDetail.emp?empno="+obj.empno+"&cp=${cpage}&ps=${pagesize}'>" +
+								obj.ename+"</a></td>" +
+							"<td>"+obj.job+"</td>" +
+							"<td>"+obj.deptno+"</td><tr>"
+					   
+					);
+				});
+				$('#zero_config_info').empty();
+				$('#zero_config_info').append("총 부서원 " + responsedata.length);
+				
+				//페이지 번호 처리
+				page(parseInt(data.cp));
+		   }
+			
+		
+		}); 
+			
+		});
+		
+		
+		
+		
+		
+		
+		//사원번호로 검색 비동기 처리
 		$('#empsearch').keyup(function(){
 			if($('#empsearch').val() == ""){
 				$(location).attr('href',"EmpList.emp?cp=${cpage}&ps=${pagesize}");
@@ -31,8 +148,8 @@
 			$.ajax(
 					 {
 						 type:"get",
-						 data,
-						 url:"EmpSearchEmpno.emp?",
+						 data: data,
+						 url:"EmpSearchEmpno.emp",
 						 dataType:"json",
 						 success:function(responsedata){ 
 							$('#emptable').empty();
@@ -46,9 +163,10 @@
 								   
 								);
 							});
-							$('#zero_config_info').empty();
-							$('#zero_config_info').append("총 부서원 " + responsedata.length);
+								$('#zero_config_info').empty();
+								$('#zero_config_info').append("총 부서원 " + responsedata.length);
 							
+
 						 }
 						
 					 }
@@ -56,6 +174,7 @@
 			      );
 		});
 		
+		//부서번호 셀렉트 비동기 처리
 		$('#deptsearch').change(function(){
 			if($('#deptsearch option:selected').val() == "선택없음") {
 				$(location).attr('href',"EmpList.emp?cp=${cpage}&ps=${pagesize}");
@@ -64,7 +183,7 @@
 			$.ajax(
 					 {
 						 type:"get",
-						 data,
+						 data: data,
 						 url:"EmpSearchDeptno.emp",
 						 dataType:"json",
 						 success:function(responsedata){ 
@@ -83,6 +202,7 @@
 							$('#zero_config_info').empty();
 							$('#zero_config_info').append("총 부서원 " + responsedata.length);
 							
+
 						 }
 						
 					 });
@@ -134,6 +254,12 @@
 	<c:set var="cpage" value="${requestScope.cpage}" />
 	<c:set var="pagecount" value="${requestScope.pagecount}" />
 	<c:set var="totalempcount" value="${requestScope.totalempcount}" />
+	<input type="hidden" id="cp" name="${cpage}" value="${cpage}"/>
+	<input type="hidden" id="pagecount" name="${pagecount}" value="${pagecount}"/>
+	<input type="hidden" id="totalempcount" name="${totalempcount}" value="${totalempcount}"/>
+	
+	
+	
 	<!-- ============================================================== -->
 	<!-- Preloader - style you can find in spinners.css -->
 	<!-- ============================================================== -->
@@ -191,12 +317,11 @@
 								<div class="col-sm-12 col-md-6">
 									<div class="dataTables_length" id="zero_config_length">
 										<form name="list">
-											<label>Show <select name="ps"
-												aria-controls="zero_config"
-												class="form-control form-control-sm" onchange="submit()">
+											<label>페이지 당 <select name="ps"
+												aria-controls="zero_config" id="paging">
 													<c:forEach var="i" begin="5" end="20" step="5">
 														<c:choose>
-															<c:when test="${pagesize ==i}">
+															<c:when test="${pagesize == i}">
 																<option value="${i}" selected>${i}건</option>
 															</c:when>
 															<c:otherwise>
@@ -204,7 +329,7 @@
 															</c:otherwise>
 														</c:choose>
 													</c:forEach>
-											</select>
+											</select> 보기
 											</label>
 										</form>
 									</div>
@@ -220,7 +345,7 @@
 											<option value="30">30</option>
 										</select>
 										<label>Search:<input type="search" id="empsearch" name="empsearch"
-											class="form-control form-control-sm" placeholder=""
+											class="form-control form-control-sm" placeholder="사번으로 검색가능합니다"
 											aria-controls="zero_config"></label>
 									</div>
 								</div>
@@ -275,9 +400,8 @@
 									<div class="dataTables_paginate paging_simple_numbers"
 										id="zero_config_paginate">
 
-
 										<c:if test="${cpage > 1}">
-											<a href="EmpList.emp?cp=${cpage-1}&ps=${pagesize}">이전</a>
+											<a href="EmpList.emp?cp=${cpage-1}&ps=${pagesize}" cp="${cpage-1}" ps="${pagesize}">이전</a>
 										</c:if>
 										<!-- page 목록 나열하기 -->
 										<c:forEach var="i" begin="1" end="${pagecount}" step="1">
@@ -286,18 +410,18 @@
 													<font color="red">[${i}]</font>
 												</c:when>
 												<c:otherwise>
-													<a href="EmpList.emp?cp=${i}&ps=${pagesize}">[${i}]</a>
+													<a href="EmpList.emp?cp=${i}&ps=${pagesize}" cp="${i}" ps="${pagesize}">[${i}]</a>
 												</c:otherwise>
 											</c:choose>
 
 										</c:forEach>
 										<!--다음 링크 -->
-
 										<c:if test="${cpage < pagecount}">
-											<a href="EmpList.emp?cp=${cpage+1}&ps=${pagesize}">다음</a>
+											<a href="EmpList.emp?cp=${cpage+1}&ps=${pagesize}" cp="${cpage+1}" ps="${pagesize}">다음</a>
 										</c:if>
+										
 									</div>
-									<a href="EmpInsert.emp">등록</a>
+									<a href="EmpInsert.emp">사원 등록</a>
 								</div>
 							</div>
 						</div>
