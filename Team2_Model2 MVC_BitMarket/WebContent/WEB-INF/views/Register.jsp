@@ -70,7 +70,7 @@
 				.keyup(
 						function() {
 							let email = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
-							if (!email.test($(this).val())) {
+							if (!email.test($('#id').val())) {
 								$('.tdemail')
 										.html(
 												'<b style="color:red">적합하지 않은 이메일 형식입니다.</b>');
@@ -249,11 +249,27 @@
 										</label>  <span id="imgFileName">${param.profile}</span> 
 										<img id="img" src="upload/${param.profile}" alt="프로필 이미지" width="100px" height="100px"/>
 									</div>
-									<button type="button"
+									</div>
+									  <!-- 카카오 지도 -->
+                       <div id="map" class="col-sm-6" style="width:300px;height:240px;"></div>
+						<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=14e1cd5829baabce1e0239e9778eb76a"></script>
+						<script>
+							var container = document.getElementById('map');
+							var options = {
+								center: new kakao.maps.LatLng(33.450701, 126.570667),
+								level: 3
+							};
+
+							var map = new kakao.maps.Map(container, options);
+						</script>
+                       <!-- 카카오 지도 끝 -->
+									
+									
+								<button type="button" id="currentLoc"
 								class="btn social facebook btn-flat btn-addon mb-3">
 								<i class="fa fa-crosshairs"></i>현재 위치로 찾기
 								</button>
-								</div>
+							
                                 </div>
                                 <div class="border-top">
                                     <div class="card-body">
@@ -264,8 +280,8 @@
                             </form>
                  </div>
                         
-                       
-                       
+                     
+
                     
                
                 <!-- ============================================================== -->
@@ -300,8 +316,28 @@
     <!-- ============================================================== -->
     <!-- All Jquery -->
     <!-- ============================================================== -->
-    
-		
+
+<script>
+//현재 위치 값 받아내기
+
+$('#currentLoc').click(function getLocation() {
+  if (navigator.geolocation) { // GPS를 지원하면
+    navigator.geolocation.getCurrentPosition(function(position) {
+      alert(position.coords.latitude + ' ' + position.coords.longitude);
+    }, function(error) {
+      console.error(error);
+    }, {
+      enableHighAccuracy: false,
+      maximumAge: 0,
+      timeout: Infinity
+    });
+  } else {
+    alert('GPS를 지원하지 않습니다');
+  }
+});
+
+
+</script>
 		
 <script type="text/javascript">
 	//***********************************//
@@ -325,50 +361,50 @@
     	//아이디 적합성 체크
     	let email = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
 		if (!email.test($('#id').val())) {
-				alert('<b style="color:red">적합하지 않은 이메일 형식입니다.</b>');
+				alert('적합하지 않은 이메일 형식입니다');
 				$('#id').focus();
-		}
+				return;
+		};
 		//아이디 중복 체크
-  function id_overlap_check() {
-
-    $('#id').change(function () {
-      $('#id_check_sucess').hide();
-      $('#btn-idchk').show();
-      $('#id').attr("check_result", "fail");
-    })
+    	$('#id').change(function () {
+     		$('#id_check_sucess').hide();
+     		$('#btn-idchk').show();
+     	 	$('#id').attr("check_result", "fail");
+    	});
 
 
-    if ($('#id').val() == '') {
-      alert('이메일을 입력해주세요.')
-      return;
-    }
+    	if ($('#id').val() == '') {
+      	alert('이메일을 입력해주세요.')
+      	return;
+    	}
 
-    id = document.querySelector('input[name="id"]');
-
-    $.ajax({
-      type: "POST",
-      url: 'IdCheck.bit',
-      data: {
-        id: id
-      },
-      datatype: 'json',
-      success: function (data) {
-        console.log(data['result']);
-        if (data['result'] == "fail") {
-          alert("이미 존재하는 아이디 입니다.");
-          $("#id").val('');
-          $("#id").focus();
-          return;
-        } else {
-          alert("사용가능한 아이디 입니다.");
-          $('#id').attr("check_result", "success");
-          $('#id_check_sucess').show();
-          $('#btn-idchk').hide();
-          return;
-        }
-      }
+    	console.log($('#id').val());
+		
+    	$.ajax({
+      		type: "POST",
+      		url: 'IdCheck.bit',
+      		data: {
+        			id: $('#id').val()
+      		 	 },
+      		datatype: 'json',
+      		success: function (data) {
+        		console.log(data['result']);
+        		if (data['result'] == "fail") {
+          			alert("이미 존재하는 아이디 입니다.");
+          			$("#id").val('');
+          			$("#id").focus();
+          			return;
+        		} else {
+          			alert("사용가능한 아이디 입니다.");
+          			$('#id').attr("check_result", "success");
+         			 $('#id_check_sucess').show();
+          			$('#btn-idchk').hide();
+          			return;
+        		}
+      		}
+    	});
     });
-  }
+		
 </script>	
 		
 		
