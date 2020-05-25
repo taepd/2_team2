@@ -23,8 +23,14 @@ public class BitBoardWrite implements Action {
 		int price = Integer.parseInt(request.getParameter("price"));
 		String content = request.getParameter("content");
 		String id = (String)session.getAttribute("id");
-
 		
+		String ctname = request.getParameter("ctname");
+		
+		
+		String ctcode = dao.getCtcode(ctname);
+		
+		
+		board.setCtcode(ctcode);
 		board.setTitle(title);
 		board.setPrice(price);
 		board.setContent(content);

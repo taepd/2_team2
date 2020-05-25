@@ -320,7 +320,7 @@ button {
 }
 
 .section-sm {
-  padding: 70px 0;
+  padding: 30px 0;
 }
 
 .section-title {
@@ -1289,7 +1289,7 @@ ul.pagination .active a {
 }
 
 .search-result {
-  padding: 20px;
+  padding: 10px;
   margin-bottom: 20px;
 }
 
@@ -1298,8 +1298,8 @@ ul.pagination .active a {
 }
 
 .category-search-filter {
-  background: #f7f7f7;
-  padding: 20px;
+  
+  
 }
 
 .category-search-filter strong {
@@ -1323,8 +1323,8 @@ ul.pagination .active a {
 }
 
 .category-search-filter .view .view-switcher {
-  background: #fff;
-  padding: 10px 15px;
+ 
+  padding: 5px 5px;
 }
 
 .nice-select {
@@ -1338,7 +1338,7 @@ ul.pagination .active a {
 }
 
 .product-item {
-  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1);
+  border: solid 1px rgb(224, 224, 224);
   margin-bottom: 30px;
 }
 
@@ -1536,9 +1536,9 @@ ul.pagination .active a {
 
 .widget {
   background: #fff;
-  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1);
+  
   padding: 25px 30px 30px;
-  margin-bottom: 30px;
+
   border-radius: 2px;
 }
 
@@ -2270,7 +2270,7 @@ article.single-post p {
 
 .comment {
   background: #fff;
-  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1);
+  
   padding: 30px;
   margin-bottom: 30px;
   border-radius: 2px;

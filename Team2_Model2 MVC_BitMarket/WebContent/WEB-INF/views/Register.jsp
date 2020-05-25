@@ -1,62 +1,89 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ include file="/Include/css.jsp"%>
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %> 
 <!DOCTYPE html>
-<html>
+<html dir="ltr" lang="en">
+
 <head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<!-- Tell the browser to be responsive to screen width -->
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="">
-<meta name="author" content="">
-<!-- Favicon icon -->
-<link rel="icon" type="image/png" sizes="16x16"
-	href="assets/images/favicon.png">
-<title>Matrix Template - The Ultimate Multipurpose admin
-	template</title>
-<!-- Custom CSS -->
-<link rel="stylesheet" type="text/css"
-	href="assets/libs/select2/dist/css/select2.min.css">
-<link rel="stylesheet" type="text/css"
-	href="assets/libs/jquery-minicolors/jquery.minicolors.css">
-<link rel="stylesheet" type="text/css"
-	href="assets/libs/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
-<link rel="stylesheet" type="text/css"
-	href="assets/libs/quill/dist/quill.snow.css">
-<link href="dist/css/style.min.css" rel="stylesheet">
-<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-<!--[if lt IE 9]>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon.png">
+    <title>회원 가입</title>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="assets/libs/select2/dist/css/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/libs/jquery-minicolors/jquery.minicolors.css">
+    <link rel="stylesheet" type="text/css" href="assets/libs/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/libs/quill/dist/quill.snow.css">
+    <link href="dist/css/style.min.css" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
+<!-- 파일 버튼 디자인을 위해 bootstrap 추가한 것-->
 
 <script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script type="text/javascript">
-	var validate = new Array;
+	src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+	
 
+<link
+	href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"
+	rel="stylesheet">
+
+
+<style>
+.btn-file {
+	position: relative;
+	overflow: hidden;
+}
+
+.btn-file input[type=file] {
+	position: absolute;
+	top: 0;
+	right: 0;
+	min-width: 100%;
+	min-height: 100%;
+	font-size: 100px;
+	text-align: right;
+	filter: alpha(opacity = 0);
+	opacity: 0;
+	outline: none;
+	background: white;
+	cursor: inherit;
+	display: block;
+}
+</style>
+<!--  파일 버튼 디자인을 위해 bootstrap 추가한 것/ -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <script type="text/javascript">
+	var validate = new Array;
 	$(function() {
-		//id검증
-		$('#userId')
+		//id검증(이메일 형식)
+		$('#id')
 				.keyup(
 						function() {
-							let id = /^[a-zA-Z0-9]{5,16}$/;
-							if (!id.test($(this).val())) {
-								$('.tdid')
+							let email = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
+							if (!email.test($(this).val())) {
+								$('.tdemail')
 										.html(
-												'<b style="color:red">5~16자리의 영문+숫자 조합으로 입력해주세요</b>');
+												'<b style="color:red">적합하지 않은 이메일 형식입니다.</b>');
 								validate[0] = false;
 							} else {
-								$('.tdid').html('<b>적합한 아이디입니다.</b>');
+								$('.tdemail').html('<b>적합한 이메일입니다.</b>');
 								validate[0] = true;
 							}
 							console.log(validate[0]);
 						});
+
 		//password
-		$('#userPass')
+		$('#pwd')
 				.keyup(
 						function() {
 							let pwd = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^~*+=-])(?=.*[0-9]).{8,20}$/;
@@ -72,8 +99,8 @@
 							console.log(validate[1]);
 						});
 		//password check
-		$('#userPassCheck, #userPass').keyup(function() {
-			if ($('#userPass').val() != $('#userPassCheck').val()) {
+		$('#pwdCheck, #pwd').keyup(function() {
+			if ($('#pwd').val() != $('#pwdCheck').val()) {
 				$('.tdpwch').html('<b style="color:red">비밀번호가 다릅니다.</b>');
 				validate[2] = false;
 			} else {
@@ -83,305 +110,341 @@
 			console.log(validate[2]);
 		});
 
-		//email
-		$('#userEmail')
-				.keyup(
-						function() {
-							let email = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
-							if (!email.test($(this).val())) {
-								$('.tdemail')
-										.html(
-												'<b style="color:red">적합하지 않은 이메일 형식입니다.</b>');
-								validate[3] = false;
-							} else {
-								$('.tdemail').html('<b>적합한 이메일입니다.</b>');
-								validate[3] = true;
-							}
-							console.log(validate[3]);
-						});
-
-		//phone
-		$('#userPhone')
-				.keyup(
-						function() {
-							let phone = /^(01[01679]{1})[-.\s]?([0-9]{3,4})[-.\s]?([0-9]{4})$/;
-							if (!phone.test($(this).val())) {
-								$('.tdphone')
-										.html(
-												'<b style="color:red">적합하지 않은 형식입니다. "01X-XXX(X)-XXXX"형식으로 입력하세요.</b>');
-								validate[4] = false;
-							} else {
-								$('.tdphone').html('<b>적합한 형식입니다.</b>');
-								validate[4] = true;
-							}
-							console.log(validate[4]);
-						});
-
 		$('input').focus(function() {
 			$(this).css('background-color', "gold");
 		});
 		$('input').blur(function() {
 			$(this).css('background-color', "white");
 		});
-
 		//입력 다 했는지 검증
 		$('input:not([type=checkbox])').prop("required", true);
 		// $('#userId').attr("required","required");
-
 		//올바르지 않은 입력 검증
 		$('input:submit').click(function() {
-
 			for (let i = 0; i < validate.length; i++) {
 				if (validate[i] == false) {
 					alert("올바르지 않은 입력이 있습니다.");
 					console.log(i);
 					switch (i) {
 					case 0:
-						$('#userId').focus();
+						$('#id').focus();
 						return false;
 					case 1:
-						$('#userPass').focus();
+						$('#pwd').focus();
 						return false;
 					case 2:
-						$('#userPassCheck').focus();
-						return false;
-					case 3:
-						$('#userEmail').focus();
-						return false;
-					case 4:
-						$('#userPhone').focus();
+						$('#pwdCheck').focus();
 						return false;
 					}
 				}
-
-			}
-			;
-			if (!($('input:checkbox').is(":checked"))) {
-				alert("취미를 선택해 주세요");
-				return false;
 			}
 			;
 
 		});
-
-		// $('input:submit').click(function(){
-		// if($('#userId').val()=="") {
-		//     alert("아이디를 입력해 주세요");
-		//     $('#userId').focus();
-		//     return false;
-		// }else if($('#userPass').val()=="") {
-		//     alert("패스워드를 입력해 주세요");
-		//     $('#userPass').focus();
-		//     return false;
-		// }else if($('#userPassCheck').val()=="") {
-		//     alert("패스워드 확인란을 입력해 주세요");
-		//     $('#userPassCheck').focus();
-		//     return false;
-		// }else if($('#userEmail').val()=="") {
-		//     alert("이메일을 입력해 주세요");
-		//     $('#userEmail').focus();
-		//     return false;
-		// }else if($('#userPhone').val()=="") {
-		//     alert("핸드폰 번호를 입력해 주세요");
-		//     $('#userPhone').focus();
-		//     return false;
-		// }else if($('#userSsn1').val()=="") {
-		//     alert("주민번호 앞자리를 입력해 주세요");
-		//     $('#userSsn1').focus();
-		//     return false;
-		// }else if($('#userSsn2').val()=="") {
-		//     alert("주민번호 뒷자리를 입력해 주세요");
-		//     $('#userSsn2').focus();
-		//     return false;
-		// }else if($('#userName').val()=="") {
-		//     alert("이름을 입력해 주세요");
-		//     $('#userName').focus();
-		//     return false;
-		// }else if($('#userZipCode').val()=="") {
-		//     alert("우편번호를 입력해 주세요");
-		//     $('#userZipCode').focus();
-		//     return false;
-		// }else if($('#userAddr1').val()=="") {
-		//     alert("기본주소를 입력해 주세요");
-		//     $('#userAddr1').focus();
-		//     return false;
-		// }else if($('#userAddr2').val()=="") {
-		//     alert("상세주소를 입력해 주세요");
-		//     $('#userAddr2').focus();
-		//     return false;
-		// }else if($('#year').val()=="") {
-		//     alert("출생년도를 입력해 주세요");
-		//     $('#year').focus();
-		//     return false;
-		// }
-
-		// });
-
 	});
 </script>
-<!--  
-      조별과제 : 
-    jquery 를 사용하여 유효성 검증 코드를 만드시고
-    MemberJoinOK.jsp 를 통해서 데이터 받아서 결과 출력하세요
-     
-    userId : keyup 이벤트  정해진 표현에 맞지 않으면 ID 추가 입력
-    ex) let id ="정규표현식" 
-    ex) if(id.test($(this).val()) != true) { 확인요청 } else {}
-    
-    userPass : keyup 이벤트에서 정해진 표현과 일치 하지 않으면 (정규표현 가능)
-    
-    userPassCheck : keyup  >> userPass 같은 값인지 확인 일치여부 확인
-    
-    userEmail : keyup 이벤트에서 email 형식과 일치여부 확인
-    
-    userPhone : keyup 이벤트에서 phone 형식과 일치여부 확인
-    
-    
-    submit 전송시 
-    userId , userPass , userPassCheck , userEmail , userPhone
-    , userSsn1 , userSsn2 , userZipCode , userPhone
-       값이 입력되지 않으면 다시 입력을 요청
-  -->
-<style>
-body {
-	font-family: "malgun gothic";
-	font-size: 9pt;
-}
-
-th {
-	text-align: right;
-	background-color: #dbdbdb
-}
-
-th.title {
-	text-align: center;
-	font-size: 12pt;
-	background-color: #ffffff;
-}
-</style>
 </head>
 
-
-<body class="bg-dark">
-	<div class="sufee-login d-flex align-content-center flex-wrap">
-		<div class="container">
-			<div class="login-content">
-				<div class="login-logo">
-					<a href="index.html"> <img class="align-content"
-						src="images/logo.png" alt="">
-					</a>
-				</div>
-				<div class="container">
-					<div class="login-form" style="text-align: center">
-						<form action="BitJoinOK.bit" name="form" method="post"
-							enctype="multipart/form-data">
-							<div class="form-group">
-								<img id="img" class="rounded-circle mx-auto d-block"
-									src="upload/${param.pofile}" alt="프로필 사진"> <label
-									class="btn btn-outline-primary btn-sm"><i
-									class="fa fa-star"></i>이미지 추가 <input type="file" name="pofile"
-									style="display: none;" onchange="readURL(this);"> </label>
-							</div>
-							<div class="form-group" align="center">
-								<table>
-									<tr>
-										<th colspan="2" class="title">회원가입</th>
-									</tr>
-									<tr>
-										<th>아이디</th>
-										<td><input type="text" maxlength="20" id="userId"
-											name="userId" title="5~16자리의 영문+숫자 조합으로 입력해주세요"
-											placeholder="아이디를 입력해주세요"></td>
-										<td class="tdid"></td>
-									</tr>
-									<tr>
-										<th>비밀번호</th>
-										<td><input type="password" maxlength="20" id="userPass"
-											name="userPass"
-											title="8~20자 사이에 적어도 하나의 영어대문자,숫자, 특수문자가 포함되어야 합니다."
-											placeholder="비밀번호를 입력해주세요"></td>
-										<td class="tdpw"></td>
-									</tr>
-									<tr>
-										<th>비밀번호 확인</th>
-										<td><input type="password" maxlength="20"
-											id="userPassCheck" name="userPassCheck" title="패스워드 확인"
-											placeholder="비밀번호를 입력해주세요"></td>
-										<td class="tdpwch"></td>
-									</tr>
-									<tr>
-										<th>닉네임</th>
-										<td><input type="text" maxlength="20" id="userName"
-											name="userName" title="닉네임"></td>
-									</tr>
-									<tr>
-										<th>주소</th>
-										<td><input type="text" maxlength="20" size="45"
-											id="userAddr1" name="userAddr1" title="주소-기본주소"></td>
-									</tr>
-								</table>
-								<br>
-								<button type="button"
-									class="btn social facebook btn-flat btn-addon mb-3">
-									<i class="fa fa-crosshairs"></i>현재 위치로 찾기
-								</button>
-								<br> <br>
-								<button type="submit"
-									class="btn btn-primary btn-flat m-b-30 m-t-30">회원 가입</button>
-								<button type="reset"
-									class="btn btn-primary btn-flat m-b-30 m-t-30">취소</button>
-									
-									
-							</div>
-
-
-
-							<!-- 
-							<div class="form-group">
-
-								<input type="password" name="pwd" class="form-control"
-									placeholder="비밀번호를 입력해주세요">
-							</div>
-							<div class="form-group">
-
-								<input type="password" name="pwd" class="form-control"
-									placeholder="비밀번호 다시 한 번">
-							</div>
-							<div class="form-group">
-
-								<input type="text" name="nick" class="form-control"
-									placeholder="사용할 닉네임을 입력해 주세요">
-							</div>
-							<div class="form-group">
-
-								<input type="text" name="loc" class="form-control"
-									placeholder="동명(읍,면)으로 검색 (ex.서초동)">
-							</div>
-							<br>
-							<button type="button"
+<body>
+    <!-- ============================================================== -->
+    <!-- Preloader - style you can find in spinners.css -->
+    <!-- ============================================================== -->
+    <div class="preloader">
+        <div class="lds-ripple">
+            <div class="lds-pos"></div>
+            <div class="lds-pos"></div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <div id="main-wrapper">
+		
+		<div class="page-wrapper">
+            <!-- ============================================================== -->
+            <!-- Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <div class="page-breadcrumb">
+                <div class="row">
+                    <div class="col-12 d-flex no-block align-items-center">
+                        <h4 class="page-title">사원 추가</h4>
+                        <div class="ml-auto text-right">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">Library</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+            <!-- ============================================================== -->
+            <!-- End Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Container fluid  -->
+            <!-- ============================================================== -->
+            <div class="container-fluid">
+                <!-- ============================================================== -->
+                <!-- Start Page Content -->
+                <!-- ============================================================== -->
+                <div class="row">
+                    
+                        <div class="card" style="width:60%; margin: 0 auto;">
+                            <form class="form-horizontal" action="BitJoinOK.bit" enctype="multipart/form-data" method="post" novalidate>
+                                <div class="card-body">
+                                    <h4 class="card-title">회원 가입</h4>
+                                    <div class="form-group row">
+                                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">아이디</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" maxlength="20" id="id" name="id"
+										title="5~16자리의 영문+숫자 조합으로 입력해주세요"
+										placeholder="이메일 형식으로 입력해 주세요" check_result="fail" required>  
+										<button type="button" class="btn btn-primary" id="btn-idchk">중복확인</button>
+										<img id="id_check_sucess" style="display: none;">
+                                        </div>
+                                        <div class="col-sm-9 tdemail"></div>
+                                        
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="lname" class="col-sm-3 text-right control-label col-form-label">비밀번호</label>
+                                        <div class="col-sm-9">
+                                           <input type="password" maxlength="20" id="pwd"
+										name="pwd"
+										title="8~20자 사이에 적어도 하나의 영어대문자,숫자, 특수문자가 포함되어야 합니다."
+										placeholder="비밀번호를 입력해주세요">
+                                        </div>
+                                        <div class="col-sm-9 tdpw"></div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="email1" class="col-sm-3 text-right control-label col-form-label">비밀번호 확인</label>
+                                        <div class="col-sm-9">
+                                            <input type="password" maxlength="20" id="pwdCheck"
+										name="pwdCheck" title="패스워드 확인" placeholder="비밀번호를 입력해주세요">
+                                        </div>
+                                        <div class="col-sm-9 tdpwch"></div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="cono1" class="col-sm-3 text-right control-label col-form-label">닉네임</label>
+                                        <div class="col-sm-9">
+                                           <input type="text" maxlength="20" id="nick"
+										name="nick" title="닉네임" placeholder="사용할 닉네임을 입력해 주세요">
+                                        </div>                                       
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="cono1" class="col-sm-3 text-right control-label col-form-label">주소</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" maxlength="20" size="45" id="loc"
+										name="loc" title="주소-기본주소" placeholder="동명(읍,면)으로 검색 (ex.서초동)">
+                                        </div>
+                                    </div>
+                                   <div class="form-group row">
+									<label for="cono1"
+										class="col-sm-3 text-right control-label col-form-label">이미지 추가</label>
+									<div class="col-sm-9">
+										<label class="btn btn-primary btn-file"> 이미지 설정/변경 
+										<input type="file" name="img" style="display: none;" onchange="readURL(this);">
+										</label>  <span id="imgFileName">${param.profile}</span> 
+										<img id="img" src="upload/${param.profile}" alt="프로필 이미지" width="100px" height="100px"/>
+									</div>
+									<button type="button"
 								class="btn social facebook btn-flat btn-addon mb-3">
 								<i class="fa fa-crosshairs"></i>현재 위치로 찾기
-							</button>
-							<br> <br>
-							<button type="submit"
-								class="btn btn-primary btn-flat m-b-30 m-t-30">회원가입 완료</button>-->
-						</form>
-
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</body>
+								</button>
+								</div>
+                                </div>
+                                <div class="border-top">
+                                    <div class="card-body">
+                                        <button type="submit" class="btn btn-primary">전송</button>
+                                        <button type="reset" class="btn btn-primary">취소</button>
+                                    </div>
+                                </div>
+                            </form>
+                 </div>
+                        
+                       
+                       
+                    
+               
+                <!-- ============================================================== -->
+                <!-- End PAge Content -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- Right sidebar -->
+                <!-- ============================================================== -->
+                <!-- .right-sidebar -->
+                <!-- ============================================================== -->
+                <!-- End Right sidebar -->
+                <!-- ============================================================== -->
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Container fluid  -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- footer -->
+            <!-- ============================================================== -->
+            
+            <!-- ============================================================== -->
+            <!-- End footer -->
+            <!-- ============================================================== -->
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Page wrapper  -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Wrapper -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- All Jquery -->
+    <!-- ============================================================== -->
+    
+		
+		
 <script type="text/javascript">
+	//***********************************//
+	// 이미지 파일 업로드시 이미지 미리보기
+	//***********************************//
 	function readURL(input) {
-		if (input.file && input.file[0]) {
+		if (input.files && input.files[0]) {
 			var reader = new FileReader();
 			reader.onload = function(e) {
 				$('#img').attr('src', e.target.result);
 			}
 			reader.readAsDataURL(input.files[0]);
-		}
+		}$('#imgFileName').html(input.files[0].name);
 	};
-</script>
+	
+	//***********************************//
+    //  아이디 중복 체크
+    //***********************************//	
+    
+    $('#btn-idchk').click(function(){
+    	//아이디 적합성 체크
+    	let email = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
+		if (!email.test($('#id').val())) {
+				alert('<b style="color:red">적합하지 않은 이메일 형식입니다.</b>');
+				$('#id').focus();
+		}
+		//아이디 중복 체크
+  function id_overlap_check() {
+
+    $('#id').change(function () {
+      $('#id_check_sucess').hide();
+      $('#btn-idchk').show();
+      $('#id').attr("check_result", "fail");
+    })
+
+
+    if ($('#id').val() == '') {
+      alert('이메일을 입력해주세요.')
+      return;
+    }
+
+    id = document.querySelector('input[name="id"]');
+
+    $.ajax({
+      type: "POST",
+      url: 'IdCheck.bit',
+      data: {
+        id: id
+      },
+      datatype: 'json',
+      success: function (data) {
+        console.log(data['result']);
+        if (data['result'] == "fail") {
+          alert("이미 존재하는 아이디 입니다.");
+          $("#id").val('');
+          $("#id").focus();
+          return;
+        } else {
+          alert("사용가능한 아이디 입니다.");
+          $('#id').attr("check_result", "success");
+          $('#id_check_sucess').show();
+          $('#btn-idchk').hide();
+          return;
+        }
+      }
+    });
+  }
+</script>	
+		
+		
+		
+
+
+	
+
+    <script src="assets/libs/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="assets/libs/popper.js/dist/umd/popper.min.js"></script>
+    <script src="assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- slimscrollbar scrollbar JavaScript -->
+    <script src="assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
+    <script src="assets/extra-libs/sparkline/sparkline.js"></script>
+    <!--Wave Effects -->
+    <script src="dist/js/waves.js"></script>
+    <!--Menu sidebar -->
+    <script src="dist/js/sidebarmenu.js"></script>
+    <!--Custom JavaScript -->
+    <script src="dist/js/custom.min.js"></script>
+    <!-- This Page JS -->
+    <script src="assets/libs/inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>
+    <script src="dist/js/pages/mask/mask.init.js"></script>
+    <script src="assets/libs/select2/dist/js/select2.full.min.js"></script>
+    <script src="assets/libs/select2/dist/js/select2.min.js"></script>
+    <script src="assets/libs/jquery-asColor/dist/jquery-asColor.min.js"></script>
+    <script src="assets/libs/jquery-asGradient/dist/jquery-asGradient.js"></script>
+    <script src="assets/libs/jquery-asColorPicker/dist/jquery-asColorPicker.min.js"></script>
+    <script src="assets/libs/jquery-minicolors/jquery.minicolors.min.js"></script>
+    <script src="assets/libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+    <script src="assets/libs/quill/dist/quill.min.js"></script>
+    
+    <script>
+        //***********************************//
+        // For select 2
+        //***********************************//
+        $(".select2").select2();
+
+        /*colorpicker*/
+        $('.demo').each(function() {
+        //
+        // Dear reader, it's actually very easy to initialize MiniColors. For example:
+        //
+        //  $(selector).minicolors();
+        //
+        // The way I've done it below is just for the demo, so don't get confused
+        // by it. Also, data- attributes aren't supported at this time...they're
+        // only used for this demo.
+        //
+        $(this).minicolors({
+                control: $(this).attr('data-control') || 'hue',
+                position: $(this).attr('data-position') || 'bottom left',
+
+                change: function(value, opacity) {
+                    if (!value) return;
+                    if (opacity) value += ', ' + opacity;
+                    if (typeof console === 'object') {
+                        console.log(value);
+                    }
+                },
+                theme: 'bootstrap'
+            });
+
+        });
+        /*datwpicker*/
+        jQuery('.mydatepicker').datepicker();
+        jQuery('#datepicker-autoclose').datepicker({
+            autoclose: true,
+            todayHighlight: true
+        });
+        var quill = new Quill('#editor', {
+            theme: 'snow'
+        })
+
+    </script>
+</body>
+
 </html>

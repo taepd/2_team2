@@ -65,7 +65,7 @@ public class FrontController extends HttpServlet {
     		forward.setRedirect(false);
     		forward.setPath("/WEB-INF/views/BitMain.jsp");
     		
-    	}else if(url_Command.equals("/BitLogout.bit")) {
+    	}else if(url_Command.equals("/BitLogout.bit")) { //로그아웃
     		action = new BitLogout();
     		forward = action.execute(request, response);
     		
@@ -75,6 +75,15 @@ public class FrontController extends HttpServlet {
     		forward.setPath("/WEB-INF/views/BitWrite.jsp");
     	
     	}else if(url_Command.equals("/BitBoardWrite.bit")) {
+    		action = new BitBoardWrite();
+    		forward = action.execute(request, response);
+    	}else if(url_Command.equals("/BitAdminMain.bit")) { //admim 메인페이지 이동
+    		//UI
+    		forward = new ActionForward();
+    		forward.setRedirect(false);
+    		forward.setPath("/WEB-INF/views/BitAdminMain.jsp");
+    		
+    	}else if(url_Command.equals("/IdCheck.bit")) { //아이디 중복 체크
     		action = new BitBoardWrite();
     		forward = action.execute(request, response);
     	}
