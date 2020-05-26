@@ -62,59 +62,87 @@
 <!--  파일 버튼 디자인을 위해 bootstrap 추가한 것/ -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-    <script type="text/javascript">
-    $(function() {
-    	$.ajax(
-				 {
-					 type:"get",
-					 url:"EmpJobSelect.emp",
-					 dataType:"html",
-					 success:function(responsedata){ 
-						$('#jobselect').html(responsedata);			 
-					 }
-				 });
-    	
-    	$.ajax(
-				 {
-					 type:"get",
-					 url:"EmpDeptnoSelect.emp",
-					 dataType:"json",
-					 success:function(responsedata){ 
-						 
-						 let select = "<select name='deptno'>";
-						 $.each(responsedata.deptnolist, function(index, obj) {
-							 if(index == 0) {
-								 select += "<option value='"+obj+"' selected>"+obj+"</option>";
-							 }else{
-							 	select += "<option value='"+obj+"'>"+obj+"</option>";
-							 }
-						})
-						$('#deptnoselect').html(select);			 
-					 }
-				 });
- 
-    	
-    	$('#hiredate').datepicker(
-				{
-				   format : "yyyy-mm-dd",
-				   autoclose : true
-				}	
-			);
-    	
-    	//급여, 보너스 자리수 처리
-    	$('#comm, #sal').keyup(function() {
-    		var num = $(this).val().toString().replace(/[^0-9]/g,"");
- 
-    		$(this).val(num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-    	});
-    	
-    	
+  <script type="text/javascript">
+	var validate = new Array;
+	$(function() {
+		//id검증(이메일 형식)
+		$('#id')
+				.keyup(
+						function() {
+							let email = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
+							if (!email.test($(this).val())) {
+								$('.tdemail')
+										.html(
+												'<b style="color:red">적합하지 않은 이메일 형식입니다.</b>');
+								validate[0] = false;
+							} else {
+								$('.tdemail').html('<b>적합한 이메일입니다.</b>');
+								validate[0] = true;
+							}
+							console.log(validate[0]);
+						});
+
+		//password
+		$('#pwd')
+				.keyup(
+						function() {
+							let pwd = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^~*+=-])(?=.*[0-9]).{8,20}$/;
+							if (!pwd.test($(this).val())) {
+								$('.tdpw')
+										.html(
+												'<b style="color:red">8~20자 사이에 적어도 하나의 영어대문자,숫자, 특수문자가 포함되어야 합니다.</b>');
+								validate[1] = false;
+							} else {
+								$('.tdpw').html('<b>적합한 패스워드입니다.</b>');
+								validate[1] = true;
+							}
+							console.log(validate[1]);
+						});
+		//password check
+		$('#pwdCheck, #pwd').keyup(function() {
+			if ($('#userPass').val() != $('#userPassCheck').val()) {
+				$('.tdpwch').html('<b style="color:red">비밀번호가 다릅니다.</b>');
+				validate[2] = false;
+			} else {
+				$('.tdpwch').html('<b>비밀번호가 일치합니다.</b>');
+				validate[2] = true;
+			}
+			console.log(validate[2]);
+		});
+
+		$('input').focus(function() {
+			$(this).css('background-color', "gold");
+		});
+		$('input').blur(function() {
+			$(this).css('background-color', "white");
+		});
+		//입력 다 했는지 검증
+		$('input:not([type=checkbox])').prop("required", true);
+		// $('#userId').attr("required","required");
+		//올바르지 않은 입력 검증
+		$('input:submit').click(function() {
+			for (let i = 0; i < validate.length; i++) {
+				if (validate[i] == false) {
+					alert("올바르지 않은 입력이 있습니다.");
+					console.log(i);
+					switch (i) {
+					case 0:
+						$('#id').focus();
+						return false;
+					case 1:
+						$('#pwd').focus();
+						return false;
+					case 2:
+						$('#pwdCheck').focus();
+						return false;
+					}
+				}
+			}
+			;
+
+		});
 	});
-    
-    
-    
-    
-    </script>
+</script>
 </head>
 
 <body>
@@ -183,63 +211,60 @@
                                 <div class="card-body">
                                     <h4 class="card-title">사원 정보 입력</h4>
                                     <div class="form-group row">
-                                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">사번</label>
+                                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">아이디</label>
+                                        <div class="col-sm-6">
+                                            <input type="text" maxlength="20" id="id" name="id"
+										title="5~16자리의 영문+숫자 조합으로 입력해주세요"
+										placeholder="이메일 형식으로 입력해 주세요">
+                                        </div>
+                                        <div class="col-sm-6 tdemail"></div>
+                                        
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="lname" class="col-sm-3 text-right control-label col-form-label">비밀번호</label>
+                                        <div class="col-sm-6">
+                                           <input type="password" maxlength="20" id="pwd"
+										name="pwd"
+										title="8~20자 사이에 적어도 하나의 영어대문자,숫자, 특수문자가 포함되어야 합니다."
+										placeholder="비밀번호를 입력해주세요">
+                                        </div>
+                                        <div class="col-sm-6 tdpw"></div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="email1" class="col-sm-3 text-right control-label col-form-label">비밀번호 확인</label>
+                                        <div class="col-sm-6">
+                                            <input type="password" maxlength="20" id="pwdCheck"
+										name="pwdCheck" title="패스워드 확인" placeholder="비밀번호를 입력해주세요">
+                                        </div>
+                                        <div class="col-sm-6 tdpwch"></div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="cono1" class="col-sm-3 text-right control-label col-form-label">닉네임</label>
+                                        <div class="col-sm-6">
+                                           <input type="text" maxlength="20" id="nick"
+										name="nick" title="닉네임" placeholder="사용할 닉네임을 입력해 주세요">
+                                        </div>                                       
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="cono1" class="col-sm-3 text-right control-label col-form-label">주소</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" name="empno" id="empno" placeholder="사번을 입력해 주세요">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="lname" class="col-sm-3 text-right control-label col-form-label">이름</label>
-                                        <div class="col-sm-9">
-                                            <input type="text" class="form-control" name="ename" id="ename" placeholder="사원의 이름을 입력해주세요">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="lname" class="col-sm-3 text-right control-label col-form-label">직급</label>
-                                        <div class="col-sm-9" id="jobselect">
-                                            
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="email1" class="col-sm-3 text-right control-label col-form-label">직속 상관</label>
-                                        <div class="col-sm-9">
-                                            <input type="text" class="form-control" name="mgr" id="mgr" placeholder="사원의 직속 상관의 사번을 입력해주세요">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="cono1" class="col-sm-3 text-right control-label col-form-label">입사일</label>
-                                        <div class="col-sm-9">
-                                            <input type="text" class="form-control" name="hiredate" id="hiredate" placeholder="사원을 입사일을 입력해 주세요" readonly style="cursor:default">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="cono1" class="col-sm-3 text-right control-label col-form-label">급여</label>
-                                        <div class="col-sm-9">
-                                            <input type="text" class="form-control" name="sal" id="sal" placeholder="사원의 급여를 입력해주세요">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="cono1" class="col-sm-3 text-right control-label col-form-label">보너스</label>
-                                        <div class="col-sm-9">
-                                            <input type="text" class="form-control" name="comm" id="comm" placeholder="사원의 인센티브를 입력해주세요">
-                                            
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="cono1" class="col-sm-3 text-right control-label col-form-label">부서번호</label>
-                                        <div class="col-sm-9" id="deptnoselect">
-                                            
+                                            <input type="text" maxlength="20" size="45" id="loc"
+										name="loc" title="주소-기본주소" placeholder="동명(읍,면)으로 검색 (ex.서초동)">
                                         </div>
                                     </div>
                                    <div class="form-group row">
 									<label for="cono1"
-										class="col-sm-3 text-right control-label col-form-label">이미지</label>
+										class="col-sm-3 text-right control-label col-form-label">이미지 추가</label>
 									<div class="col-sm-9">
 										<label class="btn btn-primary btn-file"> 이미지 설정/변경 
 										<input type="file" name="img" style="display: none;" onchange="readURL(this);">
-										</label>  <span id="imgFileName">${param.img}</span> 
-										<img id="img" src="upload/${param.img}" alt="your image" />
+										</label>  <span id="imgFileName">${param.profile}</span> 
+										<img id="img" src="upload/${param.profile}" alt="your image" />
 									</div>
+									<button type="button"
+								class="btn social facebook btn-flat btn-addon mb-3">
+								<i class="fa fa-crosshairs"></i>현재 위치로 찾기
+							</button>
 								</div>
                                 </div>
                                 <div class="border-top">

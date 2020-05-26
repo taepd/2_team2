@@ -28,7 +28,7 @@ public class AdminLogin implements Action {
 			String msg = "";
 			String url = "";
 			
-			if(userid != null && userid.equals(admin.getUserid()) && pwd != null && pwd.equals(admin.getPwd())) {
+			if(admin != null && userid.equals(admin.getUserid()) && pwd.equals(admin.getPwd())) {
 					HttpSession session = request.getSession();
 					session.setAttribute("userid", userid);
 					
