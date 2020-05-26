@@ -12,6 +12,7 @@ import kr.or.bit.action.Action;
 import kr.or.bit.action.ActionForward;
 import kr.or.bit.service.BitJoin;
 import kr.or.bit.service.BitLogout;
+import kr.or.bit.service.BItIdCheck;
 import kr.or.bit.service.BItLogin;
 import kr.or.bit.service.BitBoardWrite;
 
@@ -84,7 +85,7 @@ public class FrontController extends HttpServlet {
     		forward.setPath("/WEB-INF/views/BitAdminMain.jsp");
     		
     	}else if(url_Command.equals("/IdCheck.bit")) { //아이디 중복 체크
-    		action = new BitBoardWrite();
+    		action = new BItIdCheck();
     		forward = action.execute(request, response);
     	}
     		

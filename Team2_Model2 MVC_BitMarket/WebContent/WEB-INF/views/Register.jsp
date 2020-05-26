@@ -26,6 +26,20 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+<!-- 카카오 지도 api 호출 -->
+<!-- 
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=14e1cd5829baabce1e0239e9778eb76a"></script>
+-->
+<!-- 카카오지도 service 라이브러리 호출 -->
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=14e1cd5829baabce1e0239e9778eb76a&libraries=services"></script>
+<!-- 카카오 주소 api 호출 -->
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
+
+
+
+
 <!-- 파일 버튼 디자인을 위해 bootstrap 추가한 것-->
 
 <script
@@ -59,7 +73,10 @@
 	display: block;
 }
 </style>
-<!--  파일 버튼 디자인을 위해 bootstrap 추가한 것/ -->
+<!--  파일 버튼 디자인을 위해 bootstrap 추가한 것 끝 -->
+
+
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
   <script type="text/javascript">
@@ -117,10 +134,11 @@
 			$(this).css('background-color', "white");
 		});
 		//입력 다 했는지 검증
-		$('input:not([type=checkbox])').prop("required", true);
-		// $('#userId').attr("required","required");
-		//올바르지 않은 입력 검증
-		$('input:submit').click(function() {
+		$('input:not([type=file])').prop("required", true);
+		//$('#id').attr("required","required");
+		
+		//submit 클릭시 올바르지 않은 입력 검증
+		$('button:submit').click(function() {
 			for (let i = 0; i < validate.length; i++) {
 				if (validate[i] == false) {
 					alert("올바르지 않은 입력이 있습니다.");
@@ -138,9 +156,12 @@
 					}
 				}
 			}
-			;
-
-		});
+			if ($('#id').attr("check_result") == "fail"){
+				  alert("아이디 중복확인을 해주시기 바랍니다.");
+				  $('#id').focus();
+				    return false;
+			}			
+		});			
 	});
 </script>
 </head>
@@ -193,7 +214,7 @@
                 <div class="row">
                     
                         <div class="card" style="width:60%; margin: 0 auto;">
-                            <form class="form-horizontal" action="BitJoinOK.bit" enctype="multipart/form-data" method="post" novalidate>
+                            <form class="form-horizontal" action="BitJoinOK.bit" enctype="multipart/form-data" method="post">
                                 <div class="card-body">
                                     <h4 class="card-title">회원 가입</h4>
                                     <div class="form-group row">
@@ -201,9 +222,9 @@
                                         <div class="col-sm-9">
                                             <input type="text" maxlength="20" id="id" name="id"
 										title="5~16자리의 영문+숫자 조합으로 입력해주세요"
-										placeholder="이메일 형식으로 입력해 주세요" check_result="fail" required>  
+										placeholder="이메일 형식으로 입력해 주세요" check_result="fail">  
 										<button type="button" class="btn btn-primary" id="btn-idchk">중복확인</button>
-										<img id="id_check_sucess" style="display: none;">
+										<!-- <img id="id_check_sucess" style="display: none;"> -->
                                         </div>
                                         <div class="col-sm-9 tdemail"></div>
                                         
@@ -233,14 +254,32 @@
 										name="nick" title="닉네임" placeholder="사용할 닉네임을 입력해 주세요">
                                         </div>                                       
                                     </div>
+                               
                                     <div class="form-group row">
                                         <label for="cono1" class="col-sm-3 text-right control-label col-form-label">주소</label>
+                                        <!-- 카카오 지도 API 적용 -->
                                         <div class="col-sm-9">
                                             <input type="text" maxlength="20" size="45" id="loc"
-										name="loc" title="주소-기본주소" placeholder="동명(읍,면)으로 검색 (ex.서초동)">
+											name="loc" title="주소-기본주소" placeholder="동명(읍,면)으로 검색 (ex.서초동)">			
+											<div id="layer" style="display: none; position: absolute; overflow: hidden; z-index: 1; top: 0px; left: 0px; max-width: 600px; width: 100%; height: 400px; border: 1px solid rgb(77, 77, 77);">
+                                       	 		<img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1;width:20px" alt="닫기 버튼">
+                                    		</div>
                                         </div>
                                     </div>
-                                   <div class="form-group row">
+                           
+                                   
+                                   	<button type="button" id="currentLoc"
+								class="btn social facebook btn-flat btn-addon mb-3">
+								<i class="fa fa-crosshairs"></i>현재 위치로 찾기
+								</button>
+									
+								<!-- 지도로 찾기 잠시 보류 <button type="button" class="btn btn-primary" id="searchMap">지도에서 찾기</button> -->
+									<!-- 카카오지도 뿌려지는 곳 -->
+								<!-- 	<div id="map" style="width:300px;height:300px;"></div>   -->
+								
+									
+									
+									<div class="form-group row">
 									<label for="cono1"
 										class="col-sm-3 text-right control-label col-form-label">이미지 추가</label>
 									<div class="col-sm-9">
@@ -250,25 +289,12 @@
 										<img id="img" src="upload/${param.profile}" alt="프로필 이미지" width="100px" height="100px"/>
 									</div>
 									</div>
-									  <!-- 카카오 지도 -->
-                       <div id="map" class="col-sm-6" style="width:300px;height:240px;"></div>
-						<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=14e1cd5829baabce1e0239e9778eb76a"></script>
-						<script>
-							var container = document.getElementById('map');
-							var options = {
-								center: new kakao.maps.LatLng(33.450701, 126.570667),
-								level: 3
-							};
-
-							var map = new kakao.maps.Map(container, options);
-						</script>
-                       <!-- 카카오 지도 끝 -->
 									
 									
-								<button type="button" id="currentLoc"
-								class="btn social facebook btn-flat btn-addon mb-3">
-								<i class="fa fa-crosshairs"></i>현재 위치로 찾기
-								</button>
+						
+									
+									
+							
 							
                                 </div>
                                 <div class="border-top">
@@ -318,12 +344,88 @@
     <!-- ============================================================== -->
 
 <script>
-//현재 위치 값 받아내기
+//카카오 지도
+/* 
+	$('#searchMap').click(function(){
+	var container = document.getElementById('map');
+	var options = {
+		center: new kakao.maps.LatLng(33.450701, 126.570667),
+		level: 3
+	};
+	
+	var map = new kakao.maps.Map(container, options);
+	}); */	
+//카카오지도 끝
+
+//카카오 주소
+        var element_layer = document.getElementById('layer');
+        var themeObj = {};
+        function closeDaumPostcode() { element_layer.style.display = 'none'; }
+        var element_layer = document.getElementById('layer');
+        $("#loc").click(function () { sample2_execDaumPostcode() })
+        $("#btnCloseLayer").click(function () { closeDaumPostcode() })
+        function sample2_execDaumPostcode() {
+            new daum.Postcode({
+                oncomplete: function (data) {
+                    var addr = ''; // 주소 변수
+                    var extraAddr = ''; // 참고항목 변수
+                    if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                        addr = data.roadAddress;
+                    } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                        addr = data.jibunAddress;
+                    }
+                    if (data.userSelectedType === 'R') {
+                        if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+                            extraAddr += data.bname;
+                        }
+                        if (data.buildingName !== '' && data.apartment === 'Y') {
+                            extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                        }
+                        if (extraAddr !== '') {
+                            extraAddr = ' (' + extraAddr + ')';
+                        }
+                    }
+                    //주소 인풋창에 입력
+                    $("#loc").val(addr);
+
+                    element_layer.style.display = 'none';
+                },
+                width: '100%',
+                height: '100%',
+                maxSuggestItems: 5,
+                theme: themeObj
+            }).embed(element_layer);
+            element_layer.style.display = 'block';
+           
+        }
+       
+//카카오 주소 끝
+
+
+// html5 geolocation을 이용하여 현재 위치 값 받아내기
 
 $('#currentLoc').click(function getLocation() {
   if (navigator.geolocation) { // GPS를 지원하면
     navigator.geolocation.getCurrentPosition(function(position) {
       alert(position.coords.latitude + ' ' + position.coords.longitude);
+     
+      //카카오 지도 api 라이브러리 활용, 좌표에서 주소로 변환 // 
+      var geocoder = new kakao.maps.services.Geocoder();
+
+      var coord = new kakao.maps.LatLng(position.coords.latitude, position.coords.longitude);
+      var callback = function(result, status) {
+    	  let currentAddr = result[0].address.address_name;
+          if (status === kakao.maps.services.Status.OK) {
+              console.log('그런 너를 마주칠까 ' + currentAddr + '을 못가');
+          }
+          $("#loc").val(currentAddr);
+          
+      }; 
+      
+      geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
+ 
+    //카카오 지도api 라이브러리 활용, 좌표에서 주소로 변환 끝 //
+     
     }, function(error) {
       console.error(error);
     }, {
@@ -335,8 +437,7 @@ $('#currentLoc').click(function getLocation() {
     alert('GPS를 지원하지 않습니다');
   }
 });
-
-
+//html5 geolocation을 이용하여 현재 위치 값 받아내기 끝
 </script>
 		
 <script type="text/javascript">
@@ -367,7 +468,7 @@ $('#currentLoc').click(function getLocation() {
 		};
 		//아이디 중복 체크
     	$('#id').change(function () {
-     		$('#id_check_sucess').hide();
+     		//$('#id_check_sucess').hide();
      		$('#btn-idchk').show();
      	 	$('#id').attr("check_result", "fail");
     	});
@@ -397,14 +498,14 @@ $('#currentLoc').click(function getLocation() {
         		} else {
           			alert("사용가능한 아이디 입니다.");
           			$('#id').attr("check_result", "success");
-         			 $('#id_check_sucess').show();
-          			$('#btn-idchk').hide();
+         			// $('#id_check_sucess').show();
+          			//$('#btn-idchk').hide();
           			return;
         		}
       		}
     	});
     });
-		
+	
 </script>	
 		
 		
