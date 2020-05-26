@@ -90,7 +90,7 @@ public class Empdao {
 
 				emplist.add(emp);
 			}
-
+			System.out.println(emplist);
 		} catch (Exception e) {
 			System.out.println("오류 :" + e.getMessage());
 		} finally {

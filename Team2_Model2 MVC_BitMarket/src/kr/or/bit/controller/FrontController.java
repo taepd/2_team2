@@ -12,6 +12,8 @@ import kr.or.bit.action.Action;
 import kr.or.bit.action.ActionForward;
 import kr.or.bit.service.BitJoin;
 import kr.or.bit.service.BitLogout;
+import kr.or.bit.service.admin.AdminNoticeList;
+import kr.or.bit.service.admin.NoticeListAjax;
 import kr.or.bit.service.BItIdCheck;
 import kr.or.bit.service.BItLogin;
 import kr.or.bit.service.BitBoardWrite;
@@ -82,10 +84,16 @@ public class FrontController extends HttpServlet {
     		//UI
     		forward = new ActionForward();
     		forward.setRedirect(false);
-    		forward.setPath("/WEB-INF/views/BitAdminMain.jsp");
+    		forward.setPath("/WEB-INF/views/admin/BitAdminMain.jsp");
     		
     	}else if(url_Command.equals("/IdCheck.bit")) { //아이디 중복 체크
     		action = new BItIdCheck();
+    		forward = action.execute(request, response);
+    	}else if(url_Command.equals("/NoticeList.bit")) { // 공지사항 게시판 이동
+    		action = new AdminNoticeList();
+    		forward = action.execute(request, response);
+    	}else if(url_Command.equals("/NoticeListAjax.bit")) { // 페이징 비동기 호출 
+    		action = new NoticeListAjax();
     		forward = action.execute(request, response);
     	}
     		

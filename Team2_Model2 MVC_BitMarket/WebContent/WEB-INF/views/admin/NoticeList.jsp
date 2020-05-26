@@ -21,8 +21,43 @@
 	rel="stylesheet">
 <link href="dist/css/style.min.css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-	<script type="text/javascript">
-	$(function(){
+	
+<!-- 파일 버튼 디자인을 위해 bootstrap 추가한 것-->
+<script
+	src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<link
+	href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"
+	rel="stylesheet">
+
+
+<style>
+.btn-file {
+	position: relative;
+	overflow: hidden;
+}
+
+.btn-file input[type=file] {
+	position: absolute;
+	top: 0;
+	right: 0;
+	min-width: 100%;
+	min-height: 100%;
+	font-size: 100px;
+	text-align: right;
+	filter: alpha(opacity = 0);
+	opacity: 0;
+	outline: none;
+	background: white;
+	cursor: inherit;
+	display: block;
+}
+</style>
+<!--  파일 버튼 디자인을 위해 bootstrap 추가한 것/ -->	
+
+<script>
+
+//페이지 링크 비동기
+$(function(){
 		
 		//페이징 비동기
 		$('#paging').change(function(){
@@ -30,20 +65,21 @@
 					    cp : $('#cp').val() 
 			           };		
 			$.ajax({
-				url:"EmpListAjax.emp",
+				url:"NoticeListAjax.bit",
 				data: data,
 				type:"POST",		
 				dataType: "json",
 				success:function(responsedata){ 
 					 console.log(responsedata);
-					$('#emptable').empty();
+					$('#noticetable').empty();
 					$.each(responsedata,function(index,obj){	
-						$('#emptable').append(	
-								"<tr><td>"+obj.empno+"</td>" +
-								"<td><a href='EmpDetail.emp?empno="+obj.empno+"&cp=${cpage}&ps=${pagesize}'>" +
-									obj.ename+"</a></td>" +
-								"<td>"+obj.job+"</td>" +
-								"<td>"+obj.deptno+"</td><tr>"
+						$('#noticetable').append(	
+								"<tr><td>"+obj.ncindex+"</td>" +
+								"<td><a href='EmpDetail.emp?empno="+obj.ncindex+"&cp=${cpage}&ps=${pagesize}'>" +
+									obj.title+"</a></td>" +
+								"<td>"+obj.rtime+"</td>" +
+								"<td>"+obj.adminid+"</td>" +
+								"<td>"+obj.ncstate+"</td><tr>"
 						   
 						);
 					});
@@ -63,11 +99,11 @@
 			console.log('cp='+cp);
 			$('#zero_config_paginate').empty();
 			var pagesize = $('#paging option:selected').val();
-			var totalempcount = $('#totalempcount').val();
+			var totalempcount = $('#totalnoticecount').val();
 			
 			var pagecount;
 			console.log('pagesize= '+pagesize);
-			console.log('totalempcount= '+ totalempcount);
+			console.log('totalnoticecount= '+ totalempcount);
 			if((totalempcount % pagesize) == 0){
 				pagecount = totalempcount/pagesize;
 			}else if(totalempcount/pagesize<1){
@@ -134,132 +170,26 @@
 			
 		});
 		
-		
-		
-		
-		
-		
-		//사원번호로 검색 비동기 처리
-		$('#empsearch').keyup(function(){
-			if($('#empsearch').val() == ""){
-				$(location).attr('href',"EmpList.emp?cp=${cpage}&ps=${pagesize}");
-			}
-			var data = {empno : $('#empsearch').val()};
-			$.ajax(
-					 {
-						 type:"get",
-						 data: data,
-						 url:"EmpSearchEmpno.emp",
-						 dataType:"json",
-						 success:function(responsedata){ 
-							$('#emptable').empty();
-							$.each(responsedata,function(index,obj){	
-								$('#emptable').append(	
-										"<tr><td>"+obj.empno+"</td>" +
-										"<td><a href='EmpDetail.emp?empno="+obj.empno+"&cp=${cpage}&ps=${pagesize}'>" +
-											obj.ename+"</a></td>" +
-										"<td>"+obj.job+"</td>" +
-										"<td>"+obj.deptno+"</td><tr>"
-								   
-								);
-							});
-								$('#zero_config_info').empty();
-								$('#zero_config_info').append("총 부서원 " + responsedata.length);
-							
 
-						 }
-						
-					 }
-			
-			      );
-		});
-		
-		//부서번호 셀렉트 비동기 처리
-		$('#deptsearch').change(function(){
-			if($('#deptsearch option:selected').val() == "선택없음") {
-				$(location).attr('href',"EmpList.emp?cp=${cpage}&ps=${pagesize}");
-			}
-			var data = {deptno : $('#deptsearch option:selected').val()};
-			$.ajax(
-					 {
-						 type:"get",
-						 data: data,
-						 url:"EmpSearchDeptno.emp",
-						 dataType:"json",
-						 success:function(responsedata){ 
-							 console.log(responsedata);
-							$('#emptable').empty();
-							$.each(responsedata,function(index,obj){	
-								$('#emptable').append(	
-										"<tr><td>"+obj.empno+"</td>" +
-										"<td><a href='EmpDetail.emp?empno="+obj.empno+"&cp=${cpage}&ps=${pagesize}'>" +
-											obj.ename+"</a></td>" +
-										"<td>"+obj.job+"</td>" +
-										"<td>"+obj.deptno+"</td><tr>"
-								   
-								);
-							});
-							$('#zero_config_info').empty();
-							$('#zero_config_info').append("총 부서원 " + responsedata.length);
-							
-
-						 }
-						
-					 });
-		});
-		
-	});
-	</script>
-<!-- 파일 버튼 디자인을 위해 bootstrap 추가한 것-->
-<script
-	src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-<link
-	href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"
-	rel="stylesheet">
-
-
-<style>
-.btn-file {
-	position: relative;
-	overflow: hidden;
-}
-
-.btn-file input[type=file] {
-	position: absolute;
-	top: 0;
-	right: 0;
-	min-width: 100%;
-	min-height: 100%;
-	font-size: 100px;
-	text-align: right;
-	filter: alpha(opacity = 0);
-	opacity: 0;
-	outline: none;
-	background: white;
-	cursor: inherit;
-	display: block;
-}
-</style>
-<!--  파일 버튼 디자인을 위해 bootstrap 추가한 것/ -->	
-
+});
+</script>
 	
 	
 
 </head>
 
 <body>
-	<!-- set 하기 -->
-	<c:set var="emplist" value="${requestScope.emplist}" />
+		<!-- set 하기 -->
+	<c:set var="noticelist" value="${requestScope.noticelist}" />
 	<c:set var="pagesize" value="${requestScope.pagesize}" />
 	<c:set var="cpage" value="${requestScope.cpage}" />
 	<c:set var="pagecount" value="${requestScope.pagecount}" />
-	<c:set var="totalempcount" value="${requestScope.totalempcount}" />
+	<c:set var="totalnoticecount" value="${requestScope.totalnoticecount}" />
+	<!-- 비동기 때 사용하려고 만든 것 -->
 	<input type="hidden" id="cp" name="${cpage}" value="${cpage}"/>
 	<input type="hidden" id="pagecount" name="${pagecount}" value="${pagecount}"/>
 	<input type="hidden" id="totalempcount" name="${totalempcount}" value="${totalempcount}"/>
-	
-	
-	
+	<!-- 비동기 때 사용하려고 만든 것 끝 -->
 	<!-- ============================================================== -->
 	<!-- Preloader - style you can find in spinners.css -->
 	<!-- ============================================================== -->
@@ -276,8 +206,8 @@
 		<!-- ============================================================== -->
 		<!-- Topbar header - style you can find in pages.scss -->
 		<!-- ============================================================== -->
-		<!-- header include로 뺌 -->
-		   <jsp:include page="../../Include/adminheader.jsp"/>
+		<!-- 헤더 include로 뺌 -->
+		   <jsp:include page="../../../Include/adminheader.jsp"/>
 
 		<!-- ============================================================== -->
 		<!-- End Topbar header -->
@@ -285,19 +215,19 @@
 		<!-- ============================================================== -->
 		<!-- Left Sidebar - style you can find in sidebar.scss  -->
 		<!-- ============================================================== -->
-		<!-- sidebar include로 뺌 -->
-		   <jsp:include page="../../Include/adminsidebar.jsp"/>
+	<!-- sidebar include로 뺌 -->
+		    <jsp:include page="../../../Include/adminsidebar.jsp"/>
 	
 		<div class="page-wrapper">
 		
 			<div class="page-breadcrumb">
 				<div class="row">
 					<div class="col-12 d-flex no-block align-items-center">
-						<h4 class="page-title">관리자 페이지</h4>
+						<h4 class="page-title">게시판</h4>
 						<div class="ml-auto text-right">
 							<nav aria-label="breadcrumb">
 								<ol class="breadcrumb">
-									<li class="breadcrumb-item"><a href="#">Home</a></li>
+									<li class="breadcrumb-item"><a href="#">Board</a></li>
 								</ol>
 							</nav>
 						</div>
@@ -309,7 +239,7 @@
 
 			<div class="card">
 				<div class="card-body">
-					<h5 class="card-title">사원 목록</h5>
+					<h5 class="card-title">공지사항 게시판</h5>
 					<div class="table-responsive">
 						<div id="zero_config_wrapper"
 							class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
@@ -317,11 +247,11 @@
 								<div class="col-sm-12 col-md-6">
 									<div class="dataTables_length" id="zero_config_length">
 										<form name="list">
-											<label>페이지 당 <select name="ps"
+											<label>Show <select name="ps"
 												aria-controls="zero_config" id="paging">
 													<c:forEach var="i" begin="5" end="20" step="5">
 														<c:choose>
-															<c:when test="${pagesize == i}">
+															<c:when test="${pagesize ==i}">
 																<option value="${i}" selected>${i}건</option>
 															</c:when>
 															<c:otherwise>
@@ -329,28 +259,15 @@
 															</c:otherwise>
 														</c:choose>
 													</c:forEach>
-											</select> 보기
+											</select>
 											</label>
 										</form>
 									</div>
 								</div>
 								
-								<div class="col-sm-12 col-md-6">
 								
-									<div id="zero_config_filter" class="dataTables_filter">
-										부서번호 : <select id="deptsearch">
-											<option value="선택없음" selected>선택없음</option>
-											<option value="10">10</option>
-											<option value="20">20</option>
-											<option value="30">30</option>
-										</select>
-										<label>Search:<input type="search" id="empsearch" name="empsearch"
-											class="form-control form-control-sm" placeholder="사번으로 검색가능합니다"
-											aria-controls="zero_config"></label>
-									</div>
-								</div>
 							</div>
-							<div class="row">
+														<div class="row">
 								<div class="col-sm-12">
 									<table id="zero_config"
 										class="table table-striped table-bordered dataTable no-footer"
@@ -360,28 +277,32 @@
 
 												<th class="sorting" tabindex="0" aria-controls="zero_config"
 													rowspan="1" colspan="1"
-													aria-label="사번: activate to sort column ascending">사번</th>
+													aria-label="사번: activate to sort column ascending">글번호</th>
 												<th class="sorting" tabindex="0" aria-controls="zero_config"
 													rowspan="1" colspan="1"
-													aria-label="이름: activate to sort column ascending">이름</th>
+													aria-label="이름: activate to sort column ascending">제목</th>
 												<th class="sorting" tabindex="0" aria-controls="zero_config"
 													rowspan="1" colspan="1"
-													aria-label="직급: activate to sort column ascending">직급</th>
+													aria-label="직급: activate to sort column ascending">등록시간</th>
 												<th class="sorting" tabindex="0" aria-controls="zero_config"
 													rowspan="1" colspan="1"
-													aria-label="부서번호: activate to sort column ascending">부서번호</th>
+													aria-label="부서번호: activate to sort column ascending">작성자</th>
+												<th class="sorting" tabindex="0" aria-controls="zero_config"
+													rowspan="1" colspan="1"
+													aria-label="부서번호: activate to sort column ascending">공개 여부</th>	
 											</tr>
 										</thead>
-										<tbody id="emptable">
+										<tbody id="noticetable">
 
-											<c:forEach var="emp" items="${emplist}">
+											<c:forEach var="notice" items="${noticelist}">
 												<tr>
-													<td>${emp.empno}</td>
+													<td>${notice.ncindex}</td>
 													<td><a
-														href="EmpDetail.emp?empno=${emp.empno}&cp=${cpage}&ps=${pagesize}">
-															${emp.ename} </a></td>
-													<td>${emp.job}</td>
-													<td>${emp.deptno}</td>
+														href="EmpDetail.emp?empno=${notice.ncindex}&cp=${cpage}&ps=${pagesize}">
+															${notice.title} </a></td>
+													<td>${notice.rtime}</td>
+													<td>${notice.adminid}</td>
+													<td>${notice.ncstate}</td>
 
 												</tr>
 											</c:forEach>
@@ -393,15 +314,16 @@
 								<div class="col-sm-12 col-md-5">
 
 									<div class="dataTables_info" id="zero_config_info"
-										role="status" aria-live="polite">총 부서원 ${totalempcount}</div>
+										role="status" aria-live="polite">총 게시글 ${totalnoticecount}건</div>
 
 								</div>
 								<div class="col-sm-12 col-md-7">
 									<div class="dataTables_paginate paging_simple_numbers"
 										id="zero_config_paginate">
 
+
 										<c:if test="${cpage > 1}">
-											<a href="EmpList.emp?cp=${cpage-1}&ps=${pagesize}" cp="${cpage-1}" ps="${pagesize}">이전</a>
+											<a href="BoardList.board?cp=${cpage-1}&ps=${pagesize}">이전</a>
 										</c:if>
 										<!-- page 목록 나열하기 -->
 										<c:forEach var="i" begin="1" end="${pagecount}" step="1">
@@ -410,18 +332,18 @@
 													<font color="red">[${i}]</font>
 												</c:when>
 												<c:otherwise>
-													<a href="EmpList.emp?cp=${i}&ps=${pagesize}" cp="${i}" ps="${pagesize}">[${i}]</a>
+													<a href="BoardList.board?cp=${i}&ps=${pagesize}">[${i}]</a>
 												</c:otherwise>
 											</c:choose>
 
 										</c:forEach>
 										<!--다음 링크 -->
+
 										<c:if test="${cpage < pagecount}">
-											<a href="EmpList.emp?cp=${cpage+1}&ps=${pagesize}" cp="${cpage+1}" ps="${pagesize}">다음</a>
+											<a href="BoardList.board?cp=${cpage+1}&ps=${pagesize}">다음</a>
 										</c:if>
-										
 									</div>
-									<a href="EmpInsert.emp">사원 등록</a>
+									<a href="BoardWrite.board">글쓰기</a>
 								</div>
 							</div>
 						</div>

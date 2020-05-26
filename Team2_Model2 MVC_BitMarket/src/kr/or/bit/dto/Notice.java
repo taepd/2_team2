@@ -3,17 +3,17 @@ package kr.or.bit.dto;
 import java.util.Date;
 
 public class Notice {
-	private int index;
+	private int ncindex;
 	private String title;
-	private String content;
-	private Date rtime;
+	private String nccontent;
+	private String rtime;
 	private String ncstate;
-	private String id;
-	public int getIndex() {
-		return index;
+	private String adminid;
+	public int getNcindex() {
+		return ncindex;
 	}
-	public void setIndex(int index) {
-		this.index = index;
+	public void setNcindex(int ncindex) {
+		this.ncindex = ncindex;
 	}
 	public String getTitle() {
 		return title;
@@ -21,16 +21,16 @@ public class Notice {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public String getContent() {
-		return content;
+	public String getNccontent() {
+		return nccontent;
 	}
-	public void setContent(String content) {
-		this.content = content;
+	public void setNccontent(String nccontent) {
+		this.nccontent = nccontent;
 	}
-	public Date getRtime() {
+	public String getRtime() {
 		return rtime;
 	}
-	public void setRtime(Date rtime) {
+	public void setRtime(String rtime) {
 		this.rtime = rtime;
 	}
 	public String getNcstate() {
@@ -39,18 +39,17 @@ public class Notice {
 	public void setNcstate(String ncstate) {
 		this.ncstate = ncstate;
 	}
-	public String getId() {
-		return id;
+	public String getAdminid() {
+		return adminid;
 	}
-	public void setId(String id) {
-		this.id = id;
+	public void setAdminid(String adminid) {
+		this.adminid = adminid;
 	}
 	@Override
 	public String toString() {
-		return "Notice [index=" + index + ", title=" + title + ", content=" + content + ", rtime=" + rtime
-				+ ", ncstate=" + ncstate + ", id=" + id + "]";
+		return "Notice [ncindex=" + ncindex + ", title=" + title + ", nccontent=" + nccontent + ", rtime=" + rtime
+				+ ", ncstate=" + ncstate + ", adminid=" + adminid + "]";
 	}
 	
 	
-	
-}
+}	

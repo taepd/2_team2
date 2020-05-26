@@ -9,6 +9,7 @@ import java.util.List;
 
 import kr.or.bit.dto.Admin;
 import kr.or.bit.dto.Board;
+import kr.or.bit.dto.Notice;
 import kr.or.bit.dto.User;
 import kr.or.bit.utils.ConnectionHelper;
 import kr.or.bit.utils.DB_Close;
@@ -108,7 +109,13 @@ public class Bitdao {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		} finally {
-			
+			DB_Close.close(rs);
+			DB_Close.close(pstmt);
+			try {
+				conn.close(); // 받환하기
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		
@@ -267,5 +274,84 @@ public class Bitdao {
 		}
 		return admin;
 	}
+	
+	//게시글 목록 조회
+		public List<Notice> getNoticeList(int cpage, int pagesize) {
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			List<Notice> noticelist = null;
+			
+			try {
+				conn = ConnectionHelper.getConnection("oracle");
+				String sql = "select * from " +
+	                    				"(select rownum rn, n.* from notice n order by ncindex desc)" +
+	                    				"where rn between ? and ?";
+				pstmt = conn.prepareStatement(sql);
+				
+				int start = cpage * pagesize - (pagesize - 1);
+				int end = cpage * pagesize;
+				
+				pstmt.setInt(1, start);
+				pstmt.setInt(2, end);
+				
+				rs = pstmt.executeQuery();
+				noticelist = new ArrayList<Notice>(); 
+				while(rs.next()) {
+					Notice notice = new Notice();
+					notice.setNcindex(rs.getInt("ncindex"));
+					notice.setTitle(rs.getString("title"));
+					notice.setNccontent(rs.getString("nccontent"));
+					notice.setRtime(rs.getString("rtime"));
+					notice.setNcstate(rs.getString("ncstate"));
+					notice.setAdminid(rs.getString("adminid"));
+					
+					
+					noticelist.add(notice);
+				}
+				
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+				
+			} finally {
+				DB_Close.close(rs);
+				DB_Close.close(pstmt);
+				try {
+					conn.close();
+				} catch (Exception e2) {
+					System.out.println(e2.getMessage());
+				
+				}
+			}
+			return noticelist;
+		}
+		//공지사항 총 건수 구하기
+		public int getTotalNoticeCount() {
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			int totalcount = 0;
+			try {
+				conn = ConnectionHelper.getConnection("oracle");
+				String sql = "select count(*) from notice";
+				pstmt = conn.prepareStatement(sql);
+				rs = pstmt.executeQuery();
+				if(rs.next()) {
+					totalcount = rs.getInt(1);
+				}
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+	
+			}finally {
+				DB_Close.close(rs);
+				DB_Close.close(pstmt);
+				try {
+					conn.close();
+				} catch (Exception e2) {
+					System.out.println(e2.getMessage());
+				}
+			}
+			return totalcount;
+		}
 
 }

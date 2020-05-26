@@ -8,19 +8,23 @@
 						<li class="sidebar-item"><a
 							class="sidebar-link waves-effect waves-dark sidebar-link"
 							href="EmpList.emp" aria-expanded="false"><i
-								class="mdi mdi-view-dashboard"></i><span class="hide-menu">사원 관리</span></a></li>
+								class="mdi mdi-view-dashboard"></i><span class="hide-menu">Q&A</span></a></li>
+						<li class="sidebar-item"><a
+							class="sidebar-link waves-effect waves-dark sidebar-link"
+							href="NoticeList.bit" aria-expanded="false"><i
+								class="mdi mdi-chart-bar"></i><span class="hide-menu">공지사항</span></a></li>
 						<li class="sidebar-item"><a
 							class="sidebar-link waves-effect waves-dark sidebar-link"
 							href="EmpChartview.emp" aria-expanded="false"><i
-								class="mdi mdi-chart-bar"></i><span class="hide-menu">차트</span></a></li>
+								class="mdi mdi-chart-bar"></i><span class="hide-menu">거래내역 관리</span></a></li>		
 						<li class="sidebar-item"><a
 							class="sidebar-link waves-effect waves-dark sidebar-link"
 							href="BoardList.board" aria-expanded="false"><i
-								class="mdi mdi-chart-bar"></i><span class="hide-menu">게시판</span></a></li>		
+								class="mdi mdi-chart-bar"></i><span class="hide-menu">통계관리</span></a></li>		
 						<li class="sidebar-item"><a
 							class="sidebar-link waves-effect waves-dark sidebar-link"
 							href="DataTableView.emp" aria-expanded="false"><i
-								class="mdi mdi-chart-bar"></i><span class="hide-menu">DataTable</span></a></li>		
+								class="mdi mdi-chart-bar"></i><span class="hide-menu">회원관리</span></a></li>		
 					</ul>
 				</nav>
 				
