@@ -11,6 +11,7 @@ public class Board {
 	private int count;
 	private String id;
 	private String ctcode;
+	private String img;
 	public int getBdindex() {
 		return bdindex;
 	}
@@ -71,11 +72,17 @@ public class Board {
 	public void setCtcode(String ctcode) {
 		this.ctcode = ctcode;
 	}
+	public String getImg() {
+		return img;
+	}
+	public void setImg(String img) {
+		this.img = img;
+	}
 	@Override
 	public String toString() {
 		return "Board [bdindex=" + bdindex + ", title=" + title + ", price=" + price + ", content=" + content
 				+ ", rtime=" + rtime + ", trstate=" + trstate + ", delstate=" + delstate + ", count=" + count + ", id="
-				+ id + ", ctcode=" + ctcode + "]";
+				+ id + ", ctcode=" + ctcode + ", img=" + img + "]";
 	}
 	
 }
