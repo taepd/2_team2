@@ -99,18 +99,18 @@ $(function(){
 			console.log('cp='+cp);
 			$('#zero_config_paginate').empty();
 			var pagesize = $('#paging option:selected').val();
-			var totalempcount = $('#totalnoticecount').val();
+			var totalnoticecount = $('#totalnoticecount').val();
 			
 			var pagecount;
 			console.log('pagesize= '+pagesize);
-			console.log('totalnoticecount= '+ totalempcount);
-			if((totalempcount % pagesize) == 0){
-				pagecount = totalempcount/pagesize;
-			}else if(totalempcount/pagesize<1){
+			console.log('totalnoticecount= '+ totalnoticecount);
+			if((totalnoticecount % pagesize) == 0){
+				pagecount = totalnoticecount/pagesize;
+			}else if(totalnoticecount/pagesize<1){
 				pagecount=1;
 			}else{
 			
-				pagecount = Math.floor(totalempcount/pagesize + 1); 
+				pagecount = Math.floor(totalnoticecount/pagesize + 1); 
 			}
 			
 			console.log('pagecount = '+pagecount);
@@ -188,7 +188,7 @@ $(function(){
 	<!-- 비동기 때 사용하려고 만든 것 -->
 	<input type="hidden" id="cp" name="${cpage}" value="${cpage}"/>
 	<input type="hidden" id="pagecount" name="${pagecount}" value="${pagecount}"/>
-	<input type="hidden" id="totalempcount" name="${totalempcount}" value="${totalempcount}"/>
+	<input type="hidden" id="totalnoticecount" name="${totalnoticecount}" value="${totalnoticecount}"/>
 	<!-- 비동기 때 사용하려고 만든 것 끝 -->
 	<!-- ============================================================== -->
 	<!-- Preloader - style you can find in spinners.css -->
@@ -343,7 +343,7 @@ $(function(){
 											<a href="BoardList.board?cp=${cpage+1}&ps=${pagesize}">다음</a>
 										</c:if>
 									</div>
-									<a href="BoardWrite.board">글쓰기</a>
+									<a href="NoticeWrite.bit">글쓰기</a>
 								</div>
 							</div>
 						</div>

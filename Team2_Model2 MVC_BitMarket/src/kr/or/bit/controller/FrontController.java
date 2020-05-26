@@ -14,6 +14,7 @@ import kr.or.bit.service.BitJoin;
 import kr.or.bit.service.BitLogout;
 import kr.or.bit.service.admin.AdminNoticeList;
 import kr.or.bit.service.admin.NoticeListAjax;
+import kr.or.bit.service.admin.NoticeWrite;
 import kr.or.bit.service.BItIdCheck;
 import kr.or.bit.service.BItLogin;
 import kr.or.bit.service.BitBoardWrite;
@@ -92,8 +93,16 @@ public class FrontController extends HttpServlet {
     	}else if(url_Command.equals("/NoticeList.bit")) { // 공지사항 게시판 이동
     		action = new AdminNoticeList();
     		forward = action.execute(request, response);
-    	}else if(url_Command.equals("/NoticeListAjax.bit")) { // 페이징 비동기 호출 
+    	}else if(url_Command.equals("/NoticeListAjax.bit")) { // 공지사항 페이징 비동기 호출 
     		action = new NoticeListAjax();
+    		forward = action.execute(request, response);
+    	}else if(url_Command.equals("/NoticeWrite.bit")) { // 공지사항 글쓰기 페이지 이동
+    		//UI
+    		forward = new ActionForward();
+    		forward.setRedirect(false);
+    		forward.setPath("/WEB-INF/views/admin/NoticeWrite.jsp");
+    	}else if(url_Command.equals("/NoticeWriteOk.bit")) {  //공지사항 글 등록
+    		action = new NoticeWrite();
     		forward = action.execute(request, response);
     	}
     		

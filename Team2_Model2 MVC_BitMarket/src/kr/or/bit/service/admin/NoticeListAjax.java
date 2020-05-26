@@ -52,16 +52,16 @@ public class NoticeListAjax implements Action {
 				}else{
 					pagecount = (totalnoticecount / pagesize) + 1; 
 				}
-				//request.setAttribute("pagesize", pagesize);
-				//request.setAttribute("cpage", cpage);
-				//request.setAttribute("pagecount", pagecount);
-				//request.setAttribute("totalempcount", totalempcount);
-				System.out.println(noticelist);
+				request.setAttribute("pagesize", pagesize);
+				request.setAttribute("cpage", cpage);
+				request.setAttribute("pagecount", pagecount);
+				request.setAttribute("totalempcount", totalnoticecount);
+				 System.out.println(noticelist);
 				 JSONArray jsonArr = JSONArray.fromObject(noticelist);
 				 request.setAttribute("jsonArr", jsonArr);
 			
-				 //response.setContentType("application/x-json; charset=UTF-8");
-				 //response.getWriter().print(jsonArr);
+//				 response.setContentType("application/x-json; charset=UTF-8");
+//				 response.getWriter().print(jsonArr);
 				 
 				 forward = new ActionForward();
 				 forward.setRedirect(false); //forward

@@ -24,7 +24,7 @@ public class AdminNoticeList implements Action{
 		//List 페이지 처음 호출 ...
 		if(ps == null || ps.trim().equals("")){
 			//default 값 설정
-			ps = "10"; //5개씩 
+			ps = "5"; //5개씩 
 		}
 	
 		if(cp == null || cp.trim().equals("")){
