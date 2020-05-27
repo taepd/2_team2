@@ -37,7 +37,7 @@ public class BItLogin implements Action {
 		}else if(user != null && id.equals(user.getId()) && pwd.equals(user.getPwd())){ 
 			HttpSession session = request.getSession(); session.setAttribute("id", id);
 		  
-		  msg = "로그인 성공"; url = "BitMain.bit";
+		  msg = "로그인 성공"; url = "BitBoardList.bit";
 		  
 		}else {
 			msg = "로그인 실패";

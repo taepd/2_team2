@@ -11,14 +11,25 @@ import javax.servlet.http.HttpServletResponse;
 import kr.or.bit.action.Action;
 import kr.or.bit.action.ActionForward;
 import kr.or.bit.service.BitJoin;
+import kr.or.bit.service.BitList;
 import kr.or.bit.service.BitLogout;
+import kr.or.bit.service.BitSelectCategory;
+import kr.or.bit.service.BitUpdateOk;
 import kr.or.bit.service.admin.AdminNoticeDetail;
 import kr.or.bit.service.admin.AdminNoticeList;
+import kr.or.bit.service.admin.NoticeDelete;
 import kr.or.bit.service.admin.NoticeListAjax;
+import kr.or.bit.service.admin.NoticeUpdate;
 import kr.or.bit.service.admin.NoticeWrite;
 import kr.or.bit.service.BItIdCheck;
 import kr.or.bit.service.BItLogin;
+import kr.or.bit.service.BitBoardDetail;
+import kr.or.bit.service.BitBoardList;
+import kr.or.bit.service.BitBoardListAjax;
 import kr.or.bit.service.BitBoardWrite;
+import kr.or.bit.service.BitCategory;
+import kr.or.bit.service.BitDeleteOk;
+import kr.or.bit.service.BitDetail;
 
 
 
@@ -74,12 +85,12 @@ public class FrontController extends HttpServlet {
     		action = new BitLogout();
     		forward = action.execute(request, response);
     		
-    	}else if(url_Command.equals("/Bitwrite.bit")) {
+    	}else if(url_Command.equals("/Bitwrite.bit")) { //메인 글쓰기 게시판 이동
     		forward = new ActionForward();
     		forward.setRedirect(false);
     		forward.setPath("/WEB-INF/views/BitWrite.jsp");
     	
-    	}else if(url_Command.equals("/BitBoardWrite.bit")) {
+    	}else if(url_Command.equals("/BitBoardWrite.bit")) { //메인 게시판 글쓰기
     		action = new BitBoardWrite();
     		forward = action.execute(request, response);
     	}else if(url_Command.equals("/BitAdminMain.bit")) { //admim 메인페이지 이동
@@ -107,6 +118,56 @@ public class FrontController extends HttpServlet {
     		forward = action.execute(request, response);
     	}else if(url_Command.equals("/AdminNoticeDetail.bit")) { //공지사항 상세글 보기
     		action = new AdminNoticeDetail();
+    		forward = action.execute(request, response);
+    	
+    	}else if(url_Command.equals("/Category.bit")) {  //카테고리 셀렉트
+    		action = new BitCategory();
+    		forward = action.execute(request, response);
+    	
+    	}else if(url_Command.equals("/BitDetail.bit")) {  //상세 페이지
+    		action = new BitDetail();
+    		forward = action.execute(request, response);
+    	
+    	}else if(url_Command.equals("/BitList.bit")) {  //리스트 뷰 
+    		action = new BitList();
+    		forward = action.execute(request, response);
+    		
+    	}else if(url_Command.equals("/BitSelectCategory.bit")) { //카테고리 셀렉
+    		action = new BitSelectCategory();
+    		forward = action.execute(request, response);
+    		
+    	}else if(url_Command.equals("/BitUpdate.bit")) {  //업데이트 페이지
+    		forward = new ActionForward();
+    		forward.setRedirect(false);
+    		forward.setPath("/WEB-INF/views/BitUpdate.jsp");
+    		
+    	}else if(url_Command.equals("/BitUpdateOk.bit")) { //업데이트
+    		action = new BitUpdateOk();
+    		forward = action.execute(request, response);
+    		
+    	}else if(url_Command.equals("/BitDeleteOk.bit")) {
+    		action = new BitDeleteOk();
+    		forward = action.execute(request, response);
+    	}else if(url_Command.equals("/BitBoardListAjax.bit")) { //비동기로 리스트 조회
+    		action = new BitBoardListAjax();
+    		forward = action.execute(request, response);
+    	}else if(url_Command.equals("/BitBoardList.bit")) { //첫 화면에서 리스트 조회
+    		action = new BitBoardList();
+    		forward = action.execute(request, response);
+    	}else if(url_Command.equals("/BitBoardDetail.bit")) { // 메인 게시글 상세보기
+    		action = new BitBoardDetail();
+    		forward = action.execute(request, response);
+    	}else if(url_Command.equals("/NoticeUpdate.bit")) {  // 공지사항 수정 페이지로 이동
+    		forward = new ActionForward();
+    		forward.setRedirect(false);
+    		forward.setPath("/WEB-INF/views/admin/NoticeUpdate.jsp");
+    		
+    	}else if(url_Command.equals("/NoticeUpdateOk.bit")) {   // 공지사항 수정 완료
+    		action = new NoticeUpdate();
+    		forward = action.execute(request, response);
+    	
+    	}else if(url_Command.equals("/NoticeDeleteOk.bit")) {  //공지사항 삭제  
+    		action = new NoticeDelete();
     		forward = action.execute(request, response);
     	
     	}

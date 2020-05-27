@@ -8,7 +8,7 @@ public class Reply {
 	private String scstate;
 	private String delstate;
 	private String trstate;
-	private Date rtime;
+	private String rtime;
 	private int refer;
 	private int depth;
 	private int step;
@@ -44,10 +44,10 @@ public class Reply {
 	public void setTrstate(String trstate) {
 		this.trstate = trstate;
 	}
-	public Date getRtime() {
+	public String getRtime() {
 		return rtime;
 	}
-	public void setRtime(Date rtime) {
+	public void setRtime(String rtime) {
 		this.rtime = rtime;
 	}
 	public int getRefer() {

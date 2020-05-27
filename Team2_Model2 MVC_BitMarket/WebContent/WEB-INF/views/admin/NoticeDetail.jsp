@@ -244,10 +244,10 @@
 					<tr height="100">
 						<td width="20%" align="center"><b>글내용</b></td>
 						<td colspan="3">
-						
 						<c:if test="${!empty notice.nccontent }">
 							${fn:replace(notice.nccontent, newLineChar, "<br/>")}
-						</c:if>		
+						</c:if> 
+			
 						</td>
 					</tr>
 					
@@ -258,23 +258,19 @@
 							<a href="NoticeList.bit?cp=${param.cp}&ps=${param.ps}">목록가기</a>
 							
 							<form action="NoticeUpdate.bit" method="post" name="edit">
-                                 	<input type="hidden" name="idx" value=${param.idx }>
-                              	    <input type="hidden" name="subject" value=${board.subject }>
-                                 	<input type="hidden" name="writer" value=${board.writer }>
-                                 	<input type="hidden" name="email" value=${board.email }>
-                                 	<input type="hidden" name="homepage" value=${board.homepage }>
-                                 	<input type="hidden" name="content" value=${board.content }>
-                                 	<input type="hidden" name="filename" value=${board.filename }>
+                                 	<input type="hidden" name="ncindex" value="${param.ncindex}">
+                              	    <input type="hidden" name="rtime" value="${notice.rtime}">
+                                 	<input type="hidden" name="adminid" value="${notice.adminid}">
+                                 	<input type="hidden" name="ncstate" value="${notice.ncstate}">
+                                 	<input type="hidden" name="title" value="${notice.title}">
+                                 	<input type="hidden" name="nccontent" value="${notice.nccontent}">
+                                 	
                                  	
                                 
                                     <input type="submit" value="수정">
-                               
-                                     
-                                
-                 
-                                </form>
+                             </form>
 				           
-				            <a href="BoardDeleteOk.board?idx=${param.ncindex}&cp=${param.cp}&ps=${param.ps}&writer=${notice.adminid}">삭제</a>
+				            <a href="NoticeDeleteOk.bit?ncindex=${param.ncindex}&cp=${param.cp}&ps=${param.ps}&adminid=${notice.adminid}">삭제</a>
 				            <!--  <a href="BoardRewrite.board?idx=${param.idx}&cp=${param.cp}&ps=${param.ps}&subject=${board.subject}">답글</a>-->								
 						</td>
 					</tr>
