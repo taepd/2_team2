@@ -353,5 +353,71 @@ public class Bitdao {
 			}
 			return totalcount;
 		}
-
+		//공지사항 글쓰기
+		public int noticeWrite(Notice notice) {
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			int resultrow = 0;
+			try {
+				conn = ConnectionHelper.getConnection("oracle");
+				String sql = "insert into notice(ncindex, title, nccontent, rtime, ncstate,adminid)"+
+							 "values(notice_ncindex.nextval,?,?,sysdate,?,?)";
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setString(1, notice.getTitle());
+				pstmt.setString(2, notice.getNccontent());
+				pstmt.setString(3, notice.getNcstate());
+				pstmt.setString(4, notice.getAdminid());								
+				
+				resultrow = pstmt.executeUpdate();
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			} finally {
+				DB_Close.close(pstmt);
+				try {
+					conn.close();
+				} catch (Exception e2) {
+					System.out.println(e2.getMessage());
+				}
+			}
+			return resultrow;
+		}
+		//공지사항 상세 보기
+				public Notice getNoticeByIdx(int ncindex) {
+					Connection conn = null;
+					PreparedStatement pstmt = null;
+					ResultSet rs = null;
+					Notice notice = null;
+					try {
+						conn = ConnectionHelper.getConnection("oracle");
+						String sql = "select * from notice where ncindex=?";
+						pstmt = conn.prepareStatement(sql);
+						pstmt.setInt(1, ncindex);
+						rs = pstmt.executeQuery();
+						if(rs.next()) {
+							notice = new Notice();
+							notice.setNcindex(rs.getInt("ncindex"));
+							notice.setTitle(rs.getString("title"));
+							notice.setNccontent(rs.getString("nccontent"));
+							notice.setRtime(rs.getString("rtime"));
+							notice.setNcstate(rs.getString("ncstate"));
+							notice.setAdminid(rs.getString("adminid"));
+													
+						}
+						
+					} catch (Exception e) {
+						System.out.println(e.getMessage());
+					} finally {
+						DB_Close.close(rs);
+						DB_Close.close(pstmt);
+						try {
+							conn.close();
+						} catch (Exception e2) {
+							System.out.println(e2.getMessage());
+						}
+					}
+					
+				
+					return notice;
+				}
 }

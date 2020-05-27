@@ -1,6 +1,8 @@
 package kr.or.bit.service.admin;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Enumeration;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,46 +24,41 @@ public class NoticeWrite implements Action{
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
 		Notice notice = null;
 		Bitdao dao = null;
-		String uploadpath = request.getServletContext().getRealPath("upload_board");
 		
 		
 		int size = 1024*1024*10;
 		int result = 0;
-		try {			
-				dao = new Bitdao(); // POINT
-				notice = new Notice();
-			
-			
-				String subject = request.getParameter("adminid");
-				String writer = request.getParameter("title");
-				String email = request.getParameter("nccontent");
-				String homepage = request.getParameter("ncstate");
-				String content = request.getParameter("content");
-		
-				String img = multi.getFilesystemName(file);
-				
-				board.setSubject(subject);
-				board.setWriter(writer);
-				board.setEmail(email);
-				board.setHomepage(homepage);
-				board.setContent(content);
-				board.setFilename(img);
-				
-				 
-				result = dao.writeBoard(board);
-		} catch (IOException e) {
-			System.out.println(e.getMessage());
-			
-		}
-		System.out.println(result);
+		dao = new Bitdao(); // POINT
+		notice = new Notice();
 		
 		
 
+		String adminid = request.getParameter("adminid");
+		String title = request.getParameter("title");
+		String nccontent = request.getParameter("nccontent");
+		String ncstate = request.getParameter("ncstate");
+		//현재 날짜 데이터 생성
+		//SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
+		//String rtime = dateFormat.format(new Date());
+		if(ncstate==null) {
+			ncstate="N";
+		}
+		
+		notice.setAdminid(adminid);
+		notice.setTitle(title);
+		notice.setNccontent(nccontent);
+		notice.setNcstate(ncstate);
+
+		
+		 
+		result = dao.noticeWrite(notice);
+		System.out.println(result);
+		
 		String msg = "";
 		String url = "";
 		if (result > 0) {
 			msg = "등록성공";
-			url = "BoardList.board";
+			url = "NoticeList.bit";
 		} else {
 			msg = "등록실패";
 			url = "javascript:history.back()";

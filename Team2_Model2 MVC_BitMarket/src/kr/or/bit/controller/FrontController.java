@@ -12,6 +12,7 @@ import kr.or.bit.action.Action;
 import kr.or.bit.action.ActionForward;
 import kr.or.bit.service.BitJoin;
 import kr.or.bit.service.BitLogout;
+import kr.or.bit.service.admin.AdminNoticeDetail;
 import kr.or.bit.service.admin.AdminNoticeList;
 import kr.or.bit.service.admin.NoticeListAjax;
 import kr.or.bit.service.admin.NoticeWrite;
@@ -104,6 +105,10 @@ public class FrontController extends HttpServlet {
     	}else if(url_Command.equals("/NoticeWriteOk.bit")) {  //공지사항 글 등록
     		action = new NoticeWrite();
     		forward = action.execute(request, response);
+    	}else if(url_Command.equals("/AdminNoticeDetail.bit")) { //공지사항 상세글 보기
+    		action = new AdminNoticeDetail();
+    		forward = action.execute(request, response);
+    	
     	}
     		
     	

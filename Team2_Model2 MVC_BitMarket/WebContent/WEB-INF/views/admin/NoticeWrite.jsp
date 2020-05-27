@@ -107,7 +107,7 @@
                     </tr>
                     <tr>
                         <td width="40%" align="center">제목</td>
-                        <td width="60%" align="left"><input type="text" name="title" size="60"> &nbsp 공개여부 &nbsp<input type="checkbox" name="ncstate"></td>
+                        <td width="60%" align="left"><input type="text" name="title" size="60"> <label>&nbsp 공개여부 &nbsp<input type="checkbox" name="ncstate" value="Y" checked></label></td>
                     </tr>
                         
                     <tr>
@@ -116,7 +116,7 @@
                     </tr>
                     <tr>
                         <td colspan="2" align="center">
-                            <input type="submit" class="btn btn-secondary" value="글쓰기" /> 
+                            <input type="submit" class="btn btn-secondary" value="글 등록" /> 
                             <input type="reset" class="btn btn-secondary" value="다시쓰기" />
                         </td>
                     </tr>
