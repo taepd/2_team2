@@ -1,65 +1,132 @@
 package kr.or.bit.service;
 
+ 
+ 
+import java.io.File;
 import java.io.IOException;
-import java.util.Enumeration;
-
+import java.io.PrintWriter;
+import java.util.List;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.oreilly.servlet.MultipartRequest;
-import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import kr.or.bit.action.Action;
 import kr.or.bit.action.ActionForward;
 import kr.or.bit.dao.Bitdao;
 import kr.or.bit.dto.User;
+ 
+ 
 
 public class BitJoin implements Action {
-
-	@Override
-	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
-		User user = null;
+ 
+ 
+    private static final String CHARSET = "utf-8";
+    private static final String ATTACHES_DIR = "C:\\attaches";
+    private static final int LIMIT_SIZE_BYTES = 1024 * 1024;
+    
+    public ActionForward execute(HttpServletRequest request,  HttpServletResponse response)
+            throws ServletException, IOException {
+		
+    	User user = null;
 		Bitdao dao = null;
 		String uploadpath = request.getServletContext().getRealPath("upload");
 		
 		
-		int size = 1024*1024*10;
+		int size = 1024*1024;
 		int result = 0;
 		
+		 response.setContentType("text/html; charset=UTF-8");
+	     request.setCharacterEncoding(CHARSET);
+	
+
+
+ 
+ 
+        File attachesDir = new File(uploadpath);
+ 
+ 
+        DiskFileItemFactory fileItemFactory = new DiskFileItemFactory();
+        fileItemFactory.setRepository(attachesDir);
+        fileItemFactory.setSizeThreshold(size);
+        ServletFileUpload fileUpload = new ServletFileUpload(fileItemFactory);
+		
+		
 		try {
-			MultipartRequest multi = new MultipartRequest(
-			request, 
-			uploadpath,
-			size,
-			"UTF-8",
-			new DefaultFileRenamePolicy());
+			
 			
 			dao = new Bitdao();
 			user = new User();
 			
-			Enumeration filenames = multi.getFileNames();
-			String file = (String)filenames.nextElement();
+			String id = "";
+            String pwd = "";
+            String nick = "";
+            String loc = "";
+            String profile="";
 			
-			String profile = multi.getFilesystemName(file);
-			String id = multi.getParameter("id");
-			String pwd = multi.getParameter("pwd");
-			String nick = multi.getParameter("nick");
-			String loc = multi.getParameter("loc");
-			
-			System.out.println(profile);
-			
-			user.setProfile(profile);
-			user.setId(id);
+			List<FileItem> items = fileUpload.parseRequest(request);
+            for (FileItem item : items) {
+            	if (item.isFormField()) {
+                    System.out.printf("파라미터 명 : %s, 파라미터 값 : %s \n", item.getFieldName(), item.getString(CHARSET));
+                }else {    
+            	
+            	System.out.printf("파라미터 명 : %s, 파일 명 : %s,  파일 크기 : %s bytes \n", item.getFieldName(),
+                            item.getName(), item.getSize());
+                    if (item.getSize() > 0) {
+                        String separator = File.separator;
+                        int index =  item.getName().lastIndexOf(separator);
+                        String fileName = item.getName().substring(index  + 1);
+                        File uploadFile = new File(uploadpath +  separator + fileName);
+                        item.write(uploadFile);
+                    }
+                }
+                 
+                    switch (item.getFieldName()) {
+					case "id":
+						id = item.getString(CHARSET);
+						System.out.println("테스트");
+						break;
+					case "pwd":
+						pwd = item.getString(CHARSET);
+						break;
+					case "nick":
+						nick = item.getString(CHARSET);
+						break;
+					case "loc":
+						loc = item.getString(CHARSET);
+						break;
+					case "profile":
+						if(profile.equals("")) {
+							profile += item.getName();
+						}else {
+							profile += ","+item.getName();
+						}
+						break;
+
+					default:
+						break;
+					}
+                    // 프로필 사진 지정안했을 때  기본 이미지 지정
+                    if(profile.equals("")) {
+    					user.setProfile("profile.png");
+    				}else {
+    					user.setProfile(profile);
+    				}
+        			
+              
+                }
+            user.setId(id);
 			user.setPwd(pwd);
 			user.setNick(nick);
 			user.setLoc(loc);
-			
-			
+				
+				
 			result = dao.joinUser(user);
-			
-			
-			
-		} catch (IOException e) {
+		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 		

@@ -34,7 +34,7 @@ public class Bitdao {
 		try {
 			conn = ConnectionHelper.getConnection("oracle");// 추가
 
-			String sql = "insert into bitUSER(profile, id, pwd, nick , loc) values(?,?,?,?,?)";
+			String sql = "insert into bitUSER(profile, id, pwd, nick , loc, rtime) values(?,?,?,?,?,sysdate)";
 
 			pstmt = conn.prepareStatement(sql);
 

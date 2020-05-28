@@ -5,10 +5,22 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>qnaNickList</title>
-
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="icon" type="image/png" sizes="16x16"
+	href="assets/images/favicon.png">
+<title>관리자 QnA 게시판</title>
+<!-- Custom CSS -->
+<link rel="stylesheet" type="text/css"
+	href="assets/extra-libs/multicheck/multicheck.css">
+<link
+	href="assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css"
+	rel="stylesheet">
+<link href="dist/css/style.min.css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script type="text/javascript">
 
@@ -81,19 +93,6 @@ $(function(){
 </head>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 <body>
 <!-- set 하기 -->
 	<c:set var="qnaNickList" value="${requestScope.qnaNickList}" />
@@ -101,8 +100,35 @@ $(function(){
 	<c:set var="cpage" value="${requestScope.cpage}" />
 	<c:set var="pagecount" value="${requestScope.pagecount}" />
 	<c:set var="totalqnacount" value="${requestScope.totalqnacount}" />
+	<!-- ============================================================== -->
+	<!-- Preloader - style you can find in spinners.css -->
+	<!-- ============================================================== -->
+	<div class="preloader">
+		<div class="lds-ripple">
+			<div class="lds-pos"></div>
+			<div class="lds-pos"></div>
+		</div>
+	</div>
+	<!-- ============================================================== -->
+	<!-- Main wrapper - style you can find in pages.scss -->
+	<!-- ============================================================== -->
+	<div id="main-wrapper">
+		<!-- ============================================================== -->
+		<!-- Topbar header - style you can find in pages.scss -->
+		<!-- ============================================================== -->
+		<!-- 헤더 include로 뺌 -->
+		   <jsp:include page="../../../Include/adminheader.jsp"/>
+
+		<!-- ============================================================== -->
+		<!-- End Topbar header -->
+		<!-- ============================================================== -->
+		<!-- ============================================================== -->
+		<!-- Left Sidebar - style you can find in sidebar.scss  -->
+		<!-- ============================================================== -->
+	<!-- sidebar include로 뺌 -->
+		    <jsp:include page="../../../Include/adminsidebar.jsp"/>
 	
-	<div class="page-wrapper">
+		<div class="page-wrapper">
 		
 			<div class="page-breadcrumb">
 				<div class="row">
@@ -272,21 +298,34 @@ $(function(){
 
 				</div>
 			</div>
+		</div>
 <!-- ------------------------------------------------------------------------------------ -->
-			
-			
-			
-			
-			
-			
-			
+		
 			
 		</div>
+<!-- All Jquery -->
+	<!-- ============================================================== -->
+	<script src="assets/libs/jquery/dist/jquery.min.js"></script>
+	<!-- Bootstrap tether Core JavaScript -->
+	<script src="assets/libs/popper.js/dist/umd/popper.min.js"></script>
+	<script src="assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+	<!-- slimscrollbar scrollbar JavaScript -->
+	<script
+		src="assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
+	<script src="assets/extra-libs/sparkline/sparkline.js"></script>
+	<!--Wave Effects -->
+	<script src="dist/js/waves.js"></script>
+	<!--Menu sidebar -->
+	<script src="dist/js/sidebarmenu.js"></script>
+	<!--Custom JavaScript -->
+	<script src="dist/js/custom.min.js"></script>
+	<!-- this page js -->
+	<script src="assets/extra-libs/multicheck/datatable-checkbox-init.js"></script>
+	<script src="assets/extra-libs/multicheck/jquery.multicheck.js"></script>
+	<script src="assets/extra-libs/DataTables/datatables.min.js"></script>
+
+
+</body>	
+
 	
-	
-	
-	
-	
-	
-</body>
 </html>

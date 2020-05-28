@@ -18,8 +18,8 @@
 			if(state == 0) {
 				var maxHeight = $(document).height();
 				var currentScroll = window.scrollY + window.innerHeight;
-					
-			 	if (currentScroll == maxHeight) {
+				
+			 	if (currentScroll+1 > maxHeight) {
 			 			
 			    	 	fetchList();
 			    		

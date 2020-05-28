@@ -71,13 +71,13 @@ public class FrontController extends HttpServlet {
     		action = new BItLogin();
     		forward = action.execute(request, response);
     		
-    	}else if(url_Command.equals("/Loginpage.bit")) {
+    	}else if(url_Command.equals("/Loginpage.bit")) { //로그인 페이지로 이동
     		//UI
     		forward = new ActionForward();
     		forward.setRedirect(false);
     		forward.setPath("/Login.jsp");
     		
-    	}else if(url_Command.equals("/BitJoin.bit")) { // 회원가입
+    	}else if(url_Command.equals("/BitJoin.bit")) { // 회원가입 페이지로 이동
     		//UI
     		forward = new ActionForward();
     		forward.setRedirect(false);
@@ -87,7 +87,8 @@ public class FrontController extends HttpServlet {
     		//로직
     		action = new BitJoin();
     		forward = action.execute(request, response);
-    	}else if(url_Command.equals("/BitMain.bit")) {
+    	}
+    	else if(url_Command.equals("/BitMain.bit")) { //메인 페이지로 이동
     		//UI
     		forward = new ActionForward();
     		forward.setRedirect(false);
@@ -157,7 +158,7 @@ public class FrontController extends HttpServlet {
     		action = new BitUpdateOk();
     		forward = action.execute(request, response);
     		
-    	}else if(url_Command.equals("/BitDeleteOk.bit")) {
+    	}else if(url_Command.equals("/BitDeleteOk.bit")) { //삭제
     		action = new BitDeleteOk();
     		forward = action.execute(request, response);
     	}else if(url_Command.equals("/BitBoardListAjax.bit")) { //비동기로 리스트 조회

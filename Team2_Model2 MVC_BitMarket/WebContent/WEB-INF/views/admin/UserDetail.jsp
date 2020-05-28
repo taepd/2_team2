@@ -222,18 +222,22 @@
 						<td width="30%">${param.id}</td>
 						<td width="20%" align="center"><b>비밀 번호</b></td>
 						<td>${user.pwd}</td>
-						<td width="20%" align="center"><b>가입일</b></td>
-						<td>${user.rtime}</td>
+						
 					</tr>
 					<tr>
 						<td width="20%" align="center"><b>닉네임</b></td>
 						<td width="30%">${user.nick}</td>
 						<td width="20%" align="center"><b>입력 주소</b></td>
 						<td>${user.loc}</td>
-						<td width="20%" align="center"><b>프로필사진</b></td>
-						<td>${user.profile}</td>
-						
+												
 					</tr>
+					<tr>
+					<td width="20%" align="center"><b>프로필사진</b></td>
+						<td><img src="upload/${user.profile}" width="100px" height="100px"></td>
+						<td width="20%" align="center"><b>가입일</b></td>
+						<td>${user.rtime}</td>
+					</tr>
+					
 					 <tr>
 					 	<!--  
 						<td width="20%" align="center"><b>공지사항유무</b></td>
@@ -249,17 +253,6 @@
 						<td colspan="3">${notice.title}</td>
 					</tr>
 					-->
-					<tr height="100">
-					   
-						<td width="20%" align="center"><b>글내용</b></td>
-						<td colspan="3">
-						
-						<!--<c:if test="${!empty notice.nccontent }">
-							${fn:replace(notice.nccontent, newLineChar,"<br/>")}
-						</c:if>	
-						-->	
-						</td>
-					</tr>
 					
 		
 					
