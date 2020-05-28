@@ -21,6 +21,18 @@ import kr.or.bit.service.admin.NoticeDelete;
 import kr.or.bit.service.admin.NoticeListAjax;
 import kr.or.bit.service.admin.NoticeUpdate;
 import kr.or.bit.service.admin.NoticeWrite;
+import kr.or.bit.service.admin.UserDelete;
+import kr.or.bit.service.admin.UserDetail;
+import kr.or.bit.service.admin.UserList;
+import kr.or.bit.service.qna.QnAAddReadNum;
+import kr.or.bit.service.qna.QnADelete;
+import kr.or.bit.service.qna.QnADetail;
+import kr.or.bit.service.qna.QnANickList;
+import kr.or.bit.service.qna.QnAReDelete;
+import kr.or.bit.service.qna.QnAReWrite;
+import kr.or.bit.service.qna.QnASearch;
+import kr.or.bit.service.qna.QnAUpdate;
+import kr.or.bit.service.qna.QnAWrite;
 import kr.or.bit.service.BItIdCheck;
 import kr.or.bit.service.BItLogin;
 import kr.or.bit.service.BitBoardDetail;
@@ -170,6 +182,84 @@ public class FrontController extends HttpServlet {
     		action = new NoticeDelete();
     		forward = action.execute(request, response);
     	
+    	}/////////////////////////////////////////////+++
+		//QnA 리스트 로직(닉네임 포함)
+    	else if(url_Command.equals("/QnANickList.bit")) {
+        	action = new QnANickList();
+        	forward = action.execute(request, response);
+        	
+    	/////////////////////////////////////////////
+    	//QnA 상세보기 로직
+    	} else if (url_Command.equals("/QnADetail.bit")) {
+    		action = new QnADetail();
+    		forward = action.execute(request, response);
+    		
+    	/////////////////////////////////////////////
+   		//QnA 글쓰기 UI	
+   		} else if (url_Command.equals("/QnAWrite.bit")) {
+   			forward = new ActionForward();
+       		forward.setRedirect(false);
+       		forward.setPath("/WEB-INF/views/qna/QnAWrite.jsp");
+    		
+   		/////////////////////////////////////////////
+   		//QnA 글쓰기 로직
+   		} else if (url_Command.equals("/QnAWriteOk.bit")) {
+   			action = new QnAWrite();
+    		forward = action.execute(request, response);
+    			
+   		/////////////////////////////////////////////
+   		//QnA 삭제 로직	
+   		}else if (url_Command.equals("/QnADelete.bit")) {
+   			action = new QnADelete();
+   			forward = action.execute(request, response);
+    		
+   		/////////////////////////////////////////////
+   		//QnA 수정 UI	
+   		}else if (url_Command.equals("/QnAUpdate.bit")) {
+   			forward = new ActionForward();
+       		forward.setRedirect(false);
+       		forward.setPath("/WEB-INF/views/qna/QnAUpdate.jsp");
+        		
+   		/////////////////////////////////////////////
+   		//QnA 수정 로직	
+   		}else if (url_Command.equals("/QnAUpdateOk.bit")) {
+   			action = new QnAUpdate();
+   			forward = action.execute(request, response);
+    			
+   		/////////////////////////////////////////////+++
+   		//QnA 댓글(관리자 답변)	쓰기
+   		}else if (url_Command.equals("/QnAReWrite.bit")) {
+   			action = new QnAReWrite();
+   			forward = action.execute(request, response);
+    			
+   		/////////////////////////////////////////////+++
+   		//QnA 댓글(관리자 답변)	쓰기
+   		}else if (url_Command.equals("/QnAReDelete.bit")) {
+   			action = new QnAReDelete();
+   			forward = action.execute(request, response);
+    			
+   		/////////////////////////////////////////////
+   		//QnA 조회수증가
+   		}else if (url_Command.equals("/QnAAddReadNum.bit")) {
+   			action = new QnAAddReadNum();
+   			forward = action.execute(request, response);
+    		
+   		/////////////////////////////////////////////
+   		//QnA 검색
+   		}else if (url_Command.equals("/QnASearch.bit")) {
+   			action = new QnASearch();
+    		forward = action.execute(request, response);
+    	}else if(url_Command.equals("/UserList.bit")) {//회원 목록 이동
+    		action = new UserList();
+    		forward = action.execute(request, response);
+    	
+    	}else if(url_Command.equals("/UserDetail.bit")) {   // 회원 정보 상세 이동
+    		action = new UserDetail();
+    		forward = action.execute(request, response);   	
+    	
+    	}else if(url_Command.equals("/UserDeleteOK.bit")) {    // 회원 정보 삭제
+    		action = new UserDelete();
+    		forward = action.execute(request, response);   	
     	}
     		
     	

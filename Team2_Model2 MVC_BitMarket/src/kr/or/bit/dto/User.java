@@ -15,6 +15,7 @@ public class User {
 	private String nick;
 	private String loc;
 	private String profile;
+	private String rtime;
 	
 	public User() {}
 
@@ -34,20 +35,20 @@ public class User {
 		this.pwd = pwd;
 	}
 
-	public String getLoc() {
-		return loc;
-	}
-
-	public void setLoc(String loc) {
-		this.loc = loc;
-	}
-
 	public String getNick() {
 		return nick;
 	}
 
 	public void setNick(String nick) {
 		this.nick = nick;
+	}
+
+	public String getLoc() {
+		return loc;
+	}
+
+	public void setLoc(String loc) {
+		this.loc = loc;
 	}
 
 	public String getProfile() {
@@ -58,9 +59,22 @@ public class User {
 		this.profile = profile;
 	}
 
+	public String getRtime() {
+		return rtime;
+	}
+
+	public void setRtime(String rtime) {
+		this.rtime = rtime;
+	}
+
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", pwd=" + pwd + ", loc=" + loc + ", nick=" + nick + ", profile=" + profile + "]";
+		return "User [id=" + id + ", pwd=" + pwd + ", nick=" + nick + ", loc=" + loc + ", profile=" + profile
+				+ ", rtime=" + rtime + "]";
 	}
+	
+	
+
+	
 	
 }

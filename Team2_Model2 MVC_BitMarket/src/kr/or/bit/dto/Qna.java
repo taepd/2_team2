@@ -5,12 +5,16 @@ import java.sql.Date;
 public class Qna {
 	private int qaindex;
 	private String title;
-	private Date qatime;
+	private String qatime;
 	private int count;
 	private String scstate;
 	private String content;
 	private String filename;
 	private String id;
+	private String awstate;
+	
+	
+	
 	public int getQaindex() {
 		return qaindex;
 	}
@@ -23,10 +27,10 @@ public class Qna {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public Date getQatime() {
+	public String getQatime() {
 		return qatime;
 	}
-	public void setQatime(Date qatime) {
+	public void setQatime(String qatime) {
 		this.qatime = qatime;
 	}
 	public int getCount() {
@@ -59,11 +63,21 @@ public class Qna {
 	public void setId(String id) {
 		this.id = id;
 	}
+	public String getAwstate() {
+		return awstate;
+	}
+	public void setAwstate(String awstate) {
+		this.awstate = awstate;
+	}
+	
+	
 	@Override
 	public String toString() {
 		return "Qna [qaindex=" + qaindex + ", title=" + title + ", qatime=" + qatime + ", count=" + count + ", scstate="
-				+ scstate + ", content=" + content + ", filename=" + filename + ", id=" + id + "]";
+				+ scstate + ", content=" + content + ", filename=" + filename + ", id=" + id + ", awstate=" + awstate
+				+ "]";
 	}
+	
 	
 	
 }

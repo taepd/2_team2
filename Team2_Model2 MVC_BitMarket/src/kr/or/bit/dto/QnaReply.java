@@ -5,6 +5,7 @@ public class QnaReply {
 	private String id;
 	private String content;
 	private int qaindex;
+	private String qartime;
 	public String getTitle() {
 		return title;
 	}
@@ -29,10 +30,16 @@ public class QnaReply {
 	public void setQaindex(int qaindex) {
 		this.qaindex = qaindex;
 	}
+	public String getQartime() {
+		return qartime;
+	}
+	public void setQartime(String qartime) {
+		this.qartime = qartime;
+	}
 	@Override
 	public String toString() {
-		return "QnaReply [title=" + title + ", id=" + id + ", content=" + content + ", qaindex=" + qaindex + "]";
+		return "QnaReply [title=" + title + ", id=" + id + ", content=" + content + ", qaindex=" + qaindex
+				+ ", qartime=" + qartime + "]";
 	}
-	
-	
+		
 }
