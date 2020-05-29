@@ -115,13 +115,24 @@
         
         function submitAction() {
             console.log("업로드 파일 갯수 : "+sel_files.length);
+            
             var data = new FormData();
-
-            for(var i=0, len=sel_files.length; i<len; i++) {
+			
+            data.append($('#id').attr("name") , $('#id').val());
+            data.append("테스트","테스트");
+			
+           
+    
+            
+			for(var i=0, len=sel_files.length; i<len; i++) {
                 var name = "image_"+i;
                 data.append(name, sel_files[i]);
             }
             data.append("image_count", sel_files.length);
+            
+            for(var item of data.entries()) {
+          	  console.log(item [0]+ ', '+ item [1]); // key, value를 각각 출력
+          	}
             
             if(sel_files.length < 1) {
                 alert("한개이상의 파일을 선택해주세요.");
@@ -147,11 +158,14 @@
 
     <div>
         <h2><b>이미지 미리보기</b></h2>
+        <form id="form">
         <div class="input_wrap">
             <a href="javascript:" onclick="fileUploadAction();" class="my_button">파일 업로드</a>
             <input type="file" id="input_imgs" multiple/>
+            <input type="text" id="id" name="id"> 아이디
+            <input type="text" id="pwd"> 비밀번호
         </div>
-    
+    	</form>
     </div>
 
     <div>
