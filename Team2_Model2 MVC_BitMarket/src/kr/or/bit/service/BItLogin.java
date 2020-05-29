@@ -14,42 +14,50 @@ public class BItLogin implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
-		String id = request.getParameter("id");
-		String pwd = request.getParameter("pwd");
-		User user = null;
-		Admin admin = null;
-
-		Bitdao dao = new Bitdao();
-
-		user = dao.getUser(id);
-		admin = dao.getAdmin(id);
-
-		String msg = "";
-		String url = "";
-
-		if (admin != null && id.equals(admin.getId()) && pwd != null && pwd.equals(admin.getPwd())) {
-			HttpSession session = request.getSession();
-			session.setAttribute("id", id);
-
-			msg = "로그인 성공";
-			url = "BitAdminMain.bit";
-
-		}else if(user != null && id.equals(user.getId()) && pwd.equals(user.getPwd())){ 
-			HttpSession session = request.getSession(); session.setAttribute("id", id);
-		  
-		  msg = "로그인 성공"; url = "BitBoardList.bit";
-		  
-		}else {
-			msg = "로그인 실패";
-			url = "Loginpage.bit";
-		}
-		request.setAttribute("msg", msg);
-		request.setAttribute("url", url);
-
-		ActionForward forward = new ActionForward();
-		forward.setRedirect(false);
-		forward.setPath("/WEB-INF/views/redirect.jsp");
-
+			String id = request.getParameter("id");
+			String pwd = request.getParameter("pwd");
+			User user = null;
+			Admin admin = null;
+			
+			Bitdao dao = new Bitdao();
+						
+			user = dao.getUser(id);
+			admin = dao.getAdmin(id);
+						
+			String msg = "";
+			String url = "";
+			
+			if(admin != null && id.equals(admin.getId()) && pwd != null && pwd.equals(admin.getPwd())) {
+				HttpSession session = request.getSession();
+				session.setAttribute("id", id);
+				
+				msg = "로그인 성공";
+				url = "BitAdminMain.bit";
+			
+			}
+			
+			
+			  else if(user != null && id.equals(user.getId()) && pwd.equals(user.getPwd())){ 
+				  HttpSession session = request.getSession(); 
+			  session.setAttribute("id", id);
+			  session.setAttribute("nick", user.getNick());
+			  msg = "로그인 성공"; url = "BitImgList.bit";
+			  
+			  }
+			 
+			
+			
+			else  {
+					msg = "로그인 실패";
+					url = "Loginpage.bit";
+			}
+			request.setAttribute("msg", msg);
+			request.setAttribute("url", url);
+			
+			ActionForward forward = new ActionForward();
+			forward.setRedirect(false);
+			forward.setPath("/WEB-INF/views/redirect.jsp");
+			
 		return forward;
 	}
 

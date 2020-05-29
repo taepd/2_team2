@@ -13,12 +13,12 @@
     var isEnd = false;
 	$(function(){
 		  
-		
+		//무한스크롤 스크롤에 따라 동적인 변화 발생
 		$(window).scroll(function() {
 			if(state == 0) {
 				var maxHeight = $(document).height();
 				var currentScroll = window.scrollY + window.innerHeight;
-				
+					
 			 	if (currentScroll+1 > maxHeight) {
 			 			
 			    	 	fetchList();
@@ -28,7 +28,7 @@
 			}
 		 });
 		
-		
+		//스크롤이 바닥에 닿았을 때 비동기로 리스트 불러오기
 		var fetchList = function() {
 			if(isEnd == true){
 	            return;
@@ -58,13 +58,14 @@
 									"<div class='card'>"+
 										"<div class='thumb-content'>"+
 											
-											"<a href='BitBoardDetail.bit?bdindex=${board.bdindex}'>"+
+											"<a href='BitBoardDetail.bit?bdindex="+obj.bdindex+"'>"+
 												"<img class='card-img-top img-fluid' src='images/products/products-1.jpg'" +
 													"alt='Card image cap'>"+
 											"</a>"+
 										"</div>"+
 										"<div class='card-body'>"+
-											"<h4 class='card-title' id='cdtitle'><a href='BitBoardDetail.bit?bdindex=${board.bdindex}'>"+obj.title+"</a></h4>"+
+											"<h4 class='card-title' id='cdtitle'><a href='BitBoardDetail.bit?bdindex="+obj.bdindex+"'>"+obj.title+"</a></h4>"+
+													
 											"<ul class='list-inline product-meta'>"+
 												"<li class='list-inline-item'>"+
 												href+
@@ -112,11 +113,6 @@
 				dataType: "json",
 				success:function(responsedata){ 
 					$('#boardlist').empty();
-					
-					
-					
-					
-					
 					$.each(responsedata.boardArr,function(index,obj){	
 						
 						var href = "";
@@ -312,7 +308,7 @@
 				
 			});
 		
-		
+		/*
 			$('#imageOn').click(function() {
 				$('#pagingform').css('display',"none");
 				$('#pagingNav').css('display',"none");
@@ -331,7 +327,7 @@
 				change();
 			});
 		
-		
+		*/
 		
 		
 		
@@ -401,10 +397,10 @@
 						
 							<ul class="list-inline view-switcher">
 								<li class="list-inline-item">
-									<a href="javascript:void(0);" id="imageOn" ><i class="fa fa-th-large"></i></a>
+									<a href="BitImgList.bit" id="imageOn" ><i class="fa fa-th-large"></i></a>
 								</li>
 								<li class="list-inline-item">
-									<a href="javascript:void(0);" id="normalOn"><i class="fa fa-reorder" > </i></a>
+									<a href="BitNorList.bit" id="normalOn"><i class="fa fa-reorder" > </i></a>
 								</li>
 							</ul>
 						</div>

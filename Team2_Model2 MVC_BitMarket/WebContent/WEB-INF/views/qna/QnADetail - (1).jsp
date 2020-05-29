@@ -5,25 +5,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="">
-<meta name="author" content="">
-
-<link rel="icon" type="image/png" sizes="16x16"
-	href="assets/images/favicon.png">
 <title>QnA Detail</title>
-<!-- Custom CSS -->
-<link rel="stylesheet" type="text/css"
-	href="assets/extra-libs/multicheck/multicheck.css">
-<link
-	href="assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css"
-	rel="stylesheet">
-<link href="dist/css/style.min.css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-
-
 
 <!-- 유효성 체크	 -->
 <script type="text/javascript">
@@ -71,7 +54,6 @@ $(function(){
 
 
 </head>
-
 
 
 
@@ -348,73 +330,5 @@ $(function(){
 
 
 
-
-<%-- <c:if test="${}"></c:if>  <!-- if문 --> --%>
-<%-- <c:if test="${}"></c:if>  <!-- if문 --> --%>
-
-
-
-
-	<!-- ============================================================== -->
-	<!-- End PAge Content -->
-	<!-- ============================================================== -->
-	<!-- ============================================================== -->
-	<!-- Right sidebar -->
-	<!-- ============================================================== -->
-	<!-- .right-sidebar -->
-	<!-- ============================================================== -->
-	<!-- End Right sidebar -->
-	<!-- ============================================================== -->
-
-	<!-- ============================================================== -->
-	<!-- End Container fluid  -->
-	<!-- ============================================================== -->
-	<!-- ============================================================== -->
-	<!-- footer -->
-	<!-- ============================================================== -->
-
-	<!-- ============================================================== -->
-	<!-- End footer -->
-	<!-- ============================================================== -->
-	</div>
-	<!-- ============================================================== -->
-	<!-- End Page wrapper  -->
-	<!-- ============================================================== -->
-	</div>
-	<!-- End Wrapper -->
-	<!-- ============================================================== -->
-	<!-- ============================================================== -->
-	<!-- ============================================================== -->
-	<!-- All Jquery -->
-	<!-- ============================================================== -->
-	<script src="assets/libs/jquery/dist/jquery.min.js"></script>
-	<!-- Bootstrap tether Core JavaScript -->
-	<script src="assets/libs/popper.js/dist/umd/popper.min.js"></script>
-	<script src="assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
-	<!-- slimscrollbar scrollbar JavaScript -->
-	<script
-		src="assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
-	<script src="assets/extra-libs/sparkline/sparkline.js"></script>
-	<!--Wave Effects -->
-	<script src="dist/js/waves.js"></script>
-	<!--Menu sidebar -->
-	<script src="dist/js/sidebarmenu.js"></script>
-	<!--Custom JavaScript -->
-	<script src="dist/js/custom.min.js"></script>
-	<!-- this page js -->
-	<script src="assets/extra-libs/multicheck/datatable-checkbox-init.js"></script>
-	<script src="assets/extra-libs/multicheck/jquery.multicheck.js"></script>
-	<script src="assets/extra-libs/DataTables/datatables.min.js"></script>
-
-
 </body>
-
 </html>
-
-
-
-
-
-
-
-

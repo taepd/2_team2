@@ -15,6 +15,7 @@ import kr.or.bit.dto.Qna;
 import kr.or.bit.dto.QnaNick;
 import kr.or.bit.dto.QnaReply;
 import kr.or.bit.dto.Reply;
+import kr.or.bit.dto.ReplyUser_Join;
 import kr.or.bit.dto.User;
 import kr.or.bit.utils.ConnectionHelper;
 import kr.or.bit.utils.DB_Close;
@@ -740,25 +741,130 @@ public class Bitdao {
 		return resultrow;
 	}
 
-	// 댓글 조회하기
-	public List<Reply> getReplyList(int bdindex) {
+	// max step 구하기
+	public int maxStepByRefer(int refer, int bdindex) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		List<Reply> replylist = null;
+		int step = 0;
 
 		try {
 			conn = ConnectionHelper.getConnection("oracle");
-			String sql = "select * from reply where bdindex=? order by rpindex asc";
+			String sql = "select nvl(max(step),0) from reply where refer=? and bdindex=?";
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setInt(1, refer);
+			pstmt.setInt(2, bdindex);
+
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				step = rs.getInt(1);
+			}
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		DB_Close.close(rs);
+		DB_Close.close(pstmt);
+		try {
+			conn.close();
+		} catch (Exception e2) {
+			System.out.println(e2.getMessage());
+		}
+
+		return step;
+	}
+
+	// 대댓글 쓰기
+	public int reWriteReply(Reply reply) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int resultrow = 0;
+		try {
+
+			int bdindex = reply.getBdindex();
+			int rpindex = reply.getRpindex();
+			System.out.println("대댓bd" + bdindex);
+			System.out.println("대댓rp" + rpindex);
+			conn = ConnectionHelper.getConnection("oracle");
+
+			// refer, depth, step 조회
+			String sql_refer_depth_step = "select refer, depth from reply where bdindex = ? and rpindex = ?";
+
+			// rewrite
+			String sql_rewrite = "insert into reply(rpindex,content,scstate,delstate,trstate,rtime,id,bdindex,depth,refer,step)"
+					+ "values(reply_no.nextval,?,?,'N','N',sysdate,?,?,?,?,?)";
+
+			pstmt = conn.prepareStatement(sql_refer_depth_step);
+			pstmt.setInt(1, bdindex);
+			pstmt.setInt(2, rpindex);
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				int refer = rs.getInt("refer");
+				int depth = rs.getInt("depth");
+				int step = maxStepByRefer(refer, bdindex);
+
+				if (depth < 1) {
+					depth++;
+				}
+
+				// 닫아주고 실행 (rewrite)
+				DB_Close.close(pstmt);
+				pstmt = conn.prepareStatement(sql_rewrite);
+				pstmt.setString(1, reply.getContent());
+				pstmt.setString(2, reply.getScstate());
+				pstmt.setString(3, reply.getId());
+				pstmt.setInt(4, bdindex);
+
+				pstmt.setInt(5, depth);
+
+				pstmt.setInt(6, refer);
+				pstmt.setInt(7, step + 1);
+
+				int row = pstmt.executeUpdate();
+
+				if (row > 0) {
+					resultrow = row;
+				} else {
+					resultrow = -1;
+				}
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			DB_Close.close(rs);
+			DB_Close.close(pstmt);
+			try {
+				conn.close();
+			} catch (Exception e2) {
+				System.out.println(e2.getMessage());
+			}
+		}
+		return resultrow;
+
+	}
+
+	// 댓글 조회하기
+	public List<ReplyUser_Join> getReplyList(int bdindex) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<ReplyUser_Join> replylist = null;
+
+		try {
+			conn = ConnectionHelper.getConnection("oracle");
+			String sql = "SELECT * FROM (SELECT r.*, u.nick FROM reply r JOIN bituser u ON r.id = u.id order by refer asc, step asc)  where bdindex=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, bdindex);
 
 			rs = pstmt.executeQuery();
 
-			replylist = new ArrayList<Reply>();
+			replylist = new ArrayList<ReplyUser_Join>();
 
 			while (rs.next()) {
-				Reply reply = new Reply();
+				ReplyUser_Join reply = new ReplyUser_Join();
 				reply.setRpindex(rs.getInt("rpindex"));
 				reply.setId(rs.getString("id"));
 				reply.setContent(rs.getString("content"));
@@ -766,7 +872,11 @@ public class Bitdao {
 				reply.setScstate(rs.getString("scstate"));
 				reply.setDelstate(rs.getString("delstate"));
 				reply.setBdindex(rs.getInt("bdindex"));
-
+				reply.setDepth(rs.getInt("depth"));
+				reply.setRefer(rs.getInt("refer"));
+				reply.setStep(rs.getInt("step"));
+				reply.setTrstate(rs.getString("trstate"));
+				reply.setNick(rs.getString("nick"));
 				replylist.add(reply);
 			}
 		} catch (Exception e) {
@@ -873,6 +983,99 @@ public class Bitdao {
 		}
 
 		return refer_max;
+	}
+
+	// 구매 완료 체크 위해서 댓글 닉네임 가져오기
+	public List<ReplyUser_Join> getNickList(int bdindex) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<ReplyUser_Join> nickIdTrlist = null;
+		try {
+			conn = ConnectionHelper.getConnection("oracle");
+			String sql = "SELECT distinct nick,r.id,trstate FROM reply r JOIN bituser u ON r.id = u.id  where bdindex = ? order by u.nick asc";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, bdindex);
+			rs = pstmt.executeQuery();
+			nickIdTrlist = new ArrayList<ReplyUser_Join>();
+			while (rs.next()) {
+				ReplyUser_Join nick = new ReplyUser_Join();
+				nick.setNick(rs.getString("nick"));
+				nick.setId(rs.getString(2));
+				nick.setTrstate(rs.getString(3));
+				nickIdTrlist.add(nick);
+			}
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			DB_Close.close(rs);
+			DB_Close.close(pstmt);
+			try {
+				conn.close();
+			} catch (Exception e2) {
+				System.out.println(e2.getMessage());
+			}
+		}
+
+		return nickIdTrlist;
+	}
+
+	// 댓글 거래 상태 업데이트
+	public int updateTrstate(String boardId, String oldRepId, String newRepId, int bdindex) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		int resultrow = 0;
+
+		try {
+			conn = ConnectionHelper.getConnection("oracle");
+
+			String sql_update_board = "update board set trstate='Y' where bdindex= ? and id = ?";
+
+			String sql_update_reply = "update reply set trstate ='Y' where bdindex=? and id = ?";
+
+			String sql_update_reply_oldnew = "UPDATE reply " + "SET trstate =" + "CASE " + "WHEN id = ? THEN 'N' "
+					+ "WHEN id = ? THEN 'Y' " + "ELSE 'N' " + "END where bdindex = ?";
+
+			conn.setAutoCommit(false);
+
+			pstmt = conn.prepareStatement(sql_update_board);
+			pstmt.setInt(1, bdindex);
+			pstmt.setString(2, boardId);
+			pstmt.executeUpdate();
+			DB_Close.close(pstmt);
+
+			if (oldRepId == null) {
+				pstmt = conn.prepareStatement(sql_update_reply);
+				pstmt.setInt(1, bdindex);
+				pstmt.setString(2, newRepId);
+			} else {
+				pstmt = conn.prepareStatement(sql_update_reply_oldnew);
+				pstmt.setString(1, oldRepId);
+				pstmt.setString(2, newRepId);
+				pstmt.setInt(3, bdindex);
+			}
+
+			resultrow = pstmt.executeUpdate();
+			if (resultrow > 0) {
+				conn.commit();
+			}
+		} catch (Exception e) {
+			try {
+				conn.rollback();
+			} catch (Exception e2) {
+				System.out.println(e2.getMessage());
+			}
+
+		} finally {
+			DB_Close.close(pstmt);
+			try {
+				conn.close();
+			} catch (Exception e2) {
+				System.out.println(e2.getMessage());
+			}
+		}
+		return resultrow;
 	}
 
 	// 공지사항 수정
@@ -982,7 +1185,7 @@ public class Bitdao {
 			String sql = "select * from "
 					+ "(select rownum rn, qaindex, title, qatime, count, scstate, content, filename, id, awstate, nick from ("
 					+ "SELECT q.*, u.nick FROM userqna q JOIN bituser u ON q.id = u.id order by q.qaindex desc" + // endrow
-					 ") where rownum <=?) where rn >= ?"; // startrow
+					") where rownum <=?) where rn >= ?"; // startrow
 
 			pstmt = conn.prepareStatement(sql);
 
@@ -1009,7 +1212,7 @@ public class Bitdao {
 				qnaNick.setId(rs.getString("id"));
 				qnaNick.setAwstate(rs.getString("awstate"));
 				qnaNick.setNick(rs.getString("nick"));
-		
+
 				qnaNickList.add(qnaNick);
 			}
 
@@ -1386,7 +1589,7 @@ public class Bitdao {
 
 /////////////////////////////////////////////
 //댓글(admin 답변) 수정
-	public int QnAReplyUpdate(String title, int qaindex, String id, String content) {
+	public int QnAReplyUpdate(QnaReply qnaReply) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		int resultrow = 0;
@@ -1394,14 +1597,14 @@ public class Bitdao {
 		try {
 			conn = ConnectionHelper.getConnection("oracle");
 
-			String sql = "update reply qnareply title=?, content=? where qaindex=? and id=?";
+			String sql = "update qnareply set title=?, qartime=sysdate, content=? where qaindex=? and id=?";
 
 			pstmt = conn.prepareStatement(sql);
 
-			pstmt.setString(1, title);
-			pstmt.setString(2, id);
-			pstmt.setString(3, content);
-			pstmt.setInt(4, qaindex);
+			pstmt.setString(1, qnaReply.getTitle());
+			pstmt.setString(2, qnaReply.getContent());
+			pstmt.setInt(3, qnaReply.getQaindex());
+			pstmt.setString(4, qnaReply.getId());
 
 			resultrow = pstmt.executeUpdate();
 			System.out.println(resultrow);
@@ -1573,29 +1776,29 @@ public class Bitdao {
 
 		return qnaReply;
 	}
-	//회원관리 목록 조회
+
+	// 회원관리 목록 조회
 	public List<User> getUserList(int cpage, int pagesize) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		List<User> userlist = null;
-		
+
 		try {
 			conn = ConnectionHelper.getConnection("oracle");
-			String sql = "select * from" + 
-						 "(select rownum rn, n.* from bituser n order by rtime desc)" + 
-						 " where rn between ? and ?";
+			String sql = "select * from" + "(select rownum rn, n.* from bituser n order by rtime desc)"
+					+ " where rn between ? and ?";
 			pstmt = conn.prepareStatement(sql);
-			
+
 			int start = cpage * pagesize - (pagesize - 1);
 			int end = cpage * pagesize;
-			
+
 			pstmt.setInt(1, start);
 			pstmt.setInt(2, end);
-			
+
 			rs = pstmt.executeQuery();
-			userlist = new ArrayList<User>(); 
-			while(rs.next()) {
+			userlist = new ArrayList<User>();
+			while (rs.next()) {
 				User user = new User();
 				user.setId(rs.getString("id"));
 				user.setPwd(rs.getString("pwd"));
@@ -1603,8 +1806,7 @@ public class Bitdao {
 				user.setLoc(rs.getString("loc"));
 				user.setProfile(rs.getString("profile"));
 				user.setRtime(rs.getString("rtime"));
-				
-				
+
 				userlist.add(user);
 			}
 			System.out.println(userlist.toString());
@@ -1621,28 +1823,36 @@ public class Bitdao {
 		}
 		return userlist;
 	}
-	
+
 	//회원 총 수 구하기
-	public int getTotalUserCount() {
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		int totalcount = 0;
-		try {
-			conn = ConnectionHelper.getConnection("oracle");
-			String sql = "select count(*) from bituser";
-			pstmt = conn.prepareStatement(sql);
-			rs = pstmt.executeQuery();
-			if(rs.next()) {
-				totalcount = rs.getInt(1);
+		public int getTotalUserCount() {
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			int totalcount = 0;
+			try {
+				conn = ConnectionHelper.getConnection("oracle");
+				String sql = "select count(*) from bituser";
+				pstmt = conn.prepareStatement(sql);
+				rs = pstmt.executeQuery();
+				if(rs.next()) {
+					totalcount = rs.getInt(1);
+				}
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}finally {
+				DB_Close.close(rs);
+				DB_Close.close(pstmt);
+				try {
+					conn.close();
+				} catch (Exception e2) {
+					System.out.println(e2.getMessage());
+				}
 			}
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			return totalcount;
 		}
-		return totalcount;
-	}
-	
-	//회원관리  상세 보기
+
+	// 회원관리 상세 보기
 	public User getUserById(String id) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -1654,7 +1864,7 @@ public class Bitdao {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, id);
 			rs = pstmt.executeQuery();
-			if(rs.next()) {
+			if (rs.next()) {
 				user = new User();
 				user.setId(rs.getString("id"));
 				user.setPwd(rs.getString("pwd"));
@@ -1662,10 +1872,9 @@ public class Bitdao {
 				user.setLoc(rs.getString("loc"));
 				user.setProfile(rs.getString("profile"));
 				user.setRtime(rs.getString("rtime"));
-				
-				
+
 			}
-			
+
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		} finally {
@@ -1677,11 +1886,11 @@ public class Bitdao {
 				System.out.println(e2.getMessage());
 			}
 		}
-		
-		
+
 		return user;
 	}
-	//회원 정보 삭제
+
+	// 회원 정보 삭제
 	public int deleteUser(String id) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -1689,43 +1898,41 @@ public class Bitdao {
 		int resultrow = 0;
 		try {
 			conn = ConnectionHelper.getConnection("oracle");
-			//ID검증
+			// ID검증
 			String sql_id = "select id from bituser where id= ?";
-			
-			//게시글 삭제
+
+			// 게시글 삭제
 			String sql_user = "delete from bituser where id= ? ";
-			
+
 			pstmt = conn.prepareStatement(sql_id);
 			pstmt.setString(1, id);
 			rs = pstmt.executeQuery();
 			System.out.println("테스트");
-			if(rs.next()) {
-				if(id.equals(rs.getString(1))) {
+			if (rs.next()) {
+				if (id.equals(rs.getString(1))) {
 					conn.setAutoCommit(false);
-					
+
 					/*
-					DB_Close.close(pstmt);	
-					pstmt = conn.prepareStatement(sql_reply);
-					pstmt.setInt(1, idx);
-					pstmt.executeUpdate();
-					*/
-					
-					//게시글 삭제
+					 * DB_Close.close(pstmt); pstmt = conn.prepareStatement(sql_reply);
+					 * pstmt.setInt(1, idx); pstmt.executeUpdate();
+					 */
+
+					// 게시글 삭제
 					DB_Close.close(pstmt);
 					pstmt = conn.prepareStatement(sql_user);
 					pstmt.setString(1, id);
 					resultrow = pstmt.executeUpdate();
-					if(resultrow > 0) {
+					if (resultrow > 0) {
 						conn.commit();
-						
+
 					}
-					
-				}else { //ID 일치하지 않는 경우
+
+				} else { // ID 일치하지 않는 경우
 					resultrow = -1;
 				}
 			}
 		} catch (Exception e) {
-			//예외 발생시 rollback
+			// 예외 발생시 rollback
 			try {
 				conn.rollback();
 			} catch (Exception e2) {
@@ -1743,10 +1950,5 @@ public class Bitdao {
 		}
 		return resultrow;
 	}
-	
-	
-	
-	
-	
-	
+
 }

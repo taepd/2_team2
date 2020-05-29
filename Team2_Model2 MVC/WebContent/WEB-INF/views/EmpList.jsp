@@ -51,7 +51,7 @@
 					$('#zero_config_info').append("총 부서원 " + responsedata.length);
 					
 					//페이지 번호 처리
-					page(cp=$('#cp').val());
+					page($('#cp').val());
 			   }
 				
 			

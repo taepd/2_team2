@@ -12,7 +12,7 @@
 
 <link rel="icon" type="image/png" sizes="16x16"
 	href="assets/images/favicon.png">
-<title>공지사항</title>
+<title>회원 관리</title>
 <!-- Custom CSS -->
 <link rel="stylesheet" type="text/css"
 	href="assets/extra-libs/multicheck/multicheck.css">
@@ -57,35 +57,39 @@
 <script type="text/javascript">
 $(function(){	
 	
-	//페이징 비동기
+	//페이지 건수 비동기
 	$('#paging').change(function(){//select 태그이니까 change 이벤트
 		let data = {ps : $('#paging option:selected').val(),
-				    cp : $('#cp').val() 
-		           };		
+				    cp : $('#cp').val()
+		           };	
 		$.ajax({
-			url:"NoticeListAjax.bit",
+			url:"UserListAjax.bit",
 			data: data,
 			type:"POST",		
 			dataType: "json",
 			success:function(responsedata){ 
 				 console.log(responsedata);
-				$('#noticetable').empty();
+				$('#usertable').empty();
 				$.each(responsedata,function(index,obj){	
-					$('#noticetable').append(	
-							"<tr><td>"+obj.ncindex+"</td>" +
-							"<td><a href='BitDetail.bit?bdindex="+obj.empno+"&cp=${cpage}&ps=${pagesize}'>" +
-								obj.ename+"</a></td>" +
-							"<td>"+obj.job+"</td>" +
-							"<td>"+obj.deptno+"</td><tr>" +
-							"<td>"+obj.deptno+"</td><tr>"
+					$('#usertable').append(	
+							"<tr><td>"+ "<a href='UserDetail.bit?id="+obj.id+"&cp=${cpage}&ps=${pagesize}'>" +
+								obj.id+"</a></td>" +
+							"<td>"+obj.pwd+"</td>" +
+							"<td>"+obj.rtime+"</td>" +
+							"<td>"+obj.loc+"</td>" + 
+							"<td>"+obj.nick+"</td><tr>"
+							
+					
 					   
 					);
 				});
 				$('#zero_config_info').empty();
-				$('#zero_config_info').append("총 부서원 " + responsedata.length);
+				$('#zero_config_info').append("총  가입회원 수 " + responsedata.length);
+				
+				
 				
 				//페이지 번호 처리
-				page(cp=$('#cp').val());
+				page($('#cp').val());
 		   }
 			
 		
@@ -94,40 +98,40 @@ $(function(){
 	
 	//page()
 	function page(cp){
-		console.log('cp='+cp);
+		console.log('cp='+ cp);
 		$('#zero_config_paginate').empty();
 		var pagesize = $('#paging option:selected').val();
-		var totalempcount = $('#totalempcount').val();
+		var totalusercount = $('#totalusercount').val();
 		
 		var pagecount;
 		console.log('pagesize= '+pagesize);
-		console.log('totalempcount= '+ totalempcount);
-		if((totalempcount % pagesize) == 0){
-			pagecount = totalempcount/pagesize;
-		}else if(totalempcount/pagesize<1){
+		console.log('totalusercount= '+ totalusercount);
+		if((totalusercount % pagesize) == 0){
+			pagecount = totalusercount/pagesize;
+		}else if(totalusercount/pagesize<1){
 			pagecount=1;
 		}else{
 		
-			pagecount = Math.floor(totalempcount/pagesize + 1); 
+			pagecount = Math.floor(totalusercount/pagesize + 1); 
 		}
 		
 		console.log('pagecount = '+pagecount);
 		let tmp="";
 		
 		if(cp>1){
-			tmp +='<a href="EmpList.emp?cp=${cpage-1}&ps='+pagesize+'" cp="'+(cp-1)+'" ps="${pagesize}">이전</a>';
+			tmp +='<a href="UserList.bit?cp=${cpage-1}&ps='+pagesize+'" cp="'+(cp-1)+'" ps="${pagesize}">이전</a>';
 		}
 		//page 목록 나열하기
 		for(var i=1;i<=pagecount; i++){
 			if(cp==i){
 				tmp +=('<font color="red">['+i+']</font>');
 			}else{
-				tmp +=('<a href="EmpList.emp?cp='+i+'&ps='+pagesize+'" cp="'+i+'" ps="'+pagesize+'" >['+i+']</a>');
+				tmp +=('<a href="UserList.bit?cp='+i+'&ps='+pagesize+'" cp="'+i+'" ps="'+pagesize+'" >['+i+']</a>');
 			}
 		}
 		//다음 링크
 		if(cp<pagecount){
-			tmp += '<a href="EmpList.emp?cp=${cpage+1}&ps='+pagesize+'" cp="'+(cp+1)+'" ps="${pagesize}">다음</a>';
+			tmp += '<a href="UserList.bit?cp=${cpage+1}&ps='+pagesize+'" cp="'+(cp+1)+'" ps="${pagesize}">다음</a>';
 		};
 		$('#zero_config_paginate').append(tmp);
 	};
@@ -135,29 +139,31 @@ $(function(){
 	//페이지 링크 비동기
 	$(document).on('click', '#zero_config_paginate a', function(e){
 		e.preventDefault();
+		console.log($(this).attr('cp'));
 		let data = {ps : $(this).attr('ps'),
 			        cp : $(this).attr('cp')
 	           };		
 	$.ajax({
-		url:"EmpListAjax.emp",
+		url:"UserListAjax.bit",
 		data: data,
 		type:"POST",		
 		dataType: "json",
 		success:function(responsedata){ 
 			 console.log(responsedata);
-			$('#emptable').empty();
+			$('#usertable').empty();
 			$.each(responsedata,function(index,obj){	
-				$('#emptable').append(	
-						"<tr><td>"+obj.empno+"</td>" +
-						"<td><a href='EmpDetail.emp?empno="+obj.empno+"&cp=${cpage}&ps=${pagesize}'>" +
-							obj.ename+"</a></td>" +
-						"<td>"+obj.job+"</td>" +
-						"<td>"+obj.deptno+"</td><tr>"
+				$('#usertable').append(	
+						"<tr><td>"+ "<a href='UserDetail.bit?id="+obj.id+"&cp=${cpage}&ps=${pagesize}'>" +
+						obj.id+"</a></td>" +
+						"<td>"+obj.pwd+"</td>" +
+						"<td>"+obj.rtime+"</td>" +
+						"<td>"+obj.loc+"</td>" + 
+						"<td>"+obj.nick+"</td><tr>"
 				   
 				);
 			});
 			$('#zero_config_info').empty();
-			$('#zero_config_info').append("총 부서원 " + responsedata.length);
+			$('#zero_config_info').append("총 회원 수 " + responsedata.length);
 			
 			//페이지 번호 처리
 			page(parseInt(data.cp));
@@ -167,6 +173,77 @@ $(function(){
 	}); 
 		
 	});
+	
+	//아이디로 검색 비동기 처리
+	$('#usersearch').keyup(function(){
+		if($('#usersearch').val() == ""){
+			$(location).attr('href',"UserList.bit?cp=${cpage}&ps=${pagesize}");
+		}
+		var data = {id : $('#usersearch').val()};
+		$.ajax(
+				 {
+					 type:"get",
+					 data: data,
+					 url:"UserSearchId.bit",
+					 dataType:"json",
+					 success:function(responsedata){ 
+						$('#usertable').empty();
+						$.each(responsedata,function(index,obj){	
+							$('#usertable').append(	
+									"<tr><td>"+ "<a href='UserDetail.bit?id="+obj.id+"&cp=${cpage}&ps=${pagesize}'>" +
+									obj.id+"</a></td>" +
+									"<td>"+obj.pwd+"</td>" +
+									"<td>"+obj.rtime+"</td>" +
+									"<td>"+obj.loc+"</td>" + 
+									"<td>"+obj.nick+"</td><tr>"
+							   
+							);
+						});
+							$('#zero_config_info').empty();
+							$('#zero_config_info').append("총 회원 수 " + responsedata.length);
+						
+
+					 }
+					
+				 }
+		
+		      );
+	});
+	
+	//부서번호 셀렉트 비동기 처리
+	$('#deptsearch').change(function(){
+		if($('#deptsearch option:selected').val() == "선택없음") {
+			$(location).attr('href',"EmpList.emp?cp=${cpage}&ps=${pagesize}");
+		}
+		var data = {deptno : $('#deptsearch option:selected').val()};
+		$.ajax(
+				 {
+					 type:"get",
+					 data: data,
+					 url:"EmpSearchDeptno.emp",
+					 dataType:"json",
+					 success:function(responsedata){ 
+						 console.log(responsedata);
+						$('#emptable').empty();
+						$.each(responsedata,function(index,obj){	
+							$('#emptable').append(	
+									"<tr><td>"+obj.empno+"</td>" +
+									"<td><a href='EmpDetail.emp?empno="+obj.empno+"&cp=${cpage}&ps=${pagesize}'>" +
+										obj.ename+"</a></td>" +
+									"<td>"+obj.job+"</td>" +
+									"<td>"+obj.deptno+"</td><tr>"
+							   
+							);
+						});
+						$('#zero_config_info').empty();
+						$('#zero_config_info').append("총 부서원 " + responsedata.length);
+						
+
+					 }
+					
+				 });
+	});
+	
 
 });
 </script>	
@@ -183,9 +260,9 @@ $(function(){
 	<c:set var="totalusercount" value="${requestScope.totalusercount}" />
 	
 	<!-- 비동기떄 사용하려고 만든 것 -->
-	<input type="hidden" id="cp" name="${cpage}" value="${cpage}"/>
-	<input type="hidden" id="pagecount" name="${pagecount}" value="${pagecount}"/>
-	<input type="hidden" id="totalusercount" name="${totalusercount}" value="${totalusercount}"/>
+	<input type="hidden" id="cp" name="cp" value="${cpage}"/>
+	<input type="hidden" id="pagecount" name="pagecount" value="${pagecount}"/>
+	<input type="hidden" id="totalusercount" name="totalusercount" value="${totalusercount}"/>
 	<!-- 비동기떄 사용하려고 만든 것  끝-->
 	<!-- ============================================================== -->
 	<!-- Preloader - style you can find in spinners.css -->
@@ -262,6 +339,20 @@ $(function(){
 									</div>
 								</div>
 								
+								<div class="col-sm-12 col-md-6">
+								
+									<div id="zero_config_filter" class="dataTables_filter">
+										<!--  글 번호 : <select id="usersearch">
+											<option value="선택없음" selected>선택없음</option>
+											<option value="10">10</option>
+											<option value="20">20</option>
+											<option value="30">30</option>
+										</select>-->
+										<label>Search:<input type="search" id="usersearch" name="usersearch"
+											class="form-control form-control-sm" placeholder="회원 아이디로 검색가능합니다"
+											aria-controls="zero_config"></label>
+									</div>
+								</div>
 								
 							</div>
 							<div class="row">
@@ -328,7 +419,7 @@ $(function(){
 
 
 										<c:if test="${cpage > 1}">
-											<a href="BoardList.board?cp=${cpage-1}&ps=${pagesize}">이전</a>
+											<a href="BoardList.board?cp=${cpage-1}&ps=${pagesize}" cp="${cpage-1}" ps="${pagesize}">이전</a>
 										</c:if>
 										<!-- page 목록 나열하기 -->
 										<c:forEach var="i" begin="1" end="${pagecount}" step="1">
@@ -337,7 +428,7 @@ $(function(){
 													<font color="red">[${i}]</font>
 												</c:when>
 												<c:otherwise>
-													<a href="BoardList.board?cp=${i}&ps=${pagesize}">[${i}]</a>
+													<a href="BoardList.board?cp=${i}&ps=${pagesize}" cp="${i}" ps="${pagesize}">[${i}]</a>
 												</c:otherwise>
 											</c:choose>
 
@@ -345,7 +436,7 @@ $(function(){
 										<!--다음 링크 -->
 
 										<c:if test="${cpage < pagecount}">
-											<a href="BoardList.board?cp=${cpage+1}&ps=${pagesize}">다음</a>
+											<a href="BoardList.board?cp=${cpage+1}&ps=${pagesize}" cp="${cpage+1}" ps="${pagesize}" >다음</a>
 										</c:if>
 									</div>
 									<!--  <a href="BoardWrite.board">글쓰기</a>-->

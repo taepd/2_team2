@@ -76,7 +76,7 @@ $(function(){
 					$.each(responsedata,function(index,obj){	
 						$('#noticetable').append(	
 								"<tr><td>"+obj.ncindex+"</td>" +
-								"<td><a href='EmpDetail.emp?empno="+obj.ncindex+"&cp=${cpage}&ps=${pagesize}'>" +
+								"<td><a href='AdminNoticeDetail.bit?ncindex="+obj.ncindex+"&cp=${cpage}&ps=${pagesize}'>" +
 									obj.title+"</a></td>" +
 								"<td>"+obj.rtime+"</td>" +
 								"<td>"+obj.adminid+"</td>" +
@@ -85,7 +85,7 @@ $(function(){
 						);
 					});
 					$('#zero_config_info').empty();
-					$('#zero_config_info').append("총 부서원 " + responsedata.length);
+					$('#zero_config_info').append("페이지 표시 글 수 " + responsedata.length);
 					
 					//페이지 번호 처리
 					page(cp=$('#cp').val());
@@ -118,19 +118,19 @@ $(function(){
 			let tmp="";
 			
 			if(cp>1){
-				tmp +='<a href="EmpList.emp?cp=${cpage-1}&ps='+pagesize+'" cp="'+(cp-1)+'" ps="${pagesize}">이전</a>';
+				tmp +='<a href="NoticeList.bit?cp=${cpage-1}&ps='+pagesize+'" cp="'+(cp-1)+'" ps="${pagesize}">이전</a>';
 			}
 			//page 목록 나열하기
 			for(var i=1;i<=pagecount; i++){
 				if(cp==i){
 					tmp +=('<font color="red">['+i+']</font>');
 				}else{
-					tmp +=('<a href="EmpList.emp?cp='+i+'&ps='+pagesize+'" cp="'+i+'" ps="'+pagesize+'" >['+i+']</a>');
+					tmp +=('<a href="NoticeList.bit?cp='+i+'&ps='+pagesize+'" cp="'+i+'" ps="'+pagesize+'" >['+i+']</a>');
 				}
 			}
 			//다음 링크
 			if(cp<pagecount){
-				tmp += '<a href="EmpList.emp?cp=${cpage+1}&ps='+pagesize+'" cp="'+(cp+1)+'" ps="${pagesize}">다음</a>';
+				tmp += '<a href="NoticeList.bit?cp=${cpage+1}&ps='+pagesize+'" cp="'+(cp+1)+'" ps="${pagesize}">다음</a>';
 			};
 			$('#zero_config_paginate').append(tmp);
 		};
@@ -142,25 +142,26 @@ $(function(){
 				        cp : $(this).attr('cp')
 		           };		
 		$.ajax({
-			url:"EmpListAjax.emp",
+			url:"NoticeListAjax.bit",
 			data: data,
 			type:"POST",		
 			dataType: "json",
 			success:function(responsedata){ 
 				 console.log(responsedata);
-				$('#emptable').empty();
+				$('#noticetable').empty();
 				$.each(responsedata,function(index,obj){	
-					$('#emptable').append(	
-							"<tr><td>"+obj.empno+"</td>" +
-							"<td><a href='EmpDetail.emp?empno="+obj.empno+"&cp=${cpage}&ps=${pagesize}'>" +
-								obj.ename+"</a></td>" +
-							"<td>"+obj.job+"</td>" +
-							"<td>"+obj.deptno+"</td><tr>"
+					$('#noticetable').append(	
+							"<tr><td>"+obj.ncindex+"</td>" +
+							"<td><a href='NoticeDetail.bit?ncindex="+obj.ncindex+"&cp=${cpage}&ps=${pagesize}'>" +
+								obj.title+"</a></td>" +
+							"<td>"+obj.rtime+"</td>" +
+							"<td>"+obj.adminid+"</td>" +
+							"<td>"+obj.ncstate+"</td><tr>"
 					   
 					);
 				});
 				$('#zero_config_info').empty();
-				$('#zero_config_info').append("총 부서원 " + responsedata.length);
+				$('#zero_config_info').append("총 공지글 수 " + responsedata.length);
 				
 				//페이지 번호 처리
 				page(parseInt(data.cp));
