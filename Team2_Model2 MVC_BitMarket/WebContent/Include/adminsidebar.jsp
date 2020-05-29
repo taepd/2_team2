@@ -24,7 +24,13 @@
 						<li class="sidebar-item"><a
 							class="sidebar-link waves-effect waves-dark sidebar-link"
 							href="UserList.bit" aria-expanded="false"><i
-								class="mdi mdi-view-dashboard"></i><span class="hide-menu">회원관리</span></a></li>		
+								class="mdi mdi-view-dashboard"></i><span class="hide-menu">회원관리</span></a></li>
+					<li class="sidebar-item"><a
+							class="sidebar-link waves-effect waves-dark sidebar-link"
+							href="QnANickList.bit" aria-expanded="false"><i
+								class="mdi mdi-view-dashboard"></i><span class="hide-menu">Q&A</span></a></li>	
+								
+								
 					</ul>
 				</nav>
 				

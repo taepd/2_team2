@@ -23,10 +23,9 @@ public class QnADelete implements Action {
 		System.out.println(id);
 		System.out.println(session.getAttribute("id"));
 		
-		if(session.getAttribute("id").equals(id)) {
+		if(session.getAttribute("id").equals(id)||session.getAttribute("id").equals("admin")) {
 			
-			result = dao.deleteQna(qaindex);
-			System.out.println("21");
+			result = dao.deleteQna(qaindex,id);
 		}
 		
 		

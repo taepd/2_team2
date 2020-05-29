@@ -20,7 +20,7 @@ public class BitReplyList implements Action{
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
 		
-		
+		 
 		String bdindex = request.getParameter("bdindex");
 		System.out.println("bd"+bdindex);
 		Bitdao dao = new Bitdao();

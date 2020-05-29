@@ -23,6 +23,11 @@ import kr.or.bit.service.BitReplyWrite;
 import kr.or.bit.service.BitSelectCategory;
 import kr.or.bit.service.BitTrUpdate;
 import kr.or.bit.service.BitUpdateOk;
+import kr.or.bit.service.BitUserEdit;
+import kr.or.bit.service.BitUserEditOk;
+import kr.or.bit.service.BitUserProfile;
+import kr.or.bit.service.BitUserProfileView;
+import kr.or.bit.service.BitUserReplyList;
 import kr.or.bit.service.admin.AdminNoticeDetail;
 import kr.or.bit.service.admin.AdminNoticeList;
 import kr.or.bit.service.admin.NoticeDelete;
@@ -95,7 +100,7 @@ public class FrontController extends HttpServlet {
 			// 로직
 			action = new BitJoin();
 			forward = action.execute(request, response);
-		} else if (url_Command.equals("/BitMain.bit")) { // 메인 페이지로 이동
+		} else if (url_Command.equals("/BitMain.bit")) { // 메인 페이지로 이동 (이미지 게시판으로)
 			// UI
 			forward = new ActionForward();
 			forward.setRedirect(false);
@@ -168,7 +173,23 @@ public class FrontController extends HttpServlet {
 		} else if (url_Command.equals("/BitDeleteOk.bit")) { // 삭제
 			action = new BitDeleteOk();
 			forward = action.execute(request, response);
-		} else if (url_Command.equals("/BitBoardListAjax.bit")) { // 비동기로 리스트 조회
+		}else if(url_Command.equals("/BitUserProfile.bit")) { //마이페이지 이동
+    		action = new BitUserProfile();
+    		forward = action.execute(request, response);
+    		
+    	}else if(url_Command.equals("/BitUserEdit.bit")) { //회원 수정 페이지 이동
+    		action = new BitUserEdit();
+    		forward = action.execute(request, response);
+    		
+    	}else if(url_Command.equals("/BitUserEditOk.bit")) {  //회원 수정 (업데이트)
+    		action = new BitUserEditOk();
+    		forward = action.execute(request, response);
+    		
+    	}else if(url_Command.equals("/BitUserReplyList.bit")) {
+    		action = new BitUserReplyList();
+    		forward = action.execute(request, response);
+    		
+    	}else if (url_Command.equals("/BitBoardListAjax.bit")) { // 비동기로 리스트 조회
 			action = new BitBoardListAjax();
 			forward = action.execute(request, response);
 		} else if (url_Command.equals("/BitImgList.bit")) { // 첫 화면에서 리스트 조회
@@ -234,6 +255,10 @@ public class FrontController extends HttpServlet {
     		action = new UserListAjax();
     		forward = action.execute(request, response);   	
     	
+    	}else if(url_Command.equals("/BitUserProfileView.bit")) { //다른 이용자 페이지 조회
+    		action = new BitUserProfileView();
+    		forward = action.execute(request, response);
+    		
     	}
 
 /////////////////////////////////////////////+++

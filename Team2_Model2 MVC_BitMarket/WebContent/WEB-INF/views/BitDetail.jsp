@@ -378,7 +378,8 @@
 								<c:forEach var="user" items="${userlist}">
 									<c:if test="${board.id == user.id}">
 										<h4>
-											<a href="">${user.nick}</a>
+										  <a href="BitUserProfileView.bit?id=${user.id}">${user.nick}</a>  
+
 										</h4>
 										<p class="member-time">${user.loc}</p>
 									</c:if>

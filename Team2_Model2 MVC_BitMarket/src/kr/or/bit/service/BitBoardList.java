@@ -21,7 +21,7 @@ public class BitBoardList implements Action{
 		
 		String ps = request.getParameter("ps"); //pagesize
 		String cp = request.getParameter("cp"); //current page
-		
+		 
 		//List 페이지 처음 호출 ...
 		if(ps == null || ps.trim().equals("")){
 			//default 값 설정

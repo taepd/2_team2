@@ -21,7 +21,7 @@ public class BitNorList implements Action {
 		
 		String ps = request.getParameter("ps");
 		String cp = request.getParameter("cp");
-		
+		 
 		
 		//List 처음 호출
 		if(ps == null || ps.trim().equals("")) {

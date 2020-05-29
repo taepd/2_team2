@@ -25,7 +25,7 @@ public class BitReplyWrite implements Action{
 		if(scstate == null) {
 			scstate = "N";
 		}
-		
+		 
 		Reply reply = new Reply();
 		reply.setBdindex(bdindex);
 		reply.setContent(content);

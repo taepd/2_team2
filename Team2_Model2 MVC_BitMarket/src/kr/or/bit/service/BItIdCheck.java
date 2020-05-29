@@ -23,7 +23,7 @@ public class BItIdCheck implements Action {
 		Admin admin = null;
 
 		Bitdao dao = new Bitdao();
-
+ 
 		user = dao.getUser(id);
 		admin = dao.getAdmin(id);
 

@@ -22,7 +22,7 @@ public class BitReplyReWrite implements Action{
 		if(scstate == null) {
 			scstate = "N";
 		}
-		
+		 
 		Reply reply = new Reply();
 		reply.setBdindex(Integer.parseInt(bdindex));
 		reply.setRpindex(Integer.parseInt(rpindex));

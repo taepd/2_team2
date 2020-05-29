@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import kr.or.bit.action.Action;
 import kr.or.bit.action.ActionForward;
@@ -18,6 +19,11 @@ public class QnANickList implements Action {
 		
 		String ps = request.getParameter("ps"); //pagesize
 		String cp = request.getParameter("cp"); //current page
+		
+		HttpSession session = request.getSession();
+		String id = (String)session.getAttribute("id");
+		
+		
 		
 		//List 페이지 처음 호출 ...
 		if(ps == null || ps.trim().equals("")){
@@ -39,7 +45,7 @@ public class QnANickList implements Action {
 		
 		try {
 			Bitdao dao = new Bitdao();
-			List<QnaNick> qnaNickList = dao.getQnaNickList(cpage, pagesize); 
+			List<QnaNick> qnaNickList = dao.getQnaNickList(cpage, pagesize,id); 
 			
 			request.setAttribute("qnaNickList", qnaNickList);
 			System.out.println(qnaNickList+"넘어가냐-컨트롤러");

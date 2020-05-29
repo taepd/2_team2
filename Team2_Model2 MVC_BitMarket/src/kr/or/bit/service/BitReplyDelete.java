@@ -17,7 +17,7 @@ public class BitReplyDelete implements Action {
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
 		ActionForward forward = null;
-		
+	 	
 		int rpindex = Integer.parseInt(request.getParameter("rpindex"));
 		int bdindex = Integer.parseInt(request.getParameter("bdindex"));
 		String id = request.getParameter("id");

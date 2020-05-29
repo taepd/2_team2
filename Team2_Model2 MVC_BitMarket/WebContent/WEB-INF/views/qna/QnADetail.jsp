@@ -57,6 +57,7 @@ $(function(){
 				'<div class=row><div class=col><span class="font-bold">| 작성자: </span> <span>'+$(this).attr("id")+'</span></div><br><br>'+
 				'<div class=row><div class=col><span class="font-bold">| 내용: </span><br><br>'+ 
 				'<textarea id="admin_replycontent" name="admin_replycontent" rows="2" cols="100">'+$(this).attr("content")+'</textarea></div></div><br>'+
+				'<input type="hidden" name="qartime" value='+$(this).attr("qartime")+'></input>'+
 				'<div class=row><div class=col-6 style="text-align: right;"><input type="button" value="등록" onclick="submit();"></div></div></form>'				
 		);
 	});
@@ -171,7 +172,7 @@ $(function(){
 
 
 								<hr />
-								
+							<c:if test='${sessionScope.id=="admin"||sessionScope.id == qna.id}'>
 								<form action="QnAUpdate.bit" method="post">
 									<input type="hidden" name="qaindex" value=${qna.qaindex }></input>
 									<input type="hidden" name="title" value=${qna.title }></input> 
@@ -182,22 +183,38 @@ $(function(){
 									<input type="hidden" name="filename" value=${qna.filename }></input>
 									<input type="hidden" name="id" value=${qna.id }></input>
 									<input type="hidden" name="awstate" value=${qna.awstate }></input>
-
 									<div class="text-right">
 										<button type="submit" class="btn btn-danger">수정</button>
-									</div>
+									</div>	
+									
 								</form>
-
-								<hr />
+		
+								<hr/>
+								
 								<div class="text-right" style="margin-left: 4px">
 									<button class="btn btn-danger"
 									onclick="location.href='QnADelete.bit?qaindex=${qna.qaindex }&id=${qna.id }'">삭제
 <%-- 										onclick="location.href='QnADelete.bit?qaindex=${qna.qaindex }'">삭제 --%>
-									</button>
-									
-									<button class="btn btn-danger"
-										onclick="location.href='QnANickList.bit'">뒤로가기</button>
-								</div>
+									</button>									
+								</div>	
+							</c:if>
+							<div>
+								<button class="btn btn-danger "
+										onclick="location.href='QnANickList.bit'">뒤로가기</button>	
+							</div>
+							
+
+
+
+
+
+
+
+
+
+
+
+
 							</div>
 						</div>
 					</div>
@@ -275,7 +292,7 @@ $(function(){
 	
 	
 	
-	<c:when test='${sessionScope.id=="admin"&&qna.awstate==1}'>       <!-- 댓글(답변이) 이 존재할 때-->
+	<c:when test='${qna.awstate==1}'>       <!-- 댓글(답변이) 이 존재할 때-->
 	<!-- ============================================================== -->
 				<!--  댓글/admin답변 보기-->
 				<div class="row" name="ShowQnAReply">
@@ -294,6 +311,9 @@ $(function(){
 													<b class="text-danger">${qnaReply.title}</b>
 												</h3>
 											</div>
+											
+											
+											
 											
 											<hr />
 											<div class=row>
@@ -320,17 +340,25 @@ $(function(){
 											<br>
 											
 
+
+
+
+							<c:if test='${sessionScope.id=="admin"&&qna.awstate==1}'>
 									<div class="text-right">
-										<button class="replyUpdate" id="${qnaReply.id}" title="${qnaReply.title}" content= "${qnaReply.content}">수정</button>
+										<button class="replyUpdate" qartime="${qnaReply.qartime}" id="${qnaReply.id}" title="${qnaReply.title}" content= "${qnaReply.content}">수정</button>
 									</div>
 								<hr />
 								
 								<div class="text-right" style="margin-left: 4px">
 									<button class="btn btn-danger"
-									onclick="location.href='QnADelete.bit?qaindex=${qna.qaindex }&id=${qna.id }'">삭제
+									onclick="location.href='QnAReDelete.bit?qaindex=${qna.qaindex }&id=${qnaReply.id }'">삭제
 <%-- 										onclick="location.href='QnADelete.bit?qaindex=${qna.qaindex }'">삭제 --%>
 									</button>
 								</div>
+							</c:if>
+								
+								
+								
 								
 								
 									</div>

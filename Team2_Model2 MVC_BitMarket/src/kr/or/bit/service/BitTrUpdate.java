@@ -24,7 +24,7 @@ public class BitTrUpdate implements Action{
 		
 		int resultrow = dao.updateTrstate(boardId, oldRepId, newRepId, Integer.parseInt(bdindex));
 		
-		
+		 
 		String msg = "";
 		String url = "";
 		
