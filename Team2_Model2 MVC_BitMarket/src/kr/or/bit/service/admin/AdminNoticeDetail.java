@@ -13,7 +13,7 @@ import kr.or.bit.dto.Board;
 import kr.or.bit.dto.Notice;
 import kr.or.bit.dto.Reply;
 
-public class AdminNoticeDetail implements Action{
+public class AdminNoticeDetail implements Action{ 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
 		ActionForward forward = null;

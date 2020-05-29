@@ -39,7 +39,7 @@ import kr.or.bit.service.admin.UserDetail;
 import kr.or.bit.service.admin.UserList;
 import kr.or.bit.service.admin.UserListAjax;
 import kr.or.bit.service.qna.QnAAddReadNum;
-import kr.or.bit.service.qna.QnADelete;
+import kr.or.bit.service.qna.QnADelete; 
 import kr.or.bit.service.qna.QnADetail;
 import kr.or.bit.service.qna.QnANickList;
 import kr.or.bit.service.qna.QnAReDelete;

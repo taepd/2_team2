@@ -161,7 +161,7 @@ $(function(){
 					);
 				});
 				$('#zero_config_info').empty();
-				$('#zero_config_info').append("총 공지글 수 " + responsedata.length);
+				$('#zero_config_info').append("총 공지글 수 " + $('#totalnoticecount').val());
 				
 				//페이지 번호 처리
 				page(parseInt(data.cp));

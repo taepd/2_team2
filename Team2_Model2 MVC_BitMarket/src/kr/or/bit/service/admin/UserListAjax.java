@@ -19,7 +19,7 @@ public class UserListAjax implements Action {
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
 		ActionForward forward = null;
-		
+		 
 		String ps = request.getParameter("ps"); //pagesize
 		String cp = request.getParameter("cp"); //current page
 		

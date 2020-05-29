@@ -16,7 +16,7 @@ public class QnADelete implements Action {
 		String id = request.getParameter("id");
 		int result = 0;
 		HttpSession session = request.getSession();
-		
+		 
 		Bitdao dao = new Bitdao();
 		System.out.println("20");
 		

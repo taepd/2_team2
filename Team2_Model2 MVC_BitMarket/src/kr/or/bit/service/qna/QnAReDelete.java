@@ -20,7 +20,7 @@ public class QnAReDelete implements Action {
 		
 		System.out.println(id);
 		System.out.println(session.getAttribute("id"));
-		
+		 
 		
 		Bitdao dao = new Bitdao();
 		

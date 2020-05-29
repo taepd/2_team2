@@ -25,7 +25,7 @@ public class QnADetail implements Action {
 			List<QnaReply> qnaReplylist = dao.QnAReplyAll(qaindex); //원본글 번호
 			QnaReply qnaReply = dao.QnAReplyDetail(qaindex);
 			
-			
+			 
 			
 			request.setAttribute("qna", qna);
 			request.setAttribute("qnaReplylist", qnaReplylist);

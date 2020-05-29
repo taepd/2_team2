@@ -23,7 +23,7 @@ public class QnANickList implements Action {
 		HttpSession session = request.getSession();
 		String id = (String)session.getAttribute("id");
 		
-		
+		 
 		
 		//List 페이지 처음 호출 ...
 		if(ps == null || ps.trim().equals("")){

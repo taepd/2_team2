@@ -8,7 +8,7 @@ import kr.or.bit.action.Action;
 import kr.or.bit.action.ActionForward;
 import kr.or.bit.dao.Bitdao;
 
-public class NoticeDelete implements Action{
+public class NoticeDelete implements Action{ 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
 		int ncindex = Integer.parseInt(request.getParameter("ncindex"));

@@ -284,7 +284,7 @@
 										class="col-sm-3 text-right control-label col-form-label">이미지 추가</label>
 									<div class="col-sm-9">
 										<label class="btn btn-primary btn-file"> 이미지 설정/변경 
-										<input type="file" name="profile" style="display: none;" onchange="readURL(this);" multiple>
+										<input type="file" name="profile" style="display: none;" onchange="readURL(this);">
 										</label>  <span id="imgFileName">${param.profile}</span> 
 										<img id="img" src="upload/${param.profile}" alt="프로필 이미지" width="100px" height="100px"/>
 									</div>

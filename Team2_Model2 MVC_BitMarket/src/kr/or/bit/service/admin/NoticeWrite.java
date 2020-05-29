@@ -18,7 +18,7 @@ import kr.or.bit.dto.Notice;
 
 
 
-public class NoticeWrite implements Action{
+public class NoticeWrite implements Action{ 
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {

@@ -22,7 +22,7 @@ public class QnAReWrite implements Action {
 		
 		int qaindex = 0;
 		int resultrow = 0;
-		
+		 
 		try {
 			
 			dao = new Bitdao();

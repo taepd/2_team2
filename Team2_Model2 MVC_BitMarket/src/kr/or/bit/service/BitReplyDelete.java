@@ -22,7 +22,7 @@ public class BitReplyDelete implements Action {
 		int bdindex = Integer.parseInt(request.getParameter("bdindex"));
 		String id = request.getParameter("id");
 		System.out.println("rp"+rpindex);
-		System.out.println("bd"+bdindex);
+		System.out.println("bd"+bdindex); 
 		System.out.println("id"+id);
 		
 		

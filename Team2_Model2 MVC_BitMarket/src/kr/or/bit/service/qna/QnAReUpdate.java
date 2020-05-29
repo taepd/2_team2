@@ -20,7 +20,7 @@ public class QnAReUpdate implements Action {
 		
 		int result = 0;
 		String qaindex="";
-		
+		 
 		try {
 			dao = new Bitdao(); // POINT
 			qnaReply = new QnaReply();

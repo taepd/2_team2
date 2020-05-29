@@ -24,7 +24,7 @@ public class QnAUpdate implements Action {
 		
 		int size = 1024*1024*10;
 		int result = 0;
- 
+  
 		String qaindex="";
 		
 		try {

@@ -11,7 +11,7 @@ import kr.or.bit.dao.Bitdao;
 import kr.or.bit.dto.Notice;
 
 
-public class AdminNoticeList implements Action{
+public class AdminNoticeList implements Action{ 
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {

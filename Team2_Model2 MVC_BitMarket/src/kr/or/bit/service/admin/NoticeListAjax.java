@@ -13,7 +13,7 @@ import kr.or.bit.dto.Notice;
 import net.sf.json.JSONArray;
 
 
-public class NoticeListAjax implements Action {
+public class NoticeListAjax implements Action { 
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {

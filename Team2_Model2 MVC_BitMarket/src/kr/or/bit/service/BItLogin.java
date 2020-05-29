@@ -21,7 +21,7 @@ public class BItLogin implements Action {
 			
 			Bitdao dao = new Bitdao();
 						
-			user = dao.getUser(id);
+			user = dao.getUser(id); 
 			admin = dao.getAdmin(id);
 						
 			String msg = "";
@@ -32,7 +32,7 @@ public class BItLogin implements Action {
 				session.setAttribute("id", id);
 				
 				msg = "로그인 성공";
-				url = "BitAdminMain.bit";
+				url = "NoticeList.bit";
 			
 			}
 			

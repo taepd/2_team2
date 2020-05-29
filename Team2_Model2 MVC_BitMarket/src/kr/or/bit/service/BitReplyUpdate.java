@@ -32,7 +32,7 @@ public class BitReplyUpdate implements Action{
 		
 		System.out.println(session.getAttribute("id"));
 		
-
+ 
 		if(id.equals(session.getAttribute("id"))) {
 			resultrow = dao.updateReply(rpindex, id, content);
 		}

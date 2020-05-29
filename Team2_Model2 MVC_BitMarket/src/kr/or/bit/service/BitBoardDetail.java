@@ -25,7 +25,7 @@ public class BitBoardDetail implements Action {
 		System.out.println(bdindex);
 		
 		try {
-			Bitdao dao = new Bitdao();
+			Bitdao dao = new Bitdao(); 
 			
 			//게시판 내용
 			Board board = dao.getBoardByIdx(Integer.parseInt(bdindex));

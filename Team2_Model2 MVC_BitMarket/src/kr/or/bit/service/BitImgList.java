@@ -25,7 +25,7 @@ public class BitImgList implements Action{
 		String searchContent = request.getParameter("search");
 		String ctname = request.getParameter("ctname");
 		//List 페이지 처음 호출 ...
-		if(ps == null || ps.trim().equals("")){
+		if(ps == null || ps.trim().equals("")){ 
 			//default 값 설정
 			ps = "6"; //5개씩 
 		}
@@ -41,7 +41,7 @@ public class BitImgList implements Action{
 		
 		try {
 			 Bitdao dao = new Bitdao();
-			 List<BoardCt_Join> boardlist = dao.getBoardList(cpage, pagesize, searchContent, ctname);
+			 List<BoardCt_Join> boardlist = dao.getBoardSearchList(cpage, pagesize, searchContent, ctname);
 			 List<User> userlist = dao.getUserList();
 			 
 			 request.setAttribute("boardlist", boardlist);

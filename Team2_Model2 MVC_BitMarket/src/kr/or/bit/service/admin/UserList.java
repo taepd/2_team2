@@ -17,7 +17,7 @@ public class UserList implements Action{
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
 		
-		ActionForward forward = null;
+		ActionForward forward = null; 
 		
 		String ps = request.getParameter("ps"); //pagesize
 		String cp = request.getParameter("cp"); //current page

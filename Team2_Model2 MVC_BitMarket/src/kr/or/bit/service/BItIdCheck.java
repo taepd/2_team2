@@ -24,7 +24,7 @@ public class BItIdCheck implements Action {
 
 		Bitdao dao = new Bitdao();
  
-		user = dao.getUser(id);
+		user = dao.getUser(id); 
 		admin = dao.getAdmin(id);
 
 

@@ -8,7 +8,7 @@ import kr.or.bit.action.Action;
 import kr.or.bit.action.ActionForward;
 import kr.or.bit.dao.Bitdao;
 
-public class UserDelete implements Action{
+public class UserDelete implements Action{ 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
 		//String rtime = request.getParameter("rtime");

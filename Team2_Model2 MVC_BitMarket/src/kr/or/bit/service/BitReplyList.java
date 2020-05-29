@@ -33,7 +33,7 @@ public class BitReplyList implements Action{
 		ActionForward forward = new ActionForward();
 		forward.setRedirect(false);
 		forward.setPath("/WEB-INF/views/BitReplyListAjax.jsp");
-		
+		 
 		
 		return forward;
 	}

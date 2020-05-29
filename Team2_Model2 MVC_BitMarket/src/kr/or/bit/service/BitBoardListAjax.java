@@ -29,7 +29,7 @@ public class BitBoardListAjax implements Action {
 		if (ps == null || ps.trim().equals("")) {
 			// default 값 설정
 			ps = "5"; // 5개씩
-		}
+		} 
 
 		if (cp == null || cp.trim().equals("")) {
 			// default 값 설정
@@ -43,7 +43,7 @@ public class BitBoardListAjax implements Action {
 
 		try {
 			Bitdao dao = new Bitdao();
-			List<BoardCt_Join> boardlist = dao.getBoardList(cpage, pagesize, searchContent, ctname);
+			List<BoardCt_Join> boardlist = dao.getBoardSearchList(cpage, pagesize, searchContent, ctname);
 			List<User> userlist= dao.getUserList();
 			System.out.println("ctname : " + boardlist.toString());
 			// request.setAttribute("emplist", emplist);

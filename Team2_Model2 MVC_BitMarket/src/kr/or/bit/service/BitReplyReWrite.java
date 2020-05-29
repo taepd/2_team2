@@ -29,7 +29,7 @@ public class BitReplyReWrite implements Action{
 		reply.setContent(content);
 		reply.setScstate(scstate);
 		reply.setId(id);
-		
+		 
 		
 		
 		

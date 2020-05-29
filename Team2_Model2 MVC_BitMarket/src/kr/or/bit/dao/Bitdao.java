@@ -36,7 +36,7 @@ public class Bitdao {
 		try {
 			conn = ConnectionHelper.getConnection("oracle");// 추가
 
-			String sql = "insert into bitUSER(profile, id, pwd, nick , loc, rtime) values(?,?,?,?,?,sysdate)";
+			String sql = "insert into bitUSER(profile, id, pwd, nick , loc, rtime) values(?,?,?,?,?,TO_CHAR(SYSDATE,'yyyy/mm/dd hh24:mi:ss'))";
 
 			pstmt = conn.prepareStatement(sql);
 
@@ -528,42 +528,67 @@ public class Bitdao {
 
 	}
 
-	/*
-	 * // board 리스트 페이징 //안쓰는 것 같음 public List<Board> getBoardList(int cpage, int
-	 * pagesize) { Connection conn = null; PreparedStatement pstmt = null; ResultSet
-	 * rs = null; List<Board> boardlist = null;
-	 * 
-	 * try { conn = ConnectionHelper.getConnection("oracle"); String sql =
-	 * "select * from " +
-	 * "(select rownum rn,bdindex,title,price,content,rtime,trstate,delstate,count "
-	 * + ",id,ctcode,img" + " from (SELECT * FROM board ORDER BY bdindex desc) " +
-	 * " where rownum <= ?" + ") where rn >= ?";
-	 * 
-	 * pstmt = conn.prepareStatement(sql); // 공식같은 로직 int start = cpage * pagesize -
-	 * (pagesize - 1); int end = cpage * pagesize;
-	 * 
-	 * pstmt.setInt(1, end); pstmt.setInt(2, start);
-	 * 
-	 * rs = pstmt.executeQuery(); boardlist = new ArrayList<Board>();
-	 * 
-	 * while (rs.next()) {
-	 * 
-	 * if (rs.getString("delstate").equals("N")) { Board board = new Board();
-	 * board.setBdindex(rs.getInt("bdindex")); board.setId(rs.getString("id"));
-	 * board.setRtime(rs.getString("rtime")); board.setPrice(rs.getInt("price"));
-	 * board.setTitle(rs.getString("title"));
-	 * board.setCtcode(rs.getString("ctcode")); board.setImg(rs.getString("img"));
-	 * boardlist.add(board);
-	 * 
-	 * } } } catch (Exception e) { System.out.println(e.getMessage()); } finally {
-	 * DB_Close.close(rs); DB_Close.close(pstmt); try { conn.close(); // 받환하기 }
-	 * catch (SQLException e) { e.printStackTrace(); } } return boardlist;
-	 * 
-	 * }
-	 */
+	//board 리스트 페이징 
+		public List<Board> getBoardList(int cpage, int pagesize){
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			List<Board> boardlist = null;
+			
+			
+			try {
+				conn = ConnectionHelper.getConnection("oracle");
+				String sql = "select * from " +
+	    				"(select rownum rn,bdindex,title,price,content,rtime,trstate,delstate,count " +
+	    				",id,ctcode,img" +
+	    				" from (SELECT * FROM board ORDER BY bdindex desc) "+
+	    				" where rownum <= ?" + 
+	    	") where rn >= ?";
+				
+				pstmt = conn.prepareStatement(sql);
+				// 공식같은 로직
+				int start = cpage * pagesize - (pagesize - 1); 
+				int end = cpage * pagesize;
+				
+				pstmt.setInt(1, end);
+				pstmt.setInt(2, start);
+				
+				rs = pstmt.executeQuery();
+				boardlist = new ArrayList<Board>();
+				
+				
+				while (rs.next()) {
+					
+					if(rs.getString("delstate").equals("N")) {
+						Board board = new Board();
+						board.setBdindex(rs.getInt("bdindex"));
+						board.setId(rs.getString("id"));
+						board.setRtime(rs.getString("rtime"));
+						board.setPrice(rs.getInt("price"));
+						board.setTitle(rs.getString("title"));
+						board.setCtcode(rs.getString("ctcode"));
+						board.setImg(rs.getString("img"));
+						boardlist.add(board);
+					
+					}
+				}
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}finally {
+				DB_Close.close(rs);
+				DB_Close.close(pstmt);
+				try {
+					conn.close(); // 받환하기
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			return boardlist;
+			
+		}
 
 	// 게시글 가져오기 다양한 방식으로 전체 이미지 게시판 리스트 가져오기
-	public List<BoardCt_Join> getBoardList(int cpage, int pagesize, String searchContent, String ctname) {
+	public List<BoardCt_Join> getBoardSearchList(int cpage, int pagesize, String searchContent, String ctname) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
