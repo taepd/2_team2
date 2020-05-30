@@ -320,276 +320,153 @@ input {
 </head>
 
 <body>
-	<!-- ============================================================== -->
-	<!-- Preloader - style you can find in spinners.css -->
-	<!-- ============================================================== -->
-	<div class="preloader">
-		<div class="lds-ripple">
-			<div class="lds-pos"></div>
-			<div class="lds-pos"></div>
-		</div>
-	</div>
-	<!-- ============================================================== -->
-	<!-- Main wrapper - style you can find in pages.scss -->
-	<!-- ============================================================== -->
-	<div id="main-wrapper">
-		<!--////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
-
-		<!-- ============================================================== -->
-		<!-- Bread crumb and right sidebar toggle -->
-		<!-- ============================================================== -->
-		<div class="page-header">
-			<h1 class="logo" align="center" style="padding-bottom: 10px;">
-				<a href="Login.jsp" style="text-decoration:none "><b>비트마켓</b></a>
-			</h1>
-		</div>
-		<br>
-		<br>
-		<!-- ============================================================== -->
-		<!-- End Bread crumb and right sidebar toggle -->
-		<!-- ============================================================== -->
-		<!-- ============================================================== -->
-		<!-- Container fluid  -->
-		<!-- ============================================================== -->
-		<div class="container-fluid">
-			<!-- ============================================================== -->
-			<!-- Start Page Content -->
-			<!-- ============================================================== -->
-			<div class="row">
-
-				<div class="card" style="width: 60%; margin: 0 auto;">
-					<form class="form-horizontal" action="BitJoinOK.bit"
-						enctype="multipart/form-data" method="post">
-						<div class="card-body">
-
-							<div class="page-body">
-								<h3 class="logo" align="center">
-									<b>회원정보 입력</b>
-								</h3>
-							</div>
-
-							<br>
-							<br>
-
-							<div class="wrap-input100">
-								<div class="form-group row">
-									<div class="col-sm-12">
-
-										<div class="row row-space">
-
-											<div class="col-10">
-												<div class="input-group">
-													<label for="fname" class="label" style="text-align: left">아이디</label>
-													<input class="input--style-4" type="text" maxlength="20"
-														id="id" name="id" title="5~16자리의 영문+숫자 조합으로 입력해주세요"
-														placeholder="이메일 형식으로 입력해 주세요" check_result="fail">
-												</div>
-											</div>
-
-											<div class="col-2" style="padding-top: 35px">
-											<button type="button" class="btn btn-primary" id="btn-idchk" style="padding: 10px 20px">중복확인</button>
-											</div>
-
-										</div>
-
-
-
-									</div>
-									<div class="col-sm-9 tdemail" align="left"></div>
-								</div>
-
-
-
-
-								<div class="form-group row">
-									<div class="col-sm-12">
-										<div class="row row-space">
-											<div class="col-10">
-												<div class="input-group">
-													<label for="lname" class="label" style="text-align: left">비밀번호</label>
-													<input class="input--style-4" type="password"
-														maxlength="20" id="pwd" name="pwd"
-														title="8~20자 사이에 적어도 하나의 영어대문자,숫자, 특수문자가 포함되어야 합니다."
-														placeholder="비밀번호를 입력해주세요">
-												</div>
-											</div>
-											<div class="col-2"></div>
-										</div>
-									</div>
-									<div class="col-sm-12 tdpw" align="left"></div>
-								</div>
-
-
-
-
-
-								<div class="form-group row">
-									<div class="col-sm-12">
-										<div class="row row-space">
-											<div class="col-10">
-												<div class="input-group">
-													<label for="email1" class="label" style="text-align: left">비밀번호
-														확인</label> <input class="input--style-4" type="password"
-														maxlength="20" id="pwdCheck" name="pwdCheck"
-														title="패스워드 확인" placeholder="비밀번호를 입력해주세요">
-												</div>
-											</div>
-											<div class="col-2"></div>
-										</div>
-									</div>
-									<div class="col-sm-12 tdpwch" align="left"></div>
-								</div>
-
-
-
-
-
-
-								<div class="form-group row">
-									<div class="col-sm-12">
-										<div class="row row-space">
-											<div class="col-10">
-												<div class="input-group">
-													<label for="cono1" class="label" style="text-align: left">닉네임</label>
-													<input class="input--style-4" type="text" maxlength="20"
-														id="nick" name="nick" title="닉네임"
-														placeholder="사용할 닉네임을 입력해 주세요">
-												</div>
-											</div>
-											<div class="col-2"></div>
-										</div>
-									</div>
-									<div class="col-sm-12"></div>
-								</div>
-
-
-
-
-
-
-
-
-								<div class="form-group row">
-									<div class="col-sm-12">
-										<div class="row row-space">
-											<div class="col-10">
-												<div class="input-group">
-
-													<label for="cono1" class="label" style="text-align: left">주소</label>
-
-													<!-- 카카오 지도 API 적용 -->
-													<input class="input--style-4" type="text" maxlength="20"
-														size="45" id="loc" name="loc" title="주소-기본주소"
-														placeholder="동명(읍,면)으로 검색 (ex.서초동)"> 
-													<input type="hidden" name="lat" id="lat">
-													<input type="hidden" name="lon" id="lon">	<br>
-													<br>
-
-
-
-													<button type="button" id="currentLoc"
-														class="btn btn-primary social facebook btn-flat btn-addon mb-3" style="padding: 10px 20px">
-														<i class="fa fa-crosshairs"></i>현재 위치로 찾기
-													</button>
-
-													<!-- 지도로 찾기 잠시 보류 <button type="button" class="btn btn-primary" id="searchMap">지도에서 찾기</button> -->
-													<!-- 카카오지도 뿌려지는 곳 -->
-													<!-- 	<div id="map" style="width:300px;height:300px;"></div>   -->
-
-													<div id="layer"
-														style="border-radius: 10px; margin-bottom: 10px; display: none; position: absolute; overflow: hidden; z-index: 1; top: 0px; left: 0px; max-width: 600px; width: 100%; height: 400px; border: 1px solid #e6e6e6; ">
-														<img
-															src="//t1.daumcdn.net/postcode/resource/images/close.png"
-															id="btnCloseLayer"
-															style="cursor: pointer; position: absolute; right: -3px; top: -3px; z-index: 1; width: 20px"
-															alt="닫기 버튼">
-													</div>
-
-												</div>
-											</div>
-											<div class="col-2"></div>
-										</div>
-									</div>
-									<div class="col-sm-12"></div>
-								</div>
-
-
-
-
-
-
-
-
-
-
+    <!-- ============================================================== -->
+    <!-- Preloader - style you can find in spinners.css -->
+    <!-- ============================================================== -->
+    <div class="preloader">
+        <div class="lds-ripple">
+            <div class="lds-pos"></div>
+            <div class="lds-pos"></div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <div id="main-wrapper">
+		
+		<div class="page-wrapper">
+            <!-- ============================================================== -->
+            <!-- Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <div class="page-breadcrumb">
+                <div class="row">
+                    <div class="col-12 d-flex no-block align-items-center">
+                        <h4 class="page-title">사원 추가</h4>
+                        <div class="ml-auto text-right">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">Library</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+            <!-- ============================================================== -->
+            <!-- End Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Container fluid  -->
+            <!-- ============================================================== -->
+            <div class="container-fluid">
+                <!-- ============================================================== -->
+                <!-- Start Page Content -->
+                <!-- ============================================================== -->
+                <div class="row">
+                    
+                        <div class="card" style="width:60%; margin: 0 auto;">
+                            <form class="form-horizontal" action="BitJoinOK.bit" enctype="multipart/form-data" method="post">
+                                <div class="card-body">
+                                    <h4 class="card-title">회원 가입</h4>
+                                    <div class="form-group row">
+                                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">아이디</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" maxlength="20" id="id" name="id"
+										title="5~16자리의 영문+숫자 조합으로 입력해주세요"
+										placeholder="이메일 형식으로 입력해 주세요" check_result="fail">  
+										<button type="button" class="btn btn-primary" id="btn-idchk">중복확인</button>
+										<!-- <img id="id_check_sucess" style="display: none;"> -->
+                                        </div>
+                                        <div class="col-sm-9 tdemail"></div>
+                                        
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="lname" class="col-sm-3 text-right control-label col-form-label">비밀번호</label>
+                                        <div class="col-sm-9">
+                                           <input type="password" maxlength="20" id="pwd"
+										name="pwd"
+										title="8~20자 사이에 적어도 하나의 영어대문자,숫자, 특수문자가 포함되어야 합니다."
+										placeholder="비밀번호를 입력해주세요">
+                                        </div>
+                                        <div class="col-sm-9 tdpw"></div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="email1" class="col-sm-3 text-right control-label col-form-label">비밀번호 확인</label>
+                                        <div class="col-sm-9">
+                                            <input type="password" maxlength="20" id="pwdCheck"
+										name="pwdCheck" title="패스워드 확인" placeholder="비밀번호를 입력해주세요">
+                                        </div>
+                                        <div class="col-sm-9 tdpwch"></div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="cono1" class="col-sm-3 text-right control-label col-form-label">닉네임</label>
+                                        <div class="col-sm-9">
+                                           <input type="text" maxlength="20" id="nick"
+										name="nick" title="닉네임" placeholder="사용할 닉네임을 입력해 주세요">
+                                        </div>                                       
+                                    </div>
+                               
+                                    <div class="form-group row">
+                                        <label for="cono1" class="col-sm-3 text-right control-label col-form-label">주소</label>
+                                        <!-- 카카오 지도 API 적용 -->
+                                        <div class="col-sm-9">
+                                            <input type="text" maxlength="20" size="45" id="loc"
+											name="loc" title="주소-기본주소" placeholder="동명(읍,면)으로 검색 (ex.서초동)">
+											<input type="hidden" name="lat" id="lat">
+											<input type="hidden" name="lon" id="lon">		
+											<div id="layer" style="display: none; position: absolute; overflow: hidden; z-index: 1; top: 0px; left: 0px; max-width: 600px; width: 100%; height: 400px; border: 1px solid rgb(77, 77, 77);">
+                                       	 		<img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1;width:20px" alt="닫기 버튼">
+                                    		</div>
+                                        </div>
+                                    </div>
+                           
+                                   
+                                   	<button type="button" id="currentLoc"
+								class="btn social facebook btn-flat btn-addon mb-3">
+								<i class="fa fa-crosshairs"></i>현재 위치로 찾기
+								</button>
+									
 								<!-- 지도로 찾기 잠시 보류 <button type="button" class="btn btn-primary" id="searchMap">지도에서 찾기</button> -->
-								<!-- 카카오지도 뿌려지는 곳 -->
+									<!-- 카카오지도 뿌려지는 곳 -->
 								<!-- 	<div id="map" style="width:300px;height:300px;"></div>   -->
-
-
-
-
-
-
-
-								<div class="form-group row">
-
-									<div class="col-sm-12">
-										<div class="row row-space">
-											<div class="col-10">
-												<div class="input-group">
-
-
-
-													<label for="cono1" class="label" style="text-align: left">이미지 추가</label> 
-													
-													<div style="float: left;">
-														<label class="btn btn-primary btn-default btn-file" style="padding: 10px 20px; margin-right:80px"> 이미지 설정/변경 
-														<input class="input--style-4" type="file" name="profile" style="display: none;"
-														onchange="readURL(this);" multiple></label> &nbsp;&nbsp;&nbsp;&nbsp;
-														<img id="img" src="upload/${param.profile}" alt="" width="150px" height="150px" style="border-radius: 10px;" />
-														<span id="imgFileName">&nbsp;&nbsp;${param.profile}</span> 
-													</div>
-
-
-												</div>
-											</div>
-											<div class="col-2"></div>
-										</div>
+								
+									
+									
+									<div class="form-group row">
+									<label for="cono1"
+										class="col-sm-3 text-right control-label col-form-label">이미지 추가</label>
+									<div class="col-sm-9">
+										<label class="btn btn-primary btn-file"> 이미지 설정/변경 
+										<input type="file" name="profile" style="display: none;" onchange="readURL(this);">
+										</label>  <span id="imgFileName">${param.profile}</span> 
+										<img id="img" src="upload/${param.profile}" alt="프로필 이미지" width="100px" height="100px"/>
 									</div>
-									<div class="col-sm-12"></div>
-								</div>
+									</div>
+									
+									
+						
+									
+									
+							
+							
+                                </div>
+                                <div class="border-top">
+                                    <div class="card-body">
+                                        <button type="submit" class="btn btn-primary">전송</button>
+                                        <button type="reset" class="btn btn-primary">취소</button>
+                                    </div>
+                                </div>
+                            </form>
+                 </div>
+                        
+                     
 
-
-
-
-
-							</div>
-							<!-- wrap -->
-						</div>
-						<!-- form 다음 -->
-						<div class="border-top">
-							<div class="card-body" style="text-align: center;">
-								<button type="submit" class="btn btn-primary" style="padding: 10px 20px"><b>전송</b></button>
-								<button type="reset" class="btn" style="padding: 10px 20px">취소</button>
-							</div>
-						</div>
-
-
-
-
-
-
-
-					</form>
-				</div>
-
-
-
-
-
-				<!-- ============================================================== -->
-				<!-- End PAge Content -->
+                    
+               
+                <!-- ============================================================== -->
+                <!-- End PAge Content -->
                 <!-- ============================================================== -->
                 <!-- ============================================================== -->
                 <!-- Right sidebar -->

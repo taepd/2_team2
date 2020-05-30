@@ -25,7 +25,7 @@
 			dataType : "json",
 			success : function(response) {
 				
-				let select = "<select class='nice-select' name='category' id='categorycss'><option value='선택없음' selected>카테고리 선택</option>";
+				let select = "<select name='category' id='categorycss'><option value='선택없음' selected>카테고리 선택</option>";
 				
 				$.each(response.categorylist, function(index, obj) {
 					
@@ -122,111 +122,6 @@
 			});
 		});
 		
-		
-		//거리순 정렬
-		$('#sort').change(function() {
-			isEnd = false;
-			
-			$('#searchContent').val("");
-			changeText();
-			if($('#sort option:selected').val() == "선택없음"){
-				$(location).attr('href',"BitImgList.bit");
-			}
-			
-			var data = {ctname : $('#sort option:selected').val(),
-						ps : 6,
-				    	cp : 1
-				    	
-			
-						};
-						console.log(data);
-			
-			$.ajax({
-				
-				type:"get",
-				data : data,
-				url:"BitBoardUserListAjax.bit",
-				dataType : "json",                                                
-				success:function(responsedata){
-					$('#boardlist').empty();
-					$.each(responsedata.boardArr,function(index,obj){		
-						let href = "";
-						let strArray = obj.img.split(',');
-						if(obj.dist=='0') {console.log("0이면 찍혀라 "+obj.ctcode); return true;}//본인 게시물 제외하는게 나을까?
-						   //테이블 하나 더 조인하기 힘들어서
-								let ctname =""; 
-						   switch(obj.ctcode){
-						   case "1": ctname="디지털/가전";
-						   break;
-						   case "2": ctname="스포츠/레저";
-						   break;
-						   case "3": ctname="의류/잡화";
-						   break;
-						   case "4": ctname="뷰티/미용";
-						   break;
-						   case "5": ctname="생활/가구";
-						   break;
-						   
-						   
-						   
-						   }
-								
-								
-								
-								
-								
-						$.each(responsedata.userArr, function(index2, obj2) {	
-							if(obj.id == obj2.id){
-								href = "<i class='fa fa-location-arrow'></i>"+obj2.loc+
-										"<br><b><a href='BitUserProfileView.bit?id="+obj2.id+"'>"+obj2.nick+"</a></b>";
-										
-							}
-						});
-						
-						$('#boardlist').append(		
-								"<div class='col-sm-12 col-lg-4 col-md-6'>"+
-							
-								"<div class='product-item bg-light'>"+
-									"<div class='card'>"+
-										"<div class='thumb-content'>"+
-											
-											"<a href='BitBoardDetail.bit?bdindex="+obj.bdindex+"'>"+
-												"<img class='card-img-top img-fluid' src='upload/"+strArray[0]+"'" +
-													"alt='Card image cap' style=\"height:250px\">"+
-											"</a>"+
-										"</div>"+
-										"<div class='card-body'>"+
-											"<h4 class='card-title' id='cdtitle'><a href='BitBoardDetail.bit?bdindex="+obj.bdindex+"'>"+obj.title+"</a></h4>"+
-													
-											"<ul class='list-inline product-meta'>"+
-												"<li class='list-inline-item'>"+
-												href+
-												"</li>"+
-												"<li class='list-inline-item'>"+
-													"<span><i class='fa fa-calendar'></i>"+obj.rtime+"</span>"+
-												"</li>"+
-											"</ul>"+
-											"<p class='card-text'>"+obj.price+"</p>"+
-											"<p class='card-text'>"+ctname+"</p>"+
-											"<div class='product-ratings'>"+
-												"<ul class='list-inline'>"+
-													"<li class='list-inline-item selected'><i class='fa fa-heart'></i></li>"+
-												"</ul>"+
-											"</div>"+
-										"</div>"+
-									"</div>"+
-								"</div>"+
-							"</div>"
-								
-						   
-						);
-						if(parseFloat(obj.dist)<=0.3){
-							$('.card-body').css('background-color','#a1f9b785');
-						}
-				});
-				}
-			});
-		});
 		
 		  
 		//무한스크롤 스크롤에 따라 동적인 변화 발생
@@ -629,25 +524,20 @@
 					<div class="col-md-6">
 						<div id="selecttag">
 						</div>
-
 					</div>
+					
 					<div class="col-md-6">
 				
 				
 									
 						<div class="view">
-							<select name='sort' id='sort'>
-								<option value='선택없음' selected>정렬 방식 선택</option>
-								<option value="recent">최신 순 </option>
-								<option value="distance">거리 순</option>
-							</select>
 						
 							<ul class="list-inline view-switcher">
 								<li class="list-inline-item">
-									<a href="BitImgList.bit"><i class="fa fa-th-large fa-2x"></i></a>
+									<a href="BitImgList.bit"><i class="fa fa-th-large"></i></a>
 								</li>
 								<li class="list-inline-item">
-									<a href="BitNorList.bit"><i class="fa fa-reorder fa-2x"> </i></a>
+									<a href="BitNorList.bit"><i class="fa fa-reorder" > </i></a>
 								</li>
 							</ul>
 						</div>

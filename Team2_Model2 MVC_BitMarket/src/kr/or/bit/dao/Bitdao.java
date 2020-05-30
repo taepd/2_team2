@@ -10,6 +10,7 @@ import java.util.List;
 import kr.or.bit.dto.Admin;
 import kr.or.bit.dto.Board;
 import kr.or.bit.dto.BoardCt_Join;
+import kr.or.bit.dto.BoardUser_Join;
 import kr.or.bit.dto.Category;
 import kr.or.bit.dto.Notice;
 import kr.or.bit.dto.Qna;
@@ -36,7 +37,7 @@ public class Bitdao {
 		try {
 			conn = ConnectionHelper.getConnection("oracle");// 추가
 
-			String sql = "insert into bitUSER(profile, id, pwd, nick , loc, rtime) values(?,?,?,?,?,TO_CHAR(SYSDATE,'yyyy/mm/dd hh24:mi:ss'))";
+			String sql = "insert into bitUSER(profile, id, pwd, nick , loc, lat, lon, rtime) values(?,?,?,?,?,?,?, TO_CHAR(SYSDATE,'yyyy/mm/dd hh24:mi:ss'))";
 
 			pstmt = conn.prepareStatement(sql);
 
@@ -45,6 +46,8 @@ public class Bitdao {
 			pstmt.setString(3, user.getPwd());
 			pstmt.setString(4, user.getNick());
 			pstmt.setString(5, user.getLoc());
+			pstmt.setString(6, user.getLat());
+			pstmt.setString(7, user.getLon());
 
 			resultrow = pstmt.executeUpdate();
 
@@ -188,6 +191,14 @@ public class Bitdao {
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
+		}finally {
+			DB_Close.close(rs);
+			DB_Close.close(pstmt);
+			try {
+				conn.close(); // 받환하기
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		return totalcount;
 	}
@@ -639,21 +650,25 @@ public class Bitdao {
 			rs = pstmt.executeQuery();
 			boardlist = new ArrayList<BoardCt_Join>();
 			while (rs.next()) {
-				BoardCt_Join board = new BoardCt_Join();
-				board.setBdindex(rs.getInt("bdindex"));
-				board.setTitle(rs.getString("title"));
-				board.setPrice(rs.getInt("price"));
-				board.setContent(rs.getString("content"));
-				board.setRtime(rs.getString("rtime"));
-				board.setTrstate(rs.getString("trstate"));
-				board.setDelstate(rs.getString("delstate"));
-				board.setId(rs.getString("id"));
-				board.setCount(rs.getInt("count"));
-				board.setCtcode(rs.getString("ctcode"));
-				board.setImg(rs.getString("img"));
-				board.setId(rs.getString("id"));
-				board.setCtname(rs.getString("ctname"));
-				boardlist.add(board);
+				
+				if(rs.getString("delstate").equals("N")) {
+				
+					BoardCt_Join board = new BoardCt_Join();
+					board.setBdindex(rs.getInt("bdindex"));
+					board.setTitle(rs.getString("title"));
+					board.setPrice(rs.getInt("price"));
+					board.setContent(rs.getString("content"));
+					board.setRtime(rs.getString("rtime"));
+					board.setTrstate(rs.getString("trstate"));
+					board.setDelstate(rs.getString("delstate"));
+					board.setId(rs.getString("id"));
+					board.setCount(rs.getInt("count"));
+					board.setCtcode(rs.getString("ctcode"));
+					board.setImg(rs.getString("img"));
+					board.setId(rs.getString("id"));
+					board.setCtname(rs.getString("ctname"));
+					boardlist.add(board);
+				}
 			}
 			System.out.println("ct탄 리스트 : " + boardlist.toString());
 		} catch (Exception e) {
@@ -669,6 +684,75 @@ public class Bitdao {
 		}
 		return boardlist;
 	}
+	
+	// 게시글 거리순으로 정렬해서 가져오기
+	public List<BoardUser_Join> getBoardDistList(int cpage, int pagesize, String lat, String lon) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<BoardUser_Join> boardlist = null;
+
+		try {
+			conn = ConnectionHelper.getConnection("oracle");
+
+			String sql = "SELECT * from "
+					+ " (select rownum rn, bdindex, title,price,content,rtime,trstate,delstate,count,id,img, ctcode, dist"
+					+ " FROM (SELECT b.*, ROUND((power(lat-?,2)+power(lon-?,2)),10) dist FROM board b JOIN bituser u ON b.id = u.id order by dist)"
+					+ " where rownum <=?" + " ) where rn >= ?";
+
+
+			int start = cpage * pagesize - (pagesize - 1);
+			int end = cpage * pagesize;
+
+
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setDouble(1, Double.parseDouble(lat));
+				pstmt.setDouble(2, Double.parseDouble(lon));
+				pstmt.setInt(3, end);
+				pstmt.setInt(4, start);
+
+
+			rs = pstmt.executeQuery();
+			boardlist = new ArrayList<BoardUser_Join>();
+			while (rs.next()) {
+				
+				if(rs.getString("delstate").equals("N")) {
+				
+					BoardUser_Join board = new BoardUser_Join();
+					board.setBdindex(rs.getInt("bdindex"));
+					board.setTitle(rs.getString("title"));
+					board.setPrice(rs.getInt("price"));
+					board.setContent(rs.getString("content"));
+					board.setRtime(rs.getString("rtime"));
+					board.setTrstate(rs.getString("trstate"));
+					board.setDelstate(rs.getString("delstate"));
+					board.setId(rs.getString("id"));
+					board.setCount(rs.getInt("count"));
+					board.setCtcode(rs.getString("ctcode"));
+					board.setImg(rs.getString("img"));
+					board.setId(rs.getString("id"));
+					board.setDist(rs.getString("dist"));
+					boardlist.add(board);
+					
+					System.out.println("구한 거리=" +rs.getString("dist"));
+				}
+			}
+			System.out.println("boardUserList탄 리스트 : " + boardlist.toString());
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			DB_Close.close(rs);
+			DB_Close.close(pstmt);
+			try {
+				conn.close();
+			} catch (Exception e2) {
+				System.out.println(e2.getMessage());
+			}
+		}
+		return boardlist;
+	}
+	
+	
 
 	// 회원 리스트 조회 (회원의 위치 조회용?)
 	public List<User> getUserList() {
@@ -687,9 +771,16 @@ public class Bitdao {
 			while (rs.next()) {
 				User user = new User();
 				user.setId(rs.getString("id"));
-				user.setLoc(rs.getString("loc"));
+				
+				//동이나 로까지만 주소 받아오기
+				String str = rs.getString("loc");
+				String[] array = str.split(" ");
+				str = array[0]+" "+array[1]+" "+array[2];
+				user.setLoc(str);
+				
 				user.setNick(rs.getString("nick"));
 				user.setProfile(rs.getString("profile"));
+			
 
 				userlist.add(user);
 			}
@@ -777,18 +868,31 @@ public class Bitdao {
 		PreparedStatement pstmt = null;
 		try {
 			conn = ConnectionHelper.getConnection("oracle");
-
-			String sql = "update board set title=?,price=?,content=?,rtime=sysdate,trstate=?,delstate=?,id=?,ctcode=?,img=? where bdindex=?";
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, board.getTitle());
-			pstmt.setInt(2, board.getPrice());
-			pstmt.setString(3, board.getContent());
-			pstmt.setString(4, "N");
-			pstmt.setString(5, "N");
-			pstmt.setString(6, board.getId());
-			pstmt.setString(7, board.getCtcode());
-			pstmt.setString(8, board.getImg());
-			pstmt.setInt(9, board.getBdindex());
+			System.out.println("board.getImg=" +board.getImg());
+			if(board.getImg().equals("")) {
+				String sql = "update board set title=?,price=?,content=?,rtime=sysdate,trstate=?,delstate=?,id=?,ctcode=?where bdindex=?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, board.getTitle());
+				pstmt.setInt(2, board.getPrice());
+				pstmt.setString(3, board.getContent());
+				pstmt.setString(4, "N");
+				pstmt.setString(5, "N");
+				pstmt.setString(6, board.getId());
+				pstmt.setString(7, board.getCtcode());
+				pstmt.setInt(8, board.getBdindex());
+			}else {
+				String sql = "update board set title=?,price=?,content=?,rtime=sysdate,trstate=?,delstate=?,id=?,ctcode=?,img=? where bdindex=?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, board.getTitle());
+				pstmt.setInt(2, board.getPrice());
+				pstmt.setString(3, board.getContent());
+				pstmt.setString(4, "N");
+				pstmt.setString(5, "N");
+				pstmt.setString(6, board.getId());
+				pstmt.setString(7, board.getCtcode());
+				pstmt.setString(8, board.getImg());
+				pstmt.setInt(9, board.getBdindex());
+			}
 
 			result = pstmt.executeUpdate();
 
@@ -1059,8 +1163,8 @@ public class Bitdao {
 		int resultrow = 0;
 		try {
 			conn = ConnectionHelper.getConnection("oracle");
-			String sql = "insert into reply(rpindex,content,scstate,delstate,trstate,rtime,depth,id,bdindex,refer,step) \"\r\n" + 
-							"values(reply_no.nextval,?,?,'N','N',sysdate,0,?,?,?,0)";
+			String sql = "insert into reply(rpindex,content,scstate,delstate,trstate,rtime,depth,id,bdindex,refer,step) " + 
+							"values(reply_rpindex.nextval,?,?,'N','N',sysdate,0,?,?,?,0)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, reply.getContent());
 			pstmt.setString(2, reply.getScstate());
@@ -1138,7 +1242,7 @@ public class Bitdao {
 
 			// rewrite
 			String sql_rewrite = "insert into reply(rpindex,content,scstate,delstate,trstate,rtime,id,bdindex,depth,refer,step)"
-					+ "values(reply_no.nextval,?,?,'N','N',sysdate,?,?,?,?,?)";
+					+ "values(reply_rpindex.nextval,?,?,'N','N',sysdate,?,?,?,?,?)";
 
 			pstmt = conn.prepareStatement(sql_refer_depth_step);
 			pstmt.setInt(1, bdindex);
@@ -2356,6 +2460,8 @@ public class Bitdao {
 				user.setLoc(rs.getString("loc"));
 				user.setProfile(rs.getString("profile"));
 				user.setRtime(rs.getString("rtime"));
+				user.setLat(rs.getString("lat"));
+				user.setLon(rs.getString("lon"));
 
 			}
 

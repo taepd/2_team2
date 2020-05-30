@@ -1,14 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="/Include/nav.jsp"%>
 
 <!-- ////////////////////썸머노트///////////////////////////////////////////////////////////////// -->
-<!-- <link
+<link
 	href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css"
-	rel="stylesheet"> -->
-<!-- <script
-	src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> -->
+	rel="stylesheet">
+<script
+	src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
 <script
 	src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
 
@@ -18,7 +17,7 @@
 	rel="stylesheet">
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.js"></script>
-<!-- <script src="jquery-3.4.1.min.js"></script> -->
+<script src="jquery-3.4.1.min.js"></script>
 <!-- include summernote-ko-KR -->
 <script src="Webapp/resources/js/summernote-ko-KR.js"></script>
 
@@ -82,18 +81,15 @@
 
 		});
 		
-		 $(".owl-carousel").owlCarousel();  //카로셀
-		
 ////////////////////////////////////////////////////////////////	이미지 추가
-/*
+
 $(document).on("click","#addFile",function() {
 	        var fileIndex = $('#fileview li').children().length;      
 	        $('#fileview').append(
 	                '<li>'+
 	                '   <input type="file" name="fileName['+ fileIndex +']" multiple id="addFile" class="left" accept="image/jpeg,image/gif,image/png,application/pdf,image/x-eps"/>'+
 	                '</li>');
-});
-*/
+});   
 		
 	});
 //---------------------------------------------
@@ -102,25 +98,15 @@ $(document).on("click","#addFile",function() {
 	<section class="section-sm" id="maxwidth">
 		<div class="col-md-12">
 			<div class="search-result">
-				<h3>게시글 수정</h3>
+				<h3>게시글 작성</h3>
 			</div>
 		</div>
 
 	<div style="width: 80%; margin: auto;">
 		<form method="post" action="BitUpdateOk.bit?bdindex=${param.bdindex}" enctype="multipart/form-data" id="ajaxform">
-			<c:set var="token" value="${param.img}" />
+			
 			<div id="categoryselect"></div>
 			<div id="preview" >
-				<div  id="carousel" class="owl-carousel owl-theme">
-					<c:forTokens var="imglist" items="${token}" delims=",">
-							<c:if test="${imglist !='null'}">
-								<div class="item" style="height:200px;">
-									<img class="d-block w-100" style="max-height: 400px;"
-										src="upload/${imglist}" onError ="javascript:this.src='upload/noimage.jpg'"alt="slide img">
-								</div>
-							</c:if>
-							</c:forTokens>
-				</div>
 			</div>
 			
 			<table class="table">
@@ -131,7 +117,7 @@ $(document).on("click","#addFile",function() {
 				<td align="left"><input type="text" name="price" placeholder="가격을 입력해 주세요" value="${param.price}" size="40"></td>
 			</tr>
 			<ul id="fileview">
-				<li><input type="file" name="images" multiple id="images" class="left" accept="image/jpeg,image/gif,image/png,application/pdf,image/x-eps" onchange="preview(this);"/>
+				<li><input type="file" name="fileName[0]" multiple id="addFile" class="left" accept="image/jpeg,image/gif,image/png,application/pdf,image/x-eps" onchange="preview(this);"/>
            	</li>
            	</ul>
             

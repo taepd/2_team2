@@ -150,7 +150,10 @@ $(document).on("click","#addFile",function() {
             	<td style="padding:10px 0;"><textarea class="form-control" name="content" id="message" rows="10" placeholder="내용을 입력해주세요"></textarea></td>
             </tr>
 			<tr>
-			<td><button class="btn btn-transparent" onclick="goWrite(this.form)"style="float: right;">등록</button>
+			<td><button class="btn btn-transparent" onclick="return goWrite(this.form)"style="float: right;">등록</button>
+			</td>
+			</tr>
+			
 			</table>
 		</form>
 	</div>

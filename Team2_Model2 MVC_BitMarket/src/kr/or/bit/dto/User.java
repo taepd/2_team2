@@ -16,6 +16,8 @@ public class User {
 	private String loc;
 	private String profile;
 	private String rtime;
+	private String lat;
+	private String lon;
 	
 	public User() {}
 
@@ -67,11 +69,29 @@ public class User {
 		this.rtime = rtime;
 	}
 
+	public String getLat() {
+		return lat;
+	}
+
+	public void setLat(String lat) {
+		this.lat = lat;
+	}
+
+	public String getLon() {
+		return lon;
+	}
+
+	public void setLon(String lon) {
+		this.lon = lon;
+	}
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", pwd=" + pwd + ", nick=" + nick + ", loc=" + loc + ", profile=" + profile
-				+ ", rtime=" + rtime + "]";
+				+ ", rtime=" + rtime + ", lat=" + lat + ", lon=" + lon + "]";
 	}
+
+	
 	
 	
 

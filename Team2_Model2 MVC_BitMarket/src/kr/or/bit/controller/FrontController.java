@@ -53,6 +53,7 @@ import kr.or.bit.service.BItLogin;
 import kr.or.bit.service.BitBoardDetail;
 import kr.or.bit.service.BitBoardList;
 import kr.or.bit.service.BitBoardListAjax;
+import kr.or.bit.service.BitBoardUserListAjax;
 import kr.or.bit.service.BitBoardWrite;
 import kr.or.bit.service.BitCategory;
 import kr.or.bit.service.BitDeleteOk;
@@ -192,7 +193,10 @@ public class FrontController extends HttpServlet {
     	}else if (url_Command.equals("/BitBoardListAjax.bit")) { // 비동기로 리스트 조회
 			action = new BitBoardListAjax();
 			forward = action.execute(request, response);
-		} else if (url_Command.equals("/BitImgList.bit")) { // 첫 화면에서 리스트 조회
+		}else if (url_Command.equals("/BitBoardUserListAjax.bit")) { // 비동기로 리스트 조회
+			action = new BitBoardUserListAjax();
+			forward = action.execute(request, response);
+		}else if (url_Command.equals("/BitImgList.bit")) { // 첫 화면에서 리스트 조회
 			action = new BitImgList();
 			forward = action.execute(request, response);
 		} else if (url_Command.equals("/BitNorList.bit")) { // 첫 화면에서 리스트 조회

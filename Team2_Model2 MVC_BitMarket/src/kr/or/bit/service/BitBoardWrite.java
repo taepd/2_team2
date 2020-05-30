@@ -28,6 +28,8 @@ import kr.or.bit.dao.Bitdao;
 import kr.or.bit.dto.Board;
 import kr.or.bit.dto.User;
 
+//이슈: 글 작성을 실패해도 서버에 파일이 업로드 됨
+
 public class BitBoardWrite implements Action {
 
 	private static final String CHARSET = "utf-8";
@@ -64,6 +66,7 @@ public class BitBoardWrite implements Action {
             String filelist="";
             String id = (String)session.getAttribute("id");
 			
+            String fileName=""; //중복파일의 파일명 갱신을 위해
 			List<FileItem> items = fileUpload.parseRequest(request);
             for (FileItem item : items) {
             	if (item.isFormField()) {
@@ -75,8 +78,25 @@ public class BitBoardWrite implements Action {
                     if (item.getSize() > 0) {
                         String separator = File.separator;
                         int index =  item.getName().lastIndexOf(separator);
-                        String fileName = item.getName().substring(index  + 1);
+                        fileName = item.getName().substring(index  + 1);
                         File uploadFile = new File(uploadpath +  separator + fileName);
+                        
+                        //올릴려는 파일과 같은 이름이 존재하면 중복파일 처리
+                        if (uploadFile.exists()){
+                        	System.out.println("업로드 테스트");
+                            for(int i=0; true; i++){
+                                //파일명 중복을 피하기 위한 일련 번호를 생성하여
+                                //파일명으로 조합
+                                uploadFile = new File(uploadpath +  separator + "("+(i+1)+")"+fileName);
+                                //조합된 파일명이 존재하지 않는다면, 일련번호가
+                                //붙은 파일명 다시 생성
+                                if(!uploadFile.exists()){ //존재하지 않는 경우
+                                    fileName = "("+(i+1)+")"+fileName;
+                                    break;
+                                }
+                            }
+                        }
+                        
                         item.write(uploadFile);
                     }
                 }
@@ -100,9 +120,9 @@ public class BitBoardWrite implements Action {
 						break;	
 					case "images":
 						if(filelist.equals("")) {
-							filelist += item.getName();
+							filelist += fileName;
 						}else {
-							filelist += ","+item.getName();
+							filelist += ","+fileName;
 						}
 						break;
 
@@ -115,8 +135,7 @@ public class BitBoardWrite implements Action {
     				}else {
     					board.setImg(filelist);
     				}
-        			
-              
+        
                 }
             String ctcode = dao.getCtcode(ctname);
             

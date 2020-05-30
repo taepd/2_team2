@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="/Include/nav.jsp"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <script>
 
 	$(function() {
@@ -63,17 +64,23 @@
 					
 					$.each(response.ctjsonlist,function(index2,obj2){
 							console.log(obj2)
+							let strArray = obj2.img.split(',');
+							console.log(strArray[0]);
+							
 							$.each(response.ctjsinlistuser,function(index3,obj3){
 								if(obj2.id == obj3.id){
-									href = "<span class='add-id'><strong>판매자</strong>"+obj3.nick+"</span>"
+									href = "<span class='add-id'><strong>판매자</strong><b><a href='BitUserProfileView.bit?id"+obj3.id+"'>"+obj3.nick+"</a>"
+										+"</b></span>";
 									href2 = "<span class='location'><strong>위치</strong>"+obj3.loc+"</span>"
 								}
 								
 					
 							});
 							$('#boardtable').append(
-									'<tr><td class="product-thumb"><img width="80px" height="auto"'+
-											'src="images/products/products-1.jpg alt="image description"></td>'+
+									'<tr><td class="product-thumb"><div style="margin-right:40px;">'+
+										'<a href="BitBoardDetail.bit?bdindex='+obj2.bdinex+'">'+
+											'<img width="150px" height="100px" src="upload/'+strArray[0]+'" alt="image description"></a>'+
+										'</div></td>'+
 										'<td class="product-details">'+
 											'<h4 class="title">'
 												+'<a href="BitDetail.bit?bdindex='+obj2.bdindex+'&cp=${cpage}&ps=${pagesize}">'+obj2.title+'</a>'+
@@ -105,7 +112,7 @@
 	<section class="section-sm" id="maxwidth">
 		<div class="col-md-12">
 			<div class="search-result">
-				<h3>'모자' 의 검색 결과 : 총 30건의 상품이 검색 되었습니다.</h3>
+				
 			</div>
 		</div>
 
@@ -125,9 +132,9 @@
 					<div class="col-md-3">
 						<div class="view">
 							<ul class="list-inline view-switcher">
-								<li class="list-inline-item"><a href="javascript:void(0);"><i
+								<li class="list-inline-item"><a href="BitImgList.bit"><i
 										class="fa fa-th-large"></i></a></li>
-								<li class="list-inline-item"><a href="BitList.bit"><i
+								<li class="list-inline-item"><a href="BitNorList.bit"><i
 										class="fa fa-reorder"></i></a></li>
 							</ul>
 						</div>
@@ -150,18 +157,34 @@
 					</thead>
 					<tbody id="boardtable">
 						<c:forEach var="board" items="${boardlist}">
+						
+						
 
 							<tr>
-								<td class="product-thumb"><img width="80px" height="auto"
-									src="images/products/products-1.jpg" alt="image description"></td>
+								
+									<c:forTokens var="imglist" items="${board.img}" delims="," varStatus="status">
+										<c:if test="${status.first}">
+										<td class="product-thumb">
+										<div style="margin-right:40px;">
+										<a href="BitBoardDetail.bit?bdindex=${board.bdindex}">
+											<img width="150px" height="100px" src="upload/${imglist}" alt="image description">
+										</a>
+										</div>
+										</td>
+								
+							</c:if>
+						</c:forTokens>
+					
 								<td class="product-details">
 									<h4 class="title">
-										<a href="BitDetail.bit?bdindex=${board.bdindex}&cp=${cpage}&ps=${pagesize}">${board.title}</a>
+										<a href="BitBoardDetail.bit?bdindex=${board.bdindex}&cp=${cpage}&ps=${pagesize}">${board.title}</a>
 									</h4> <span class="add-id"><strong>가격</strong>${board.price}</span>
 									<span><strong>등록일</strong>${board.rtime}</span>
 									<c:forEach var="user" items="${userlist}">
 										<c:if test="${board.id == user.id}">
-											<span class="add-id"><strong>판매자</strong>${user.nick}</span>
+											<span class="add-id"><strong>판매자</strong><b><a
+															href="BitUserProfileView.bit?id=${user.id}">${user.nick}</a>
+														</b></span>
 											<span class="location"><strong>위치</strong>${user.loc}</span>
 										</c:if>
 									</c:forEach>

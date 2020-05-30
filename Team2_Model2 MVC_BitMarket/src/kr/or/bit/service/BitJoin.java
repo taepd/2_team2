@@ -66,7 +66,9 @@ public class BitJoin implements Action {
             String pwd = "";
             String nick = "";
             String loc = "";
-            String profile="";
+            String profile ="";
+            String lat ="";
+            String lon ="";
 			
 			List<FileItem> items = fileUpload.parseRequest(request);
             for (FileItem item : items) {
@@ -99,6 +101,12 @@ public class BitJoin implements Action {
 					case "loc":
 						loc = item.getString(CHARSET);
 						break;
+					case "lat":
+						lat = item.getString(CHARSET);
+						break;
+					case "lon":
+						lon = item.getString(CHARSET);
+						break;	
 					case "profile":
 						if(profile.equals("")) {
 							profile += item.getName();
@@ -123,6 +131,8 @@ public class BitJoin implements Action {
 			user.setPwd(pwd);
 			user.setNick(nick);
 			user.setLoc(loc);
+			user.setLat(lat);
+			user.setLon(lon);
 				
 				
 			result = dao.joinUser(user);
