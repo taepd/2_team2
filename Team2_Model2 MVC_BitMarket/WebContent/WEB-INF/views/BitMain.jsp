@@ -152,7 +152,7 @@
 					$.each(responsedata.boardArr,function(index,obj){		
 						let href = "";
 						let strArray = obj.img.split(',');
-						if(obj.dist=='0') {console.log("0이면 찍혀라 "+obj.ctcode); return true;}//본인 게시물 제외하는게 나을까?
+						if(obj.dist=='0')return true;//본인 게시물 제외하는게 나을까?
 						   //테이블 하나 더 조인하기 힘들어서
 								let ctname =""; 
 						   switch(obj.ctcode){
@@ -220,9 +220,10 @@
 								
 						   
 						);
-						if(parseFloat(obj.dist)<=0.3){
+						if(parseFloat(obj.dist)<=5){
 							$('.card-body').css('background-color','#a1f9b785');
 						}
+						console.log(obj.dist);
 				});
 				}
 			});

@@ -697,7 +697,7 @@ public class Bitdao {
 
 			String sql = "SELECT * from "
 					+ " (select rownum rn, bdindex, title,price,content,rtime,trstate,delstate,count,id,img, ctcode, dist"
-					+ " FROM (SELECT b.*, ROUND((power(lat-?,2)+power(lon-?,2)),10) dist FROM board b JOIN bituser u ON b.id = u.id order by dist)"
+					+ " FROM (SELECT b.*, round((google_distance(lat,lon, ?, ?)),0) dist FROM board b JOIN bituser u ON b.id = u.id order by dist)"
 					+ " where rownum <=?" + " ) where rn >= ?";
 
 
