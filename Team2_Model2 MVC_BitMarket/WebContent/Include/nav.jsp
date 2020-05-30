@@ -20,9 +20,9 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 	<!-- Font Awesome -->
 	<link href="plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-	<!-- Owl Carousel -->
+ 	<!-- Owl Carousel -->
 	<link href="plugins/slick-carousel/slick/slick.css" rel="stylesheet">
-	<link href="plugins/slick-carousel/slick/slick-theme.css" rel="stylesheet">
+	<link href="plugins/slick-carousel/slick/slick-theme.css" rel="stylesheet"> 
 	<!-- Fancy Box -->
 	<link href="plugins/fancybox/jquery.fancybox.pack.css" rel="stylesheet">
 	<link href="plugins/jquery-nice-select/css/nice-select.css" rel="stylesheet">
@@ -33,7 +33,7 @@
 	<!-- FAVICON -->
 	<link href="img/favicon.png" rel="shortcut icon">
 	<!-- JAVASCRIPTS -->
-	<script src="plugins/jquery/jquery.min.js"></script>
+	<script src="plugins/jquery/dist/jquery.min.js"></script>
 	<script src="plugins/jquery-ui/jquery-ui.min.js"></script>
 	<script src="plugins/tether/js/tether.min.js"></script>
 	<script src="plugins/raty/jquery.raty-fa.js"></script>
@@ -46,13 +46,12 @@
 	<script src="plugins/smoothscroll/SmoothScroll.min.js"></script>
 	
 	<script src="js/scripts.js"></script>
-	<link rel="stylesheet" href="/css/owl.carousel.css">
     
     <link rel="stylesheet" href="plugins/dist/assets/owl.carousel.css">
     
     <script src="plugins/dist/owl.carousel.min.js"></script>
-    <script src="plugins/dist/assets/owl.carousel.min.css"></script>
-    <script src="plugins/dist/assets/owl.theme.default.min.css"></script>
+    <link rel="plugins/dist/assets/owl.carousel.css">
+    <link rel="plugins/dist/assets/owl.theme.default.css">
 
 	
 	

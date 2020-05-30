@@ -2,9 +2,11 @@ package kr.or.bit.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Vector;
 
 import javax.servlet.ServletContext;
@@ -13,6 +15,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.websocket.Session;
 
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
@@ -20,97 +26,118 @@ import kr.or.bit.action.Action;
 import kr.or.bit.action.ActionForward;
 import kr.or.bit.dao.Bitdao;
 import kr.or.bit.dto.Board;
+import kr.or.bit.dto.User;
 
 public class BitBoardWrite implements Action {
 
+	private static final String CHARSET = "utf-8";
+	
 	@Override
-	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
+	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
 		
 		
-		String uploadimg = request.getServletContext().getRealPath("upload");
+		String uploadpath = request.getServletContext().getRealPath("upload");
 		
 		Board board = new Board();
 		Bitdao dao = new Bitdao(); 
 		int result = 0;
 		HttpSession session = request.getSession();
 	
-		int sizeLimit = 1024*1024*15;
-
-        
-        MultipartRequest multi = null; 
+		int size = 1024*1024;
+		
+		response.setContentType("text/html; charset=UTF-8");
+	    request.setCharacterEncoding(CHARSET);
+	    
+	    File attachesDir = new File(uploadpath);
+	    
+	    DiskFileItemFactory fileItemFactory = new DiskFileItemFactory();
+        fileItemFactory.setRepository(attachesDir);
+        fileItemFactory.setSizeThreshold(size);
+        ServletFileUpload fileUpload = new ServletFileUpload(fileItemFactory);
+		
+		
 		try {
-			multi = new MultipartRequest(request, uploadimg, sizeLimit, "utf-8", new DefaultFileRenamePolicy());
-	        
-	        Enumeration fileNames=multi.getFileNames(); //파일 이름 반환
-	       
-	       
-	        
-	        //변수 초기화
-	        String fileInput = ""; //폼으로 받아온 fileName
-	        String fileName = ""; //저장된 파일 이름
-	        
-	        /*
-	        boolean save= true; //파일 저장 성공
-	        String type = ""; //저장된 파일 종류
-	        File fileObj = null; //저장된 파일 객체
-	        String originFileName = ""; //원본 파일 이름
-	        String fileExtend = ""; //jpg,png,gif 등 확장자
-	        String fileSize = ""; //저장된 파일 사이즈
-	        String newFileName = "";
-	        */
-	        
-	        String filelist = "";
-	        
-	        while(fileNames.hasMoreElements()){
-	            fileInput = (String)fileNames.nextElement();
-	            fileName = multi.getFilesystemName(fileInput);
-	            System.out.println(fileInput);
-	            
-	            if(fileName != null){
-	            	board.setImg(fileName);
-	            	/*
-	                type = multi.getContentType(fileInput);
-	                fileObj = multi.getFile(fileInput);
-	                originFileName = multi.getOriginalFileName(fileInput);
-	                fileExtend = fileName.substring(fileName.lastIndexOf(".")+1);//"file1.jpg"라면 jpg 반환
-	                fileSize = String.valueOf(fileObj.length());//file도 결국 문자열이므로 length()로 반환
-	                System.out.println("type:"+type+"||originFileName:"+originFileName+
-	                        "||fileExtend:"+fileExtend+"||fileSize:"+fileSize);
-	                
-	                String[] splitType = type.split("/");
-	                if(!splitType[0].equals("image")){
-	                    save=false;
-	                    fileObj.delete(); //저장된 파일 객체로 삭제
-	                    break;
-	                }else{//만약 이미지 파일이면 저장 파일의 이름 바꾼다.
-	                	newFileName = "board_"+System.currentTimeMillis(); //저장된 파일을 바꿀 이름
-	                	System.out.println("newFileName:"+newFileName);
-	                    newFileName =  newFileName + "." +fileExtend;
-	                    fileObj.renameTo(new File(newFileName));
-	                }
-	                */
-	            }filelist += fileName + "/";
-	            
-	        }
+			String ctname = "";
+			String title = "";
+			String price = "";
+            String content = "";
+            String filelist="";
+            String id = (String)session.getAttribute("id");
+			
+			List<FileItem> items = fileUpload.parseRequest(request);
+            for (FileItem item : items) {
+            	if (item.isFormField()) {
+                    System.out.printf("파라미터 명 : %s, 파라미터 값 : %s \n", item.getFieldName(), item.getString(CHARSET));
+                }else {    
+            	
+            	System.out.printf("파라미터 명 : %s, 파일 명 : %s,  파일 크기 : %s bytes \n", item.getFieldName(),
+                            item.getName(), item.getSize());
+                    if (item.getSize() > 0) {
+                        String separator = File.separator;
+                        int index =  item.getName().lastIndexOf(separator);
+                        String fileName = item.getName().substring(index  + 1);
+                        File uploadFile = new File(uploadpath +  separator + fileName);
+                        item.write(uploadFile);
+                    }
+                }
+                 
+                    switch (item.getFieldName()) {
+					case "category":
+						ctname = item.getString(CHARSET);
+						
+						break;
+					case "title":
+						title = item.getString(CHARSET);
+						break;
+					case "price":
+						price = item.getString(CHARSET);
+						break;
+					case "content":
+						content = item.getString(CHARSET);
+						break;
+					case "loc":
+						content = item.getString(CHARSET);
+						break;	
+					case "images":
+						if(filelist.equals("")) {
+							filelist += item.getName();
+						}else {
+							filelist += ","+item.getName();
+						}
+						break;
 
-			String ctname = multi.getParameter("category");
-			String title = multi.getParameter("title");
-			int price = Integer.parseInt(multi.getParameter("price"));
-			String content = multi.getParameter("content");
-			String id = (String)session.getAttribute("id");
-			String ctcode = dao.getCtcode(ctname);
-			
-			
-			board.setCtcode(ctcode);
+					default:
+						break;
+					}
+                    // 프로필 사진 지정안했을 때  기본 이미지 지정
+                    if(filelist.equals("")) {
+    					board.setImg("noimage.jpg");
+    				}else {
+    					board.setImg(filelist);
+    				}
+        			
+              
+                }
+            String ctcode = dao.getCtcode(ctname);
+            
+            board.setCtcode(ctcode);
 			board.setTitle(title);
-			board.setPrice(price);
+			board.setPrice(Integer.parseInt(price));
 			board.setContent(content);
 			board.setId(id);
-			board.setImg(filelist);
-		
-
-			result = dao.boardWrite(board);
 				
+				
+			result = dao.boardWrite(board);
+
+	    
+	    
+	    
+
+	    
+	    
+	    ////////////////////////////////////////////////////////
+        
+        
 		
 		} catch (Exception e) {
 			System.out.println(e.getMessage());

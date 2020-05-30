@@ -10,7 +10,7 @@
 		 //상세 페이지 댓글 불러오기
 		 getReplyList();
 		 
-		 
+		// $(".owl-carousel").owlCarousel();
 		 
 		 
 		 
@@ -327,15 +327,14 @@
 			<div class="row mt-30">
 					<!-- Left sidebar -->
 				<div class="col-sm-12 col-md-7">
-						<div id="carousel" class="owl-carousel owl-theme" >
-							<c:forTokens var="imglist" items="${token}" delims="/">
+						<div id="carousel" class="owl-carousel owl-theme">
+							<c:forTokens var="imglist" items="${token}" delims=",">
 							<c:if test="${imglist !='null'}">
 								<div class="item" style="height:400px;">
 									<img class="d-block w-100" style="max-height: 400px;"
-										src="upload/${imglist}" onError ="javascript:this.src='upload/noimage.gif'"alt="slide img">
+										src="upload/${imglist}" onError ="javascript:this.src='upload/noimage.jpg'"alt="slide img">
 								</div>
 							</c:if>
-							
 							</c:forTokens>
 						</div>
 						

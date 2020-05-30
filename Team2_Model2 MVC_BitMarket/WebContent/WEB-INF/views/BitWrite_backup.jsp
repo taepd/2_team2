@@ -2,8 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="/Include/nav.jsp"%>
 
-<html>
-<head>
 <!-- ////////////////////썸머노트///////////////////////////////////////////////////////////////// 
 <link	href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css"
 	rel="stylesheet">
@@ -93,21 +91,18 @@
 
 
 
-/*
+
 $(document).on("click","#addFile",function() {
 	        var fileIndex = $('#fileview li').children().length;      
 	        $('#fileview').append(
 	                '<li>'+
 	                '   <input type="file" name="fileName['+ fileIndex +']" multiple id="addFile" class="left" accept="image/jpeg,image/gif,image/png,application/pdf,image/x-eps"/>'+
 	                '</li>');
+			});   
 });
-*/
-});
-
 //------------------------------------------------------------------
 
 </script>
-</head>
 <body>	
 
 	<section class="section-sm" id="maxwidth">
@@ -125,7 +120,7 @@ $(document).on("click","#addFile",function() {
 			</div>
 			
              <ul id="fileview">
-				<li><input type="file" name="images" multiple id="iamges" class="left" accept="image/jpeg,image/gif,image/png,application/pdf,image/x-eps" onchange="preview(this);"/>
+				<li><input type="file" name="fileName[0]" multiple id="addFile" class="left" accept="image/jpeg,image/gif,image/png,application/pdf,image/x-eps" onchange="preview(this);"/>
            	</li>
            	</ul>
 			<table class="table">

@@ -71,7 +71,7 @@ public class Bitdao {
 		User user = null;
 		try {
 			conn = ConnectionHelper.getConnection("oracle");
-			String sql = "SELECT ID, PWD FROM BITUSER WHERE ID=?";
+			String sql = "SELECT ID, PWD, NICK FROM BITUSER WHERE ID=?";
 			pstmt = conn.prepareStatement(sql);
 
 			pstmt.setString(1, id);
@@ -81,6 +81,7 @@ public class Bitdao {
 				user = new User();
 				user.setId(rs.getString(1));
 				user.setPwd(rs.getString(2));
+				user.setNick(rs.getString(3));
 			}
 
 		} catch (Exception e) {
@@ -1058,8 +1059,8 @@ public class Bitdao {
 		int resultrow = 0;
 		try {
 			conn = ConnectionHelper.getConnection("oracle");
-			String sql = "insert into reply(rpindex,content,scstate,delstate,trstate,rtime,depth,id,bdindex,refer) "
-					+ "values(reply_no.nextval,?,?,'N','N',sysdate,0,?,?,?)";
+			String sql = "insert into reply(rpindex,content,scstate,delstate,trstate,rtime,depth,id,bdindex,refer,step) \"\r\n" + 
+							"values(reply_no.nextval,?,?,'N','N',sysdate,0,?,?,?,0)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, reply.getContent());
 			pstmt.setString(2, reply.getScstate());
@@ -1067,7 +1068,7 @@ public class Bitdao {
 			pstmt.setInt(4, reply.getBdindex());
 
 			int refer = getReplyMaxRefer();
-			pstmt.setInt(5, refer);
+			pstmt.setInt(5, refer+1);
 
 			resultrow = pstmt.executeUpdate();
 
