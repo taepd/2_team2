@@ -66,10 +66,16 @@ public class QnANickList implements Action {
 				request.setAttribute("pagecount", pagecount);
 				request.setAttribute("totalqnacount", totalqnacount);
 			
+				
 			 forward = new ActionForward();
 			 forward.setRedirect(false); //forward
-			 forward.setPath("/WEB-INF/views/qna/QnAList.jsp");
-
+			 
+			 //유저와 관리자 페이지뷰 분리
+			 if(dao.getAdmin(id)!=null	) {			 
+				 forward.setPath("/WEB-INF/views/qna/QnAList.jsp");
+			 }else {
+				 forward.setPath("/WEB-INF/views/qna/QnAUserList.jsp");
+			 }
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}

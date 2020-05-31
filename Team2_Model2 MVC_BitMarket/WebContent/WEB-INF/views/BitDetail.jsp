@@ -9,11 +9,32 @@
 	 
 	 $(function() {
 		 
+		 
+		 
+		 
+		 
 		 //상세 페이지 댓글 불러오기
 		 getReplyList();
 		 
 		 
-			// $(".owl-carousel").owlCarousel();
+         $(".owl-carousel").owlCarousel({
+        	 loop:true,
+        	    margin:10,
+        	 
+        	    responsive:{
+        	        0:{
+        	            items:1
+        	        },
+        	        600:{
+        	            items:1
+        	        },
+        	        1000:{
+        	            items:1
+        	        }
+        	    }
+        	 
+        	 
+         });
 		 
 		 
 		 function PrintData(data){
@@ -338,6 +359,9 @@
 
 	});
 </script>
+
+
+
 </head>
 <body class="body-wrapper">
 	<c:set var="board" value="${requestScope.board}" />
@@ -358,19 +382,20 @@
 			<div class="row mt-30">
 				<!-- Left sidebar -->
 				<div class="col-sm-12 col-md-7">
+					
+					
 					<div id="carousel" class="owl-carousel owl-theme">
-						<c:forTokens var="imglist" items="${token}" delims="/">
+						<c:forTokens var="imglist" items="${token}" delims=",">
 							<c:if test="${imglist !='null'}">
 								<div class="item" style="height: 400px;">
-									<img class="d-block w-100" style="max-height: 400px;"
-										src="upload/${imglist}"
-										onError="javascript:this.src='upload/noimage.gif'"
+									<img class="d-block w-100" style="max-height: 400px;"	src="upload/${imglist}"
+										onError="javascript:this.src='upload/noimage.jpg'"
 										alt="slide img">
-								</div>
+								</div>  
 							</c:if>
-
-						</c:forTokens>
+							</c:forTokens>
 					</div>
+					
 
 				</div>
 				<div class="col-sm-12 col-md-5" style="margin-top: 50px;">
@@ -400,49 +425,36 @@
 					<hr>
 					<div class="row">
 						<!-- User Profile widget -->
-
+<!-- 여기요오오오오오오오오오오======================================================================================== -->
 						<div class="col-sm-12 col-md-10">
-
-
 							<c:forEach var="user" items="${userlist}">
 								<c:if test="${board.id == user.id}">
-									<div class="col-sm-12 col-md-2">
-										<div class="thumbnail-wrapper">
-											<div class="thumbnail">
-												<div class="thumbnail-centered rounded-circle"
-													style="width: 100px;">
-													<div class="rounded-circle">
-													
-														<img class="thumbnail-img" src="upload/${user.profile }"
-															style="max-width: 100%;" /> 
-															<h4> <a
-															href="BitUserProfileView.bit?id=${user.id}">${user.nick}</a>
-														</h4>
-													</div>
-														
-												</div>
-											</div>
-										</div>
-									</div>
-
-
-
+										<div  style="max-width: 20%; margin-bottom:15px;">
+							<div class="rounded-circle" style="border: 5px solid #F4F7F9; position: relative; padding-top: 100%; overflow: hidden;">
+								<div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; transform: translate(50%, 50%);">
+									<a href="BitUserProfileView.bit?id=${user.id}"><img id="proimg" src="upload/${user.profile}"
+										style="width :auto; height: 80px; transform: translate(-50%, -50%);"></a>
+								</div>
+							</div>
+							<h4> <a href="BitUserProfileView.bit?id=${user.id}">${user.nick}</a> </h4>
+						</div>
 									<p class="member-time">${user.loc}</p>
 								</c:if>
 							</c:forEach>
 						</div>
+						
+	<!-- 여기요오오오오오오오오오오======================================================================================== -->
 					</div>
 					<c:if test="${board.id == sessionScope.id}">
 						<form action="BitUpdate.bit?" method="get" name="edit"
 							style="float: left;">
 							<input type="hidden" name="bdindex" value="${param.bdindex}">
 							<input type="hidden" name="title" value="${board.title}">
-							<input type="hidden" name="id" value="${board.id}">
-							<input type="hidden" name="ctcode" value="${board.ctcode}">
-							<input type="hidden" name="content" value="${board.content}"> 
-							<input type="hidden" name="price" value="${board.price}"> 
-							<input type="hidden" name="img" value="${board.img}"> 
-							<a href="BitUpdate.bit"><button class="btn btn-transparent"
+							<input type="hidden" name="id" value="${board.id}"> <input
+								type="hidden" name="ctcode" value="${board.ctcode}"> <input
+								type="hidden" name="content" value="${board.content}"> <input
+								type="hidden" name="price" value="${board.price}"> <a
+								href="BitUpdate.bit"><button class="btn btn-transparent"
 									style="padding: 10px 20px">수정하기</button></a>
 
 						</form>
@@ -465,7 +477,7 @@
 						<br>
 						<br>
 						<c:if test="${board.trstate == 'Y'}">
-							<span>'<b>${oldRepNick}</b>'님과 거래완료
+							<span style="background-color: #0004ff4f">'<b>${oldRepNick}</b>'님과 거래완료
 							</span>
 
 						</c:if>
@@ -543,6 +555,10 @@
 			<hr>
 			<div>
 				<h4>상품 문의</h4>
+				<div class="container">
+					<div id="replyall" style="border:solid #ddd;"></div>
+
+				</div>
 
 				<!-- Message -->
 				<div>
@@ -565,10 +581,7 @@
 
 				<br> <br>
 
-				<div class="container">
-					<div id="replyall"></div>
-
-				</div>
+				
 			</div>
 		</div>
 	</section>

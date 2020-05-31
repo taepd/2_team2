@@ -13,7 +13,7 @@
 
 <link rel="icon" type="image/png" sizes="16x16"
 	href="assets/images/favicon.png">
-<title>거래내역 관리</title>
+<title>공지사항 게시판</title>
 <!-- Custom CSS -->
 <link rel="stylesheet" type="text/css"
 	href="assets/extra-libs/multicheck/multicheck.css">
@@ -60,41 +60,27 @@
 //페이지 링크 비동기
 $(function(){
 		
-		//페이징 비동기
+		//페이지 당 건수
 		$('#paging').change(function(){
 			let data = {ps : $('#paging option:selected').val(),
 					    cp : $('#cp').val() 
 			           };		
 			$.ajax({
-				url:"PurchaseListAjax.bit",
+				url:"NoticeListAjax.bit",
 				data: data,
 				type:"POST",		
 				dataType: "json",
 				success:function(responsedata){ 
 					 console.log(responsedata);
-					$('#purchaselisttable').empty();
+					$('#noticetable').empty();
 					$.each(responsedata,function(index,obj){	
-						$('#purchaselisttable').append(	
-								"<tr><td>"+obj.bdindex+"</td>" +
-								"<td><a href='PurchaseDetail.bit?bdindex="+obj.bdindex+"&cp=${cpage}&ps=${pagesize}'>" +
+						$('#noticetable').append(	
+								"<tr><td>"+obj.ncindex+"</td>" +
+								"<td><a href='AdminNoticeDetail.bit?ncindex="+obj.ncindex+"&cp=${cpage}&ps=${pagesize}'>" +
 									obj.title+"</a></td>" +
 								"<td>"+obj.rtime+"</td>" +
-								"<td>"+obj.count+"</td>" +
-								"<td>"+obj.id+"</td>" +
-								"<td>"+obj.trstate+"</td><tr>"
-								
-								/*
-								<tr>
-									<td>${purchase.bdindex}</td>
-									<td><a href="PurchaseDetail.bit?bdindex=${purchase.bdindex}&cp=${cpage}&ps=${pagesize}">
-									${purchase.title} </a></td>
-									<td>${purchase.rtime}</td>
-									<td>${purchase.count}</td>
-									<td>${purchase.id}</td>
-									<td>${purchase.trstate}</td>
-								</tr>
-								
-								*/
+								"<td>"+obj.adminid+"</td>" +
+								"<td>"+obj.ncstate+"</td><tr>"
 						   
 						);
 					});
@@ -102,7 +88,7 @@ $(function(){
 					$('#zero_config_info').append("페이지 표시 글 수 " + responsedata.length);
 					
 					//페이지 번호 처리
-					page(cp=$('#cp').val());
+					page($('#cp').val());
 			   }
 				
 			
@@ -114,37 +100,37 @@ $(function(){
 			console.log('cp='+cp);
 			$('#zero_config_paginate').empty();
 			var pagesize = $('#paging option:selected').val();
-			var totalpurchasecount = $('#totalpurchasecount').val();
+			var totalnoticecount = $('#totalnoticecount').val();
 			
 			var pagecount;
 			console.log('pagesize= '+pagesize);
-			console.log('totalpurchasecount= '+ totalpurchasecount);
-			if((totalpurchasecount % pagesize) == 0){
-				pagecount = totalpurchasecount/pagesize;
-			}else if(totalpurchasecount/pagesize<1){
+			console.log('totalnoticecount= '+ totalnoticecount);
+			if((totalnoticecount % pagesize) == 0){
+				pagecount = totalnoticecount/pagesize;
+			}else if(totalnoticecount/pagesize<1){
 				pagecount=1;
 			}else{
 			
-				pagecount = Math.floor(totalpurchasecount/pagesize + 1); 
+				pagecount = Math.floor(totalnoticecount/pagesize + 1); 
 			}
 			
 			console.log('pagecount = '+pagecount);
 			let tmp="";
 			
 			if(cp>1){
-				tmp +='<a href="PurchaseList.bit?cp=${cpage-1}&ps='+pagesize+'" cp="'+(cp-1)+'" ps="${pagesize}">이전</a>';
+				tmp +='<a href="NoticeList.bit?cp=${cpage-1}&ps='+pagesize+'" cp="'+(cp-1)+'" ps="${pagesize}">이전</a>';
 			}
 			//page 목록 나열하기
 			for(var i=1;i<=pagecount; i++){
 				if(cp==i){
 					tmp +=('<font color="red">['+i+']</font>');
 				}else{
-					tmp +=('<a href="PurchaseList.bit?cp='+i+'&ps='+pagesize+'" cp="'+i+'" ps="'+pagesize+'" >['+i+']</a>');
+					tmp +=('<a href="NoticeList.bit?cp='+i+'&ps='+pagesize+'" cp="'+i+'" ps="'+pagesize+'" >['+i+']</a>');
 				}
 			}
 			//다음 링크
 			if(cp<pagecount){
-				tmp += '<a href="PurchaseList.bit?cp=${cpage+1}&ps='+pagesize+'" cp="'+(cp+1)+'" ps="${pagesize}">다음</a>';
+				tmp += '<a href="NoticeList.bit?cp=${cpage+1}&ps='+pagesize+'" cp="'+(cp+1)+'" ps="${pagesize}">다음</a>';
 			};
 			$('#zero_config_paginate').append(tmp);
 		};
@@ -156,27 +142,26 @@ $(function(){
 				        cp : $(this).attr('cp')
 		           };		
 		$.ajax({
-			url:"PurchaseListAjax.bit",
+			url:"NoticeListAjax.bit",
 			data: data,
 			type:"POST",		
 			dataType: "json",
 			success:function(responsedata){ 
 				 console.log(responsedata);
-				$('#purchaselisttable').empty();
+				$('#noticetable').empty();
 				$.each(responsedata,function(index,obj){	
-					$('#purchaselisttable').append(	
-							"<tr><td>"+obj.bdindex+"</td>" +
-							"<td><a href='PurchaseDetail.bit?bdindex="+obj.bdindex+"&cp=${cpage}&ps=${pagesize}'>" +
+					$('#noticetable').append(	
+							"<tr><td>"+obj.ncindex+"</td>" +
+							"<td><a href='NoticeDetail.bit?ncindex="+obj.ncindex+"&cp=${cpage}&ps=${pagesize}'>" +
 								obj.title+"</a></td>" +
 							"<td>"+obj.rtime+"</td>" +
-							"<td>"+obj.count+"</td>" +
-							"<td>"+obj.id+"</td>" +
-							"<td>"+obj.trstate+"</td><tr>"
+							"<td>"+obj.adminid+"</td>" +
+							"<td>"+obj.ncstate+"</td><tr>"
 					   
 					);
 				});
 				$('#zero_config_info').empty();
-				$('#zero_config_info').append("총 거래글 수 " + responsedata.length);
+				$('#zero_config_info').append("총 공지글 수 " + $('#totalnoticecount').val());
 				
 				//페이지 번호 처리
 				page(parseInt(data.cp));
@@ -187,44 +172,25 @@ $(function(){
 			
 		});
 		
-		//체크 박스 모두 체크
-		function allChk(obj){
-		      var chkObj = document.getElementsByName("RowCheck");
-		      var rowCnt = chkObj.length - 1;
-		      var check = obj.checked;
-		      if (check) {﻿
-		          for (var i=0; i<=rowCnt; i++){
-		           if(chkObj[i].type == "checkbox")
-		               chkObj[i].checked = true;
-		          }
-		      } else {
-		          for (var i=0; i<=rowCnt; i++) {
-		           if(chkObj[i].type == "checkbox"){
-		               chkObj[i].checked = false;
-		           }
-		          }
-		      }
-		  } 
-		
 
 });
 </script>
 	
-	
-
 </head>
 
-<body>
+<%@ include file="/Include/nav.jsp"%>
+<body class="body-wrapper">
+
 		<!-- set 하기 -->
-	<c:set var="purchaselist" value="${requestScope.purchaselist}" />
+	<c:set var="noticelist" value="${requestScope.noticelist}" />
 	<c:set var="pagesize" value="${requestScope.pagesize}" />
 	<c:set var="cpage" value="${requestScope.cpage}" />
 	<c:set var="pagecount" value="${requestScope.pagecount}" />
-	<c:set var="totalpurchasecount" value="${requestScope.totalpurchasecount}" />
+	<c:set var="totalnoticecount" value="${requestScope.totalnoticecount}" />
 	<!-- 비동기 때 사용하려고 만든 것 -->
-	<input type="hidden" id="cp" name="${cpage}" value="${cpage}"/>
-	<input type="hidden" id="pagecount" name="${pagecount}" value="${pagecount}"/>
-	<input type="hidden" id="totalpurchasecount" name="${totalpurchasecount}" value="${totalpurchasecount}"/>
+	<input type="hidden" id="cp" name="cp" value="${cpage}"/>
+	<input type="hidden" id="pagecount" name="pagecount" value="${pagecount}"/>
+	<input type="hidden" id="totalnoticecount" name="totalnoticecount" value="${totalnoticecount}"/>
 	<!-- 비동기 때 사용하려고 만든 것 끝 -->
 	<!-- ============================================================== -->
 	<!-- Preloader - style you can find in spinners.css -->
@@ -243,7 +209,7 @@ $(function(){
 		<!-- Topbar header - style you can find in pages.scss -->
 		<!-- ============================================================== -->
 		<!-- 헤더 include로 뺌 -->
-		   <jsp:include page="../../../Include/adminheader.jsp"/>
+
 
 		<!-- ============================================================== -->
 		<!-- End Topbar header -->
@@ -252,22 +218,12 @@ $(function(){
 		<!-- Left Sidebar - style you can find in sidebar.scss  -->
 		<!-- ============================================================== -->
 	<!-- sidebar include로 뺌 -->
-		    <jsp:include page="../../../Include/adminsidebar.jsp"/>
-	
-		<div class="page-wrapper">
+
+		<div class="page-wrapper" style="margin-right :250px">
 		
 			<div class="page-breadcrumb">
 				<div class="row">
-					<div class="col-12 d-flex no-block align-items-center">
-						<h4 class="page-title">거래내역</h4>
-						<div class="ml-auto text-right">
-							<nav aria-label="breadcrumb">
-								<ol class="breadcrumb">
-									<li class="breadcrumb-item"><a href="#">Board</a></li>
-								</ol>
-							</nav>
-						</div>
-					</div>
+				
 				</div>
 			</div>
 
@@ -275,7 +231,7 @@ $(function(){
 
 			<div class="card">
 				<div class="card-body">
-					<h5 class="card-title">거래내역 관리 리스트</h5>
+					<h5 class="card-title">공지사항 게시판</h5>
 					<div class="table-responsive">
 						<div id="zero_config_wrapper"
 							class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
@@ -309,42 +265,36 @@ $(function(){
 										class="table table-striped table-bordered dataTable no-footer"
 										role="grid" aria-describedby="zero_config_info">
 										<thead>
-										<th scope="col" aria-label="글 선택: activate to sort column ascending"><input id="allCheck" type="checkbox" onclick="allChk(this);"/>선택</th>
 											<tr role="row" >
-												 
+
 												<th class="sorting" tabindex="0" aria-controls="zero_config"
 													rowspan="1" colspan="1"
-													aria-label="글번호: activate to sort column ascending">글번호</th>
+													aria-label="사번: activate to sort column ascending">글번호</th>
 												<th class="sorting" tabindex="0" aria-controls="zero_config"
 													rowspan="1" colspan="1"
-													aria-label="제목: activate to sort column ascending">제목</th>
+													aria-label="이름: activate to sort column ascending">제목</th>
 												<th class="sorting" tabindex="0" aria-controls="zero_config"
 													rowspan="1" colspan="1"
-													aria-label="등록시간: activate to sort column ascending">등록시간</th>
+													aria-label="직급: activate to sort column ascending">등록시간</th>
 												<th class="sorting" tabindex="0" aria-controls="zero_config"
 													rowspan="1" colspan="1"
-													aria-label="조회수: activate to sort column ascending">조회수</th>
+													aria-label="부서번호: activate to sort column ascending">작성자</th>
 												<th class="sorting" tabindex="0" aria-controls="zero_config"
 													rowspan="1" colspan="1"
-													aria-label="id: activate to sort column ascending">작성자</th>
-												<th class="sorting" tabindex="0" aria-controls="zero_config"
-													rowspan="1" colspan="1"
-													aria-label="판매자 거래유무: activate to sort column ascending">판매자 거래유무</th>	
+													aria-label="부서번호: activate to sort column ascending">공개 여부</th>	
 											</tr>
 										</thead>
-										<tbody id="purchaselisttable">
+										<tbody id="noticetable">
 
-											<c:forEach var="purchase" items="${purchaselist}">
+											<c:forEach var="notice" items="${noticelist}">
 												<tr>
-													<td class="text_ct"><input﻿ name="RowCheck" type="checkbox" value="${purchase.id}"/></td>
-													<td>${purchase.bdindex}</td>
+													<td>${notice.ncindex}</td>
 													<td><a
-														href="PurchaseDetail.bit?bdindex=${purchase.bdindex}&cp=${cpage}&ps=${pagesize}">
-															${purchase.title} </a></td>
-													<td>${purchase.rtime}</td>
-													<td>${purchase.count}</td>
-													<td>${purchase.id}</td>
-													<td>${purchase.trstate}</td>
+														href="AdminNoticeDetail.bit?ncindex=${notice.ncindex}&cp=${cpage}&ps=${pagesize}">
+															${notice.title} </a></td>
+													<td>${notice.rtime}</td>
+													<td>${notice.adminid}</td>
+													<td>${notice.ncstate}</td>
 
 												</tr>
 											</c:forEach>
@@ -356,7 +306,7 @@ $(function(){
 								<div class="col-sm-12 col-md-5">
 
 									<div class="dataTables_info" id="zero_config_info"
-										role="status" aria-live="polite">총 게시글 ${totalpurchasecount}건</div>
+										role="status" aria-live="polite">총 게시글 ${totalnoticecount}건</div>
 
 								</div>
 								<div class="col-sm-12 col-md-7">
@@ -382,10 +332,10 @@ $(function(){
 										<!--다음 링크 -->
 
 										<c:if test="${cpage < pagecount}">
-											<a href="BoardList.board?cp=${cpage+1}&ps=${pagesize}" cp="${cpage+1}" ps="${pagesize}">다음</a>
+											<a href="BoardList.board?cp=${cpage+1}&ps=${pagesize}" cp="${cpage+1}" ps="${pagesize}" >다음</a>
 										</c:if>
 									</div>
-									<a href="NoticeWrite.bit">글쓰기</a>
+						
 								</div>
 							</div>
 						</div>
@@ -446,7 +396,7 @@ $(function(){
 	<script src="assets/extra-libs/multicheck/jquery.multicheck.js"></script>
 	<script src="assets/extra-libs/DataTables/datatables.min.js"></script>
 
-
+<%@ include file="/Include/footer.jsp"%>
 </body>
 
 </html>

@@ -32,7 +32,7 @@ public class BItLogin implements Action {
 				session.setAttribute("id", id);
 				
 				msg = "로그인 성공";
-				url = "NoticeList.bit";
+				url = "PurchaseList.bit";
 			
 			}
 			

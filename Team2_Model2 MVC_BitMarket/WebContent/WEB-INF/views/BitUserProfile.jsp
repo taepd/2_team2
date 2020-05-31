@@ -47,7 +47,7 @@
 								<th>이미지</th>
 								<th>내용</th>
 								<th class="text-center">카테고리</th>
-								<th class="text-center">찜</th>
+								
 							</tr>
 						</thead>
 						<tbody id="boardtable">
@@ -56,17 +56,26 @@
 							<c:if test="${board.id ==userlist.id}">
 							
 							<tr>
-								<td class="product-thumb"><img width="80px" height="auto"
-									src="images/products/products-1.jpg" alt="image description"></td>
+				<!-- 여기요오오오오오오오오오오======================================================================================== -->
+							<c:forTokens var="imglist" items="${board.img}" delims="/" varStatus="status">
+							<c:if test="${status.first}">
+										<td class="product-thumb">
+										<div style="margin-right:40px;">
+										<a href="BitBoardDetail.bit?bdindex=${board.bdindex}">
+											<img width="150px" height="auto" src="upload/${imglist}" alt="image description">
+										</a>
+										</div>
+										</td>
+							</c:if>
+						</c:forTokens>
+				<!-- 여기요오오오오오오오오오오======================================================================================== -->
 								<td class="product-details">
 									<h4 class="title">
 										<a href="BitDetail.bit?bdindex=${board.bdindex}&cp=${cpage}&ps=${pagesize}">${board.title}</a>
 									</h4> <span class="add-id"><strong>가격</strong>${board.price}</span>
 									<span><strong>등록일</strong>${board.rtime}</span>
-								
 											<span class="add-id"><strong>판매자</strong>${userlist.nick}</span>
 											<span class="location"><strong>위치</strong>${userlist.loc}</span>
-											
 								</td>
 								<c:forEach var="category" items="${categorylist}">
 									<c:if test="${board.ctcode == category.ctcode}">
@@ -74,10 +83,7 @@
 									</c:if>
 									</c:forEach>
 								
-								<td class="action" data-title="Action"><a data-toggle="tooltip" data-placement="top"
-									title="Tooltip on top" class="view" href=""> <i
-										class="fa fa-heart"></i>
-								</a></td>
+								
 							</tr>
 							</c:if>
 							</c:forEach>

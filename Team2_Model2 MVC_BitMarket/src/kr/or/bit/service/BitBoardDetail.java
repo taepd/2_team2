@@ -39,6 +39,8 @@ public class BitBoardDetail implements Action {
 			//댓글의 닉네임과 id 리스트
 			List<ReplyUser_Join> nickIdTrlist = dao.getNickList(Integer.parseInt(bdindex));
 			
+			dao.getBoardReadNum(Integer.parseInt(bdindex));
+
 			
 			for(ReplyUser_Join join : nickIdTrlist) {
 				if(join.getTrstate().equals("Y") && board.getTrstate().equals("Y")) {

@@ -325,7 +325,7 @@ $(function(){
 
 
 										<c:if test="${cpage > 1}">
-											<a href="BoardList.board?cp=${cpage-1}&ps=${pagesize}">이전</a>
+											<a href="BoardList.board?cp=${cpage-1}&ps=${pagesize}" cp="${cpage-1}" ps="${pagesize}">이전</a>
 										</c:if>
 										<!-- page 목록 나열하기 -->
 										<c:forEach var="i" begin="1" end="${pagecount}" step="1">
@@ -334,7 +334,7 @@ $(function(){
 													<font color="red">[${i}]</font>
 												</c:when>
 												<c:otherwise>
-													<a href="BoardList.board?cp=${i}&ps=${pagesize}">[${i}]</a>
+													<a href="BoardList.board?cp=${i}&ps=${pagesize}" cp="${i}" ps="${pagesize}">[${i}]</a>
 												</c:otherwise>
 											</c:choose>
 
@@ -342,7 +342,7 @@ $(function(){
 										<!--다음 링크 -->
 
 										<c:if test="${cpage < pagecount}">
-											<a href="BoardList.board?cp=${cpage+1}&ps=${pagesize}">다음</a>
+											<a href="BoardList.board?cp=${cpage+1}&ps=${pagesize}" cp="${cpage+1}" ps="${pagesize}" >다음</a>
 										</c:if>
 									</div>
 									<a href="NoticeWrite.bit">글쓰기</a>

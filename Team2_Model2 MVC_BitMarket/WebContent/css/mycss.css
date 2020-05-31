@@ -91,7 +91,7 @@ body{
     height: 635px;
 }
 #loginform{
-    margin-top:300px;
+    margin-top:150px;
 }
 #logininput{
     width: 400px;
@@ -100,12 +100,10 @@ body{
 #loginbt{
     width: 400px;
     margin-bottom: 10px;
-    background-color: violet;
+    background-color: #5a00b7;
     color: white;
 }
+
 #joinlink p{
     font-size: 15px;
-}
-#joinlink strong{
-    color: white;
 }

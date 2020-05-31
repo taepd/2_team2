@@ -45,5 +45,14 @@
 	<script
 		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCC72vZw-6tGqFyRhhg5CkF2fqfILn2Tsw"></script>
 	<script src="js/scripts.js"></script>
+	
+	<script src="js/scripts.js"></script>
+	<link rel="stylesheet" href="/css/owl.carousel.css">
+    
+    <link rel="stylesheet" href="plugins/dist/assets/owl.carousel.css">
+    
+    <script src="plugins/dist/owl.carousel.min.js"></script>
+    <script src="plugins/dist/assets/owl.carousel.min.css"></script>
+    <script src="plugins/dist/assets/owl.theme.default.min.css"></script>
 
 </head>

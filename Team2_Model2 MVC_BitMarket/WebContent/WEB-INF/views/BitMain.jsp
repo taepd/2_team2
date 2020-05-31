@@ -238,9 +238,7 @@
 			 	if (currentScroll == maxHeight) {
 			 			
 			    	 	fetchList();
-			    		
 			 	}
-			 	
 			
 		 });
 		

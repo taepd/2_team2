@@ -32,6 +32,7 @@ public class BitDetail implements Action {
 			request.setAttribute("userlist", userlist);
 			request.setAttribute("ctlist", ctlist);
 			
+			
 			forward = new ActionForward();
 			forward.setRedirect(false);
 			forward.setPath("/WEB-INF/views/BitDetail.jsp");

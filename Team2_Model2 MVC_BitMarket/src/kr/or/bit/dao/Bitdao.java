@@ -921,6 +921,36 @@ public class Bitdao {
 
 		return board;
 	}
+	//상세 페이지 게시글 조회수 증가
+	public boolean getBoardReadNum(int bdindex) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		boolean result = false;
+
+		try {
+			conn = ConnectionHelper.getConnection("oracle");
+			String sql = "update board set count = count + 1 where bdindex= ?";
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setInt(1, bdindex);
+
+			int resultrow = pstmt.executeUpdate();
+			if (resultrow > 0) {
+				result = true;
+			}
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			DB_Close.close(pstmt);
+			try {
+				conn.close(); // 반환하기
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
 
 	// 게시물 수정
 	public int updateBoard(Board board) {
