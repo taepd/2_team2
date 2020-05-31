@@ -540,7 +540,7 @@ public class Bitdao {
 
 	}
 
-	//board 리스트 페이징 
+	    //board 리스트 페이징 
 		public List<Board> getBoardList(int cpage, int pagesize){
 			Connection conn = null;
 			PreparedStatement pstmt = null;
@@ -751,6 +751,65 @@ public class Bitdao {
 		}
 		return boardlist;
 	}
+	
+	//리스트 최신순으로 가져오기
+			public List<Board> getBoardRtimeList(int cpage, int pagesize){
+				Connection conn = null;
+				PreparedStatement pstmt = null;
+				ResultSet rs = null;
+				List<Board> boardlist = null;
+				
+				
+				try {
+					conn = ConnectionHelper.getConnection("oracle");
+					String sql = "select * from " +
+		    				"(select rownum rn,bdindex,title,price,content,rtime,trstate,delstate,count " +
+		    				",id,ctcode,img" +
+		    				" from (SELECT * FROM board ORDER BY rtime desc) "+
+		    				" where rownum <= ?" + 
+		    				") where rn >= ?";
+					
+					pstmt = conn.prepareStatement(sql);
+					// 공식같은 로직
+					int start = cpage * pagesize - (pagesize - 1); 
+					int end = cpage * pagesize;
+					
+					pstmt.setInt(1, end);
+					pstmt.setInt(2, start);
+					
+					rs = pstmt.executeQuery();
+					boardlist = new ArrayList<Board>();
+					
+					
+					while (rs.next()) {
+						
+						if(rs.getString("delstate").equals("N")) {
+							Board board = new Board();
+							board.setBdindex(rs.getInt("bdindex"));
+							board.setId(rs.getString("id"));
+							board.setRtime(rs.getString("rtime"));
+							board.setPrice(rs.getInt("price"));
+							board.setTitle(rs.getString("title"));
+							board.setCtcode(rs.getString("ctcode"));
+							board.setImg(rs.getString("img"));
+							boardlist.add(board);
+						
+						}
+					}
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+				}finally {
+					DB_Close.close(rs);
+					DB_Close.close(pstmt);
+					try {
+						conn.close(); // 받환하기
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+				}
+				return boardlist;
+				
+			}
 	
 	
 

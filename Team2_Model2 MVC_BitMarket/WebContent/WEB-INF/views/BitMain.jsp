@@ -123,14 +123,18 @@
 		});
 		
 		
-		//거리순 정렬
+		//거리 순, 최신 순 정렬
 		$('#sort').change(function() {
 			isEnd = false;
-			
+			var target="";
 			$('#searchContent').val("");
 			changeText();
 			if($('#sort option:selected').val() == "선택없음"){
 				$(location).attr('href',"BitImgList.bit");
+			}else if($('#sort option:selected').val() == "recent"){
+				target="BitBoardRtimeListAjax.bit"
+			}else if($('#sort option:selected').val() == "distance"){
+				target="BitBoardUserListAjax.bit";
 			}
 			
 			var data = {ctname : $('#sort option:selected').val(),
@@ -145,7 +149,7 @@
 				
 				type:"get",
 				data : data,
-				url:"BitBoardUserListAjax.bit",
+				url: target,
 				dataType : "json",                                                
 				success:function(responsedata){
 					$('#boardlist').empty();
@@ -166,14 +170,7 @@
 						   break;
 						   case "5": ctname="생활/가구";
 						   break;
-						   
-						   
-						   
 						   }
-								
-								
-								
-								
 								
 						$.each(responsedata.userArr, function(index2, obj2) {	
 							if(obj.id == obj2.id){
@@ -220,7 +217,9 @@
 								
 						   
 						);
-						if(parseFloat(obj.dist)<=5){
+						if(obj.dist==null){
+							return true;
+						}else if(parseFloat(obj.dist)<=1){
 							$('.card-body').css('background-color','#a1f9b785');
 						}
 						console.log(obj.dist);

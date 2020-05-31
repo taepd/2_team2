@@ -53,6 +53,7 @@ import kr.or.bit.service.BItLogin;
 import kr.or.bit.service.BitBoardDetail;
 import kr.or.bit.service.BitBoardList;
 import kr.or.bit.service.BitBoardListAjax;
+import kr.or.bit.service.BitBoardRtimeListAjax;
 import kr.or.bit.service.BitBoardUserListAjax;
 import kr.or.bit.service.BitBoardWrite;
 import kr.or.bit.service.BitCategory;
@@ -193,8 +194,11 @@ public class FrontController extends HttpServlet {
     	}else if (url_Command.equals("/BitBoardListAjax.bit")) { // 비동기로 리스트 조회
 			action = new BitBoardListAjax();
 			forward = action.execute(request, response);
-		}else if (url_Command.equals("/BitBoardUserListAjax.bit")) { // 비동기로 리스트 조회
+		}else if (url_Command.equals("/BitBoardUserListAjax.bit")) { // 비동기로 유저 위치정보 포함 리스트 조회
 			action = new BitBoardUserListAjax();
+			forward = action.execute(request, response);
+		}else if (url_Command.equals("/BitBoardRtimeListAjax.bit")) { // 비동기로 리스트 rtime으로 정렬 조회
+			action = new BitBoardRtimeListAjax();
 			forward = action.execute(request, response);
 		}else if (url_Command.equals("/BitImgList.bit")) { // 첫 화면에서 리스트 조회
 			action = new BitImgList();
