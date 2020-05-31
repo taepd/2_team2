@@ -30,6 +30,7 @@ import kr.or.bit.service.BitUserProfileView;
 import kr.or.bit.service.BitUserReplyList;
 import kr.or.bit.service.admin.AdminNoticeDetail;
 import kr.or.bit.service.admin.AdminNoticeList;
+import kr.or.bit.service.admin.CtTranChart;
 import kr.or.bit.service.admin.NoticeDelete;
 import kr.or.bit.service.admin.NoticeListAjax;
 import kr.or.bit.service.admin.NoticeUpdate;
@@ -281,6 +282,13 @@ public class FrontController extends HttpServlet {
 			
 			action = new PurchaseListAjax();
     		forward = action.execute(request, response); 
+    	}else if(url_Command.equals("/GetCtTranChart.bit")) {  //차트 json 생성
+    		action = new CtTranChart();
+    		forward = action.execute(request, response);
+    	}else if(url_Command.equals("/AdminChart.bit")) {  //차트 게시판 이동
+    		forward = new ActionForward();
+    		forward.setRedirect(false);
+    		forward.setPath("/WEB-INF/views/admin/CtTranChartview.jsp");
     	}
 
 /////////////////////////////////////////////+++

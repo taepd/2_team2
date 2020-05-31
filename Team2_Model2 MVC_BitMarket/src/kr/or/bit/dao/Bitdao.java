@@ -21,6 +21,8 @@ import kr.or.bit.dto.ReplyUser_Join;
 import kr.or.bit.dto.User;
 import kr.or.bit.utils.ConnectionHelper;
 import kr.or.bit.utils.DB_Close;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 public class Bitdao {
 
@@ -2599,5 +2601,42 @@ public class Bitdao {
 		}
 		return resultrow;
 	}
+	// 차트 데이터
+		public JSONArray getCtTranChart() {
 
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			JSONObject jsonObject = new JSONObject();
+			JSONArray jsonArray = new JSONArray();
+
+			try {
+				conn = ConnectionHelper.getConnection("oracle");
+				String sql = " select ctname, count(b.trstate) tran from board b join category c on b.ctcode = c.ctcode " +
+						" where b.trstate = 'Y' group by ctname ";
+				
+				pstmt = conn.prepareStatement(sql);
+				rs = pstmt.executeQuery();
+
+				while (rs.next()) {
+
+					jsonObject.put("ctname", rs.getString(1));
+					jsonObject.put("trCount", rs.getInt(2));
+					jsonArray.add(jsonObject);
+				}
+
+			} catch (Exception e) {
+				System.out.println("오류 :" + e.getMessage());
+			} finally {
+				DB_Close.close(rs);
+				DB_Close.close(pstmt);
+				try {
+					conn.close(); // 받환하기
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+
+			return jsonArray;
+		}
 }

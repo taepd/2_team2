@@ -60,7 +60,7 @@
 //페이지 링크 비동기
 $(function(){
 		
-		//페이징 비동기
+		//페이지 당 건수
 		$('#paging').change(function(){
 			let data = {ps : $('#paging option:selected').val(),
 					    cp : $('#cp').val() 
@@ -88,7 +88,7 @@ $(function(){
 					$('#zero_config_info').append("페이지 표시 글 수 " + responsedata.length);
 					
 					//페이지 번호 처리
-					page(cp=$('#cp').val());
+					page($('#cp').val());
 			   }
 				
 			
@@ -188,9 +188,9 @@ $(function(){
 	<c:set var="pagecount" value="${requestScope.pagecount}" />
 	<c:set var="totalnoticecount" value="${requestScope.totalnoticecount}" />
 	<!-- 비동기 때 사용하려고 만든 것 -->
-	<input type="hidden" id="cp" name="${cpage}" value="${cpage}"/>
-	<input type="hidden" id="pagecount" name="${pagecount}" value="${pagecount}"/>
-	<input type="hidden" id="totalnoticecount" name="${totalnoticecount}" value="${totalnoticecount}"/>
+	<input type="hidden" id="cp" name="cp" value="${cpage}"/>
+	<input type="hidden" id="pagecount" name="pagecount" value="${pagecount}"/>
+	<input type="hidden" id="totalnoticecount" name="totalnoticecount" value="${totalnoticecount}"/>
 	<!-- 비동기 때 사용하려고 만든 것 끝 -->
 	<!-- ============================================================== -->
 	<!-- Preloader - style you can find in spinners.css -->

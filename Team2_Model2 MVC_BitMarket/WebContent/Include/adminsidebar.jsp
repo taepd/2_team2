@@ -19,15 +19,12 @@
 								class="mdi mdi-chart-bar"></i><span class="hide-menu">거래내역 관리</span></a></li>		
 						<li class="sidebar-item"><a
 							class="sidebar-link waves-effect waves-dark sidebar-link"
-							href="BoardList.board" aria-expanded="false"><i
-								class="mdi mdi-chart-bar"></i><span class="hide-menu">통계관리</span></a></li>		
-						<li class="sidebar-item"><a
-							class="sidebar-link waves-effect waves-dark sidebar-link"
 							href="UserList.bit" aria-expanded="false"><i
 								class="mdi mdi-view-dashboard"></i><span class="hide-menu">회원관리</span></a></li>
-			
-								
-								
+						<li class="sidebar-item"><a
+							class="sidebar-link waves-effect waves-dark sidebar-link"
+							href="AdminChart.bit" aria-expanded="false"><i
+								class="mdi mdi-chart-bar"></i><span class="hide-menu">통계관리</span></a></li>		
 					</ul>
 				</nav>
 				
