@@ -34,6 +34,9 @@ import kr.or.bit.service.admin.NoticeDelete;
 import kr.or.bit.service.admin.NoticeListAjax;
 import kr.or.bit.service.admin.NoticeUpdate;
 import kr.or.bit.service.admin.NoticeWrite;
+import kr.or.bit.service.admin.PurchaseDetail;
+import kr.or.bit.service.admin.PurchaseList;
+import kr.or.bit.service.admin.PurchaseListAjax;
 import kr.or.bit.service.admin.UserDelete;
 import kr.or.bit.service.admin.UserDetail;
 import kr.or.bit.service.admin.UserList;
@@ -266,7 +269,18 @@ public class FrontController extends HttpServlet {
     	}else if(url_Command.equals("/BitUserProfileView.bit")) { //다른 이용자 페이지 조회
     		action = new BitUserProfileView();
     		forward = action.execute(request, response);
-    		
+    	}else if (url_Command.equals("/PurchaseList.bit")) { // 거래내역 관리 가져오기
+			action = new PurchaseList();
+			forward = action.execute(request, response);
+
+		} else if (url_Command.equals("/PurchaseDetail.bit")) { // 거래내역 상세 이동
+			action = new PurchaseDetail();
+			forward = action.execute(request, response);
+
+		} else if(url_Command.equals("/PurchaseListAjax.bit")) {    // 회원 목록 AJAX
+			
+			action = new PurchaseListAjax();
+    		forward = action.execute(request, response); 
     	}
 
 /////////////////////////////////////////////+++
