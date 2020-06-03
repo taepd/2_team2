@@ -700,7 +700,7 @@ public class Bitdao {
 			String sql = "SELECT * from "
 					+ " (select rownum rn, bdindex, title,price,content,rtime,trstate,delstate,count,id,img, ctcode, dist"
 					+ " FROM (SELECT b.*, round((google_distance(lat,lon, ?, ?)),0) dist FROM board b JOIN bituser u ON b.id = u.id order by dist)"
-					+ " where rownum <=?" + " ) where rn >= ?";
+					+ " where rownum <=? ) where rn >= ?";
 
 
 			int start = cpage * pagesize - (pagesize - 1);
@@ -710,8 +710,8 @@ public class Bitdao {
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setDouble(1, Double.parseDouble(lat));
 				pstmt.setDouble(2, Double.parseDouble(lon));
-				pstmt.setInt(3, end);
-				pstmt.setInt(4, start);
+				pstmt.setInt(3, 50);   //잠시 테스트 위해 수정 원래 end
+				pstmt.setInt(4, 1);  //잠시 테스트 위해 수정 원래 start
 
 
 			rs = pstmt.executeQuery();
@@ -776,7 +776,7 @@ public class Bitdao {
 					int start = cpage * pagesize - (pagesize - 1); 
 					int end = cpage * pagesize;
 					
-					pstmt.setInt(1, end);
+					pstmt.setInt(1, 30);  //테스트 위해 잠시 수정 원래 end
 					pstmt.setInt(2, start);
 					
 					rs = pstmt.executeQuery();

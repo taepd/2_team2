@@ -429,14 +429,14 @@
 						<div class="col-sm-12 col-md-10">
 							<c:forEach var="user" items="${userlist}">
 								<c:if test="${board.id == user.id}">
-										<div  style="max-width: 20%; margin-bottom:15px;">
+										<div  style="max-width: 25%; margin-bottom:15px;">
 							<div class="rounded-circle" style="border: 5px solid #F4F7F9; position: relative; padding-top: 100%; overflow: hidden;">
 								<div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; transform: translate(50%, 50%);">
 									<a href="BitUserProfileView.bit?id=${user.id}"><img id="proimg" src="upload/${user.profile}"
 										style="width :auto; height: 80px; transform: translate(-50%, -50%);"></a>
 								</div>
 							</div>
-							<h4> <a href="BitUserProfileView.bit?id=${user.id}">${user.nick}</a> </h4>
+							<h4 align="center"> <a href="BitUserProfileView.bit?id=${user.id}">${user.nick}</a> </h4>
 						</div>
 									<p class="member-time">${user.loc}</p>
 								</c:if>

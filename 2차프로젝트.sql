@@ -1,35 +1,35 @@
 -- 회원
-DROP TABLE BITUSER;
+DROP TABLE BITUSER CASCADE CONSTRAINTS ;
 
 -- 관리자
-DROP TABLE ADMIN;
+DROP TABLE ADMIN CASCADE CONSTRAINTS;
 
 -- 공지사항
-DROP TABLE NOTICE;
+DROP TABLE NOTICE CASCADE CONSTRAINTS;
 
 -- 댓글
-DROP TABLE REPLY;
+DROP TABLE REPLY CASCADE CONSTRAINTS;
 
 -- 게시글
-DROP TABLE BOARD;
+DROP TABLE BOARD CASCADE CONSTRAINTS;
 
 -- 이미지
-DROP TABLE IMAGE;
+DROP TABLE IMAGE CASCADE CONSTRAINTS;
 
 -- 관심목록
-DROP TABLE FAVORITE;
+DROP TABLE FAVORITE CASCADE CONSTRAINTS;
 
 -- 카테고리
-DROP TABLE CATEGORY;
+DROP TABLE CATEGORY CASCADE CONSTRAINTS;
 
 -- 질의응답
-DROP TABLE USERQNA;
+DROP TABLE USERQNA CASCADE CONSTRAINTS;
 
 -- 질의응답댓글
-DROP TABLE QNAREPLY;
+DROP TABLE QNAREPLY CASCADE CONSTRAINTS;
 
 -- 회원
-CREATE TABLE BITUSER1 (
+CREATE TABLE BITUSER (
 	ID      VARCHAR2(20)  NOT NULL, -- ID
 	PWD     VARCHAR2(20)  NOT NULL, -- 비밀번호
 	LOC     VARCHAR2(300) NOT NULL, -- 위치정보
@@ -57,7 +57,8 @@ ALTER TABLE BITUSER
 -- 관리자
 CREATE TABLE ADMIN (
 	ID  VARCHAR2(20) NOT NULL, -- ID
-	PWD VARCHAR2(20) NOT NULL  -- 비밀번호
+	PWD VARCHAR2(20) NOT NULL,
+    NICK VARCHAR2(20) NOT NULL-- 비밀번호
 );
 
 -- 관리자 기본키
@@ -133,7 +134,7 @@ CREATE TABLE BOARD (
 	TITLE    VARCHAR2(100) NOT NULL, -- 제목
 	PRICE    NUMBER        NOT NULL, -- 가격
 	CONTENT  VARCHAR2(500) NOT NULL, -- 내용
-	RTIME    DATE          NOT NULL, -- 등록시간
+	RTIME    VARCHAR2(40)          NOT NULL, -- 등록시간
 	TRSTATE  VARCHAR2(4)   NOT NULL, -- 판매자 거래유무
 	DELSTATE VARCHAR2(4)   NOT NULL, -- 삭제유무
 	COUNT    NUMBER        NOT NULL, -- 조회수
@@ -426,7 +427,7 @@ NOCACHE;
 -- 시퀀스 내역 조회
 SELECT * FROM USER_SEQUENCES;
 
-insert into admin values('admin',1004);
+insert into admin values('admin',1004, '관리자');
 
 select * from bituser;
 desc bituser;
@@ -440,7 +441,7 @@ order by t;
 
 select round((google_distance(37.6438784, 127.06775039999998, lat, lon)),10) t from bituser1 u;
 desc bituser1;
-select * from bituser1;
+select * from bituser;
 
 
 
@@ -481,16 +482,24 @@ END;
 
 ---함수 끝 '/'이것도 포함이다.
 
+
+select * from board;
+
+--안쓰는거
  SELECT * from 
 					(select rownum rn, bdindex, title,price,content,rtime,trstate,delstate,count,id,img,dist
 				 , ctcode FROM (SELECT b.*, (power(lat-37,2)+power(lon-127,2)) dist FROM board b JOIN bituser u ON b.id = u.id order by dist)
-					 where rownum <=10) where rn >= 1;
-
+					 where rownum <=10) where rn >= 1;  
+--새 버전
+SELECT * from 
+				 (select rownum rn, bdindex, title,price,content,rtime,trstate,delstate,count,id,img, ctcode, dist
+				 FROM (SELECT b.*, round((google_distance(lat,lon, 37.4992037464339, 127.06309937724)),0) dist FROM board b JOIN bituser u ON b.id = u.id order by dist)
+				 where rownum <=6) where rn >= 1;
  
 
 select * from reply;
 
-
+select * from bituser;
 
 select * from admin;
 

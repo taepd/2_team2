@@ -152,7 +152,7 @@ $(function(){
 				$.each(responsedata,function(index,obj){	
 					$('#noticetable').append(	
 							"<tr><td>"+obj.ncindex+"</td>" +
-							"<td><a href='NoticeDetail.bit?ncindex="+obj.ncindex+"&cp=${cpage}&ps=${pagesize}'>" +
+							"<td><a href='AdminNoticeDetail.bit?ncindex="+obj.ncindex+"&cp=${cpage}&ps=${pagesize}'>" +
 								obj.title+"</a></td>" +
 							"<td>"+obj.rtime+"</td>" +
 							"<td>"+obj.adminid+"</td>" +

@@ -70,10 +70,10 @@
    						 border-color: #5a00b7;"><i class="svg-inline fa fa-search fa-w-16 fa-2x"></i></button>
 					</form>
 					<ul class="navbar-nav" id="navbutton">
-						<li class="nav-item" style="margin-right: 15px;font-weight: 500; ">
+						<li class="nav-item" style="font-weight: 500; ">
 							<a class="nav-link"href="Bitwrite.bit">글쓰기</a>
 						</li>
-						<li class="nav-item" style="margin-right: 15px;font-weight: 500; ">
+						<li class="nav-item" style="font-weight: 500; ">
 							<a class="nav-link" href="BitUserProfile.bit">마이페이지</a>
 						</li>
 						<li class="nav-item" style="font-weight: 500; ">

@@ -152,8 +152,9 @@
 				url: target,
 				dataType : "json",                                                
 				success:function(responsedata){
+				
 					$('#boardlist').empty();
-					$.each(responsedata.boardArr,function(index,obj){		
+					$.each(responsedata.boardArr,function(index,obj){	
 						let href = "";
 						let strArray = obj.img.split(',');
 						if(obj.dist=='0')return true;//본인 게시물 제외하는게 나을까?
@@ -192,7 +193,7 @@
 													"alt='Card image cap' style=\"height:250px\">"+
 											"</a>"+
 										"</div>"+
-										"<div class='card-body'>"+
+										"<div class='card-body' id='"+index+"'>"+
 											"<h4 class='card-title' id='cdtitle'><a href='BitBoardDetail.bit?bdindex="+obj.bdindex+"'>"+obj.title+"</a></h4>"+
 													
 											"<ul class='list-inline product-meta'>"+
@@ -219,9 +220,19 @@
 						);
 						if(obj.dist==null){
 							return true;
-						}else if(parseFloat(obj.dist)<=1){
-							$('.card-body').css('background-color','#a1f9b785');
+						}else if(parseFloat(obj.dist)<=3){  
+							$('#'+index+'').css('background-color','#a1f9b785');
+						}else if(parseFloat(obj.dist)<=4){
+							$('#'+index+'').css('background-color','#a1e5f985');
+						}else if(parseFloat(obj.dist)<=5){
+							$('#'+index+'').css('background-color','#a1a4f985');
+						}else if(parseFloat(obj.dist)<=6){
+							$('#'+index+'').css('background-color','#f9a1ee85');
 						}
+						
+						
+						
+						
 						console.log(obj.dist);
 				});
 				}
@@ -262,11 +273,11 @@
 				success:function(responsedata){ 
 					$.each(responsedata.boardArr,function(index,obj){		
 						var href = "";
-						let strArray = obj.img.split('/');
+						let strArray = obj.img.split(',');
 						$.each(responsedata.userArr, function(index2, obj2) {	
 							if(obj.id == obj2.id){
 								href = "<i class='fa fa-location-arrow'></i>"+obj2.loc+
-								"<b><a href='BitUserProfileView.bit?id="+obj2.id+">"+obj2.nick+"</a></b>";
+								"<br><b><a href='BitUserProfileView.bit?id="+obj2.id+"'>"+obj2.nick+"</a></b>";
 										
 							}
 						});
@@ -307,6 +318,7 @@
 								
 						   
 						);
+					
 					});
 					if(responsedata.boardArr.length < 6) {
 						isEnd = true;

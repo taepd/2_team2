@@ -26,7 +26,7 @@
 <script>
 	
 
-	/*
+	
 	
 /////////////////////////////////////////////////////////////////////////////////////
 
@@ -56,9 +56,9 @@
 									[ 'view', [ 'fullscreen', 'codeview' ] ]]
 									
 						});
-		
+	});
 ///////////////////////////////////////////////////////////////////////////////		
-*/
+
 
 //--------------------카테고리 select 태그 
 	$(function() {
@@ -121,7 +121,7 @@ $(document).on("click","#addFile",function() {
 		
 			<div id="categoryselect"></div>
 			<div id="preview">
-			<img id="previewimg" src="" width="300" alt="로컬에 있는 이미지가 보여지는 영역">
+			<img id="previewimg" src="" width="300">
 			</div>
 			
              <ul id="fileview">
